@@ -121,8 +121,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_ROOT = os.path.join(WSGI_DIR, 'static')
-STATICFILES_DIRS = (
-    ("uploaded_files", os.path.join(DATA_DIR, "static/uploaded_files")),
-)
 STATIC_URL = '/static/'
+
+
 MEDIA_ROOT = os.path.join(DATA_DIR, "uploaded_files")
+#STATICFILES_DIRS = (
+#    ("uploaded_files", os.path.join(DATA_DIR, "static/uploaded_files")),
+#)
