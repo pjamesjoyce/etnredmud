@@ -346,16 +346,16 @@ def get_LCI(request, process_id):
 
     for subprocess in process.subprocesses.all():
         subprocess_meta =  subprocess.processmembership_set.get(process = process)
-        print subprocess.name
+        #print subprocess.name
         multiplier = subprocess_meta.amount_required
 
 
 
         for thisinput in subprocess.inputs.all():
             input_meta = thisinput.inputmembership_set.get(subprocess = subprocess)
-            print thisinput.name
+            #print thisinput.name
             input_amount = input_meta.amount_required * multiplier
-            print input_amount
+            #print input_amount
             try:
                 LCI[thisinput.name]['total_amount'] += input_amount
                 LCI[thisinput.name]['total_footprint'] = LCI[thisinput.name]['total_amount'] * thisinput.emission_factor
@@ -367,7 +367,8 @@ def get_LCI(request, process_id):
         grand_total = 0
 
         for item in LCI:
-            grand_total += item.total_footprint
+            print LCI[item]['total_footprint']
+            grand_total += LCI[item]['total_footprint']
 
         args['grand_total']=grand_total
 
