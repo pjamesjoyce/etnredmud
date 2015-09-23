@@ -338,8 +338,11 @@ def delete_output(request,output_id):
 def get_LCI(request, process_id):
 
     LCI = {}
+    args ={}
 
     process = Process.objects.get(id=process_id)
+
+    args['process']=process
 
     for subprocess in process.subprocesses.all():
         subprocess_meta =  subprocess.processmembership_set.get(process = process)
@@ -362,6 +365,6 @@ def get_LCI(request, process_id):
                 LCI[thisinput.name]['total_footprint'] = input_amount * thisinput.emission_factor
 
 
-        print LCI
+        args['LCI'] = LCI
 
-    return HttpResponseRedirect('/data/process/all')
+    return render(request,'lci.html',args)
