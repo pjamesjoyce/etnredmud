@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from models import Process, ProcessMembership, SubProcess, InputMembership, OutputMembership, InputSubstance, OutputSubstance
 from django.template import RequestContext
 from django.contrib import messages
-from REDMUD import settings
+from myproject import settings
 from forms import ProcessForm, SubProcessForm, SubProcessFormSet, InputFormSet, OutputFormSet, InputForm, OutputForm
 from django.core.context_processors import  csrf
 

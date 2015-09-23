@@ -28,8 +28,8 @@ SECRETS = secrets.getter(os.path.join(DATA_DIR, 'secrets.json'))
 SECRET_KEY = SECRETS['secret_key']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG') == 'True'
-
+#DEBUG = os.environ.get('DEBUG') == 'True'
+DEBUG=True
 from socket import gethostname
 ALLOWED_HOSTS = [
     gethostname(), # For internal OpenShift load balancer security purposes.
@@ -120,5 +120,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(WSGI_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, "static/uploaded_files")
