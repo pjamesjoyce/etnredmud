@@ -30,7 +30,7 @@
   </div>
   <div class="col-md-5">
     {% if request.user.profile.profile_picture %}
-    <img src="/static/uploaded_files/{{request.user.profile.profile_picture}}" alt="" class="profile_pic" />
+    <img src="/static/media/{{request.user.profile.profile_picture}}" alt="" class="profile_pic" />
     {% else %}
     <img src="/static/img/user_default.png" alt=""  class="profile_pic"/>
     {% endif %}
