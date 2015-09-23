@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+
+{% block nav-class-process %}active{% endblock %}
+
+{% block title %}{% if process %}Updating process{% else %}New process{%endif%}{% endblock %}
+
+{% block content %}
+
+
+
+<h2>{% if process %}{{process.name}}{% else %}New process{%endif%}</h2>
+
+<form class="processform" action="{% if process %}/data/process/edit/{{process.id}}{% else %}/data/process/create/{%endif%}" method="post">{% csrf_token %}
+<table>
+  {{ form.as_table }}
+</table>
+
+{% if process %}
+{{formset.management_form}}
+<br><br>
+
+
+<table class="table-hover table text-center">
+    <thead>
+        {% for form in formset.forms %}
+            {% if forloop.first %}
+                {% for field in form %}
+                    {% if forloop.counter != 2 and forloop.counter != 5 %}
+                    <th>{{ field.label_tag }}</th>
+                    {% else %}
+                    <th></th>
+                    {% endif %}
+
+                {% endfor %}
+            {% endif %}
+    </thead>
+    <tbody>
+            <tr>
+                {% for field in form %}
+
+                    <td>{{ field }}{{ field.errors }}</td>
+
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+<a href="/data/process/all" role="button" name="cancel" class="btn btn-info">Cancel</a>
+<button type="submit" name="submit" class="btn btn-primary">{% if process %}Save{% else %}Create{%endif%}</button>
+{% if process %}
+
+
+
+<!-- Trigger for the modal (button) -->
+
+  <button type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#deleteModal">Delete Process</button>
+
+<!-- Modal -->
+  <div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Delete '{{process.name}}'?</h4>
+        </div>
+        <div class="modal-body">
+          <p>Whoa! You're about to delete the process called '{{ process.name }}'.<br> You can't undo this.</p>
+          <p>
+            Are you sure you want to do this?
+          </p>
+        </div>
+        <div class="modal-footer">
+          <a role = "button" class="btn btn-danger" href="/data/process/delete/{{process.id}}">Yes, delete it</a>
+          <button type="button" class="btn btn-default" data-dismiss="modal">No, cancel</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% endif %}
+
+</form>
+
+
+
+{% endblock %}

@@ -1,0 +1,91 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon" />
+    <title>REDMUD - {% block title %}Default title{% endblock %}</title>
+
+    <!-- Extra items for the header -->
+    {% block head-preload %}{% endblock %}
+
+    <!-- Bootstrap -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel = "stylesheet" type = "text/css" href = "{% static 'css/style.css' %}" />
+
+    <!-- Extra items for the header -->
+    {% block head-postload %}{% endblock %}
+
+  </head>
+  <body>
+
+    <div class="main">
+      <div class="container">
+        <nav>
+          <div class="container-fluid">
+          <ul class="nav nav-tabs">
+
+            <li role="presentation" class="{% block nav-class-home %}{% endblock %}"><a href="/">Home</a></li>
+            <li role="presentation" class="{% block nav-class-process %}{% endblock %}"><a href="/data/process/all/">Processes</a></li>
+            <li role="presentation" class="{% block nav-class-subprocess %}{% endblock %}"><a href="/data/subprocess/all/">Subprocesses</a></li>
+            <li role="presentation" class="{% block nav-class-input %}{% endblock %}"><a href="/data/input/all/">Inputs</a></li>
+            <li role="presentation" class="{% block nav-class-output %}{% endblock %}"><a href="/data/output/all/">Outputs</a></li>
+            {% block navcontents %}
+            {% endblock %}
+
+            {% if user.is_authenticated %}
+              <li role="presentation" class="navbar-right"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role = "button" aria-haspopup="true" aria-expanded="false">{{user}}<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="/accounts/profile">Profile</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="/accounts/logout">Logout</a></li>
+                </ul>
+              </li>
+            {% else %}
+              <li role="presentation" class="navbar-right"><a href="/accounts/login/">Log in</a></li>
+            {% endif %}
+          </ul>
+        </div>
+        </nav>
+
+          <div class="col-xs-12" id="content">
+          {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class = "{{message.tags }}"{% endif %}>{{message}}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+          {% block content %}
+            Nothing to see here
+          {% endblock %}
+          </div>
+          <footer class="footer">
+            <p class = "whitetext">&copy; ETN-MSCA REDMUD 2015</p>
+          </footer>
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  </body>
+</html>

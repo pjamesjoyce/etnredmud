@@ -1,0 +1,15 @@
+{% extends  'base.html' %}
+
+{% block content %}
+
+  <p>
+    Welcome {{ full_name }}, you are now logged in.
+  </p>
+  <p>
+    Click <a href="/accounts/profile/">here</a> to update your profile.
+  </p>
+  <p>
+    Click <a href="/accounts/logout/">here</a> to log back out.
+  </p>
+
+{% endblock %}

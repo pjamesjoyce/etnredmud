@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{%  block content %}
+
+  {% if form.errors %}
+    <p class="error">Sorry, that's a no I'm afraid</p>
+  {% endif %}
+
+  <form action = "/accounts/auth/" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.GET.next }}"/>
+    <label for="username">User name</label>
+    <input type="text" name="username" value="" id="username">
+    <label for="password">Password</label>
+    <input type="password" name="password" value="" id="password">
+
+    <input type="submit" name="submit" value="Log in"/>
+
+  
+  </form>
+  <p>
+    or <a href="/accounts/register/">register</a> here.
+  </p>
+{% endblock %}

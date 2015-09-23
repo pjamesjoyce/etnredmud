@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Processes{% endblock %}
+
+{% block head-postload %}
+
+<script src="{% static 'js/jquery.tablesorter.js' %}"></script>
+<script src="{% static 'js/jquery.tablesorter.widgets.js' %}"></script>
+<script>
+$(document).ready(function(){
+  $(function(){
+    $('#sp_table').tablesorter();
+  });
+});
+</script>
+
+{% endblock %}
+
+{% block nav-class-process %}active{% endblock %}
+
+{% block content %}
+
+<h2>My REDMUD Processes</h2>
+<p>
+  Click on a process to view/edit it
+  <a href="/data/process/create"><input type="button" name="create" value="Add new" class="btn btn-sm btn-info pull-right"></a>
+</p>
+
+<table class="table table-hover" id="sp_table">
+
+<thead>
+<tr>
+  <th>
+    Name
+  </th>
+  <th>
+    Output
+  </th>
+</tr>
+</thead>
+<tbody>
+{% for process in processes %}
+  <tr>
+    <td>
+      <a href="/data/process/edit/{{process.id}}">{{ process.name }}</a></li>
+    </td>
+    <td>
+      {{ process.output}}: {{ process.output_amount}} {{ process.unit}}
+    </td>
+  </tr>
+
+
+  {% empty %}
+  <tr>
+    <td>
+      Sorry, you don't have any processes yet, click <a href="/data/process/create/">here</a> to create one</li>
+    </td>
+  </tr>
+  {% endfor %}
+
+  </tbody>
+</table>
+
+
+{% endblock %}

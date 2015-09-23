@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Subprocesses{% endblock %}
+
+{% block head-postload %}
+
+<script src="{% static 'js/jquery.tablesorter.js' %}"></script>
+<script src="{% static 'js/jquery.tablesorter.widgets.js' %}"></script>
+<script>
+$(document).ready(function(){
+  $(function(){
+    $('#sp_table').tablesorter();
+  });
+});
+</script>
+
+{% endblock %}
+
+{% block nav-class-subprocess %}active{% endblock %}
+
+{% block content %}
+
+<h2>REDMUD Subprocesses</h2>
+<p>
+  Click on a subprocess to view/edit it
+  <a href="/data/subprocess/create"><input type="button" name="create" value="Add new" class="btn btn-sm btn-info pull-right"></a>
+</p>
+
+<table class="table table-hover" id="sp_table">
+
+<thead>
+<tr>
+  <th>
+    Name
+  </th>
+  <th>
+    Category
+  </th>
+  <th>
+    Author
+  </th>
+</tr>
+</thead>
+<tbody>
+{% for subprocess in subprocesses %}
+  <tr>
+    <td>
+      <a href="/data/subprocess/edit/{{subprocess.id}}">{{ subprocess.name }}</a></li>
+    </td>
+    <td>
+      {{ subprocess.category}}
+    </td>
+    <td>
+      {{ subprocess.author}}
+    </td>
+  </tr>
+
+
+  {% empty %}
+
+  {% endfor %}
+
+  </tbody>
+</table>
+
+
+{% endblock %}

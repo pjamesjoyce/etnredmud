@@ -1,0 +1,98 @@
+@import url(http://fonts.googleapis.com/css?family=Play|Quicksand|Cabin);
+
+
+body {
+	font-family: 'Quicksand', sans-serif;
+	background: url(../img/background.jpg) no-repeat center center fixed;
+	background-size: cover;
+}
+
+/* tab color */
+.nav-tabs>li>a {
+  background-color: #333333;
+  background-color: rgba(120, 120, 120, 0.95);
+  color:#fff;
+}
+
+/* active tab color */
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+  color: #000;
+  background-color: rgba(240, 240, 240, 0.95);
+
+}
+
+/* hover tab color */
+.nav-tabs>li>a:hover, .nav-tabs>li>a:focus {
+  background-color: rgba(139, 0, 0, 0.95);;
+}
+
+
+.jumbotron{
+	background: url(../img/data.jpg) no-repeat center center;
+	color:white;
+	text-shadow: black 0.1em 0.1em 0.2em;
+	height:450px;
+}
+
+ul {
+	list-style-type: none;
+	padding-left: 0;
+}
+
+h1, h2 {
+	font-family: 'Play',sans-serif;
+}
+
+p {
+	font-family: 'Quicksand', sans-serif;
+}
+
+a{
+
+}
+
+#sidebar{
+	background-color: rgba(192, 192, 192, 0.5);
+}
+
+.container{
+
+}
+
+#content{
+
+	background-color: rgba(240, 240, 240, 0.95);
+	padding:10px;
+}
+
+.disallowed{
+	text-align: center;
+	background-color: #ffaaaa;
+	border-color: #550000;
+	border: 1px solid;
+	border-radius: 2px;
+	padding-left: 1em;
+}
+
+.success{
+	text-align: center;
+	background-color: #aaeeaa;
+	border: 1px solid #005500;
+	border-radius: 5px;
+	padding-left: 1em;
+}
+
+.errorlist{
+	font-size: 10px;
+	color:darkred;
+}
+
+.disabled{
+	background-color: #eee;
+	color: #555;
+}
+
+.whitetext{
+	color: #555;
+	background-color: rgba(180, 180, 180, 0.85);
+}

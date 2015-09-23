@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Data collection platform{% endblock %}
+
+{% block nav-class-home %}active{% endblock %}
+
+{% block content %}
+
+<div class="jumbotron">
+  <h1>ETN-MSCA REDMUD</h1>
+  <h2>Data Collection Platform</h2>
+  <p>Welcome to the data collection platform</p>
+</div>
+
+{% if homeblock1 %}
+
+<!-- Row of columns -->
+      <div class="row">
+        <div class="col-md-4">
+          <h2>{{homeblock1.title}}</h2>
+          <p>{{homeblock1.body|safe}}</p>
+        </div>
+        <div class="col-md-4">
+          <h2>{{homeblock2.title}}</h2>
+          <p>{{homeblock2.body|safe}}</p>
+        </div>
+        <div class="col-md-4">
+          <h2>{{homeblock3.title}}</h2>
+          <p>{{homeblock3.body|safe}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <p><a class="btn btn-default" href="{{homeblock1.link1.href}}" role="button">{{homeblock1.link1.alt}} &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+          <p><a class="btn btn-default" href="{{homeblock2.link1.href}}" role="button">{{homeblock2.link1.alt}} &raquo;</a></p>
+       </div>
+        <div class="col-md-4">
+          <p><a class="btn btn-default " href="{{homeblock3.link1.href}}" role="button">{{homeblock3.link1.alt}} &raquo;</a>
+          <a class="btn btn-default" href="{{homeblock3.link2.href}}" role="button">{{homeblock3.link2.alt}} &raquo;</a></p>
+        </div>
+      </div>
+
+      <hr>
+
+{% endif %}
+
+
+{% endblock %}

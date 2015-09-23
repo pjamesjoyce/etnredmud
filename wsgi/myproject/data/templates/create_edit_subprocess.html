@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+
+
+{% block nav-class-subprocess %}active{% endblock %}
+
+{% block title %}{% if process %}Updating subprocess{% else %}New subprocess{%endif%}{% endblock %}
+
+{% block content %}
+
+{% if readonly %}
+
+<h2>{{subprocess.name}}</h2>
+
+<p>
+  <strong>Name:</strong> {{subprocess.name}}
+</p>
+<p>
+  <strong>Unit:</strong> {{subprocess.unit}}
+</p>
+<p>
+  <strong>Category:</strong> {{subprocess.category}}
+</p>
+<p>
+  <strong>Owner :</strong> {{subprocess.author.first_name}} {{subprocess.author.last_name}}
+</p>
+<br><br>
+<table class="table-hover table text-center">
+    <thead>
+      <tr>
+        <th class="col-md-4 text-center">
+          Input
+        </th>
+        <th class="col-md-4 text-center">
+          Amount required
+        </th>
+        <th class="col-md-4 text-center">
+          Note
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for input in subprocess.inputmembership_set.all %}
+        <tr>
+          <td class="col-md-4">{{ input.inputsubstance }}</td>
+          <td class="col-md-4">{{ input.amount_required }}</td>
+          <td class="col-md-4">{{ input.note }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td class="col-md-4">[No outputs/emissions]</td>
+          <td class="col-md-4"></td>
+          <td class="col-md-4"></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br><br>
+<table class="table-hover table text-center">
+    <thead>
+      <tr>
+        <th class="col-md-4 text-center">
+          Output
+        </th>
+        <th class="col-md-4 text-center">
+          Amount required
+        </th>
+        <th class="col-md-4 text-center">
+          Note
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for output in subprocess.outputmembership_set.all %}
+        <tr>
+          <td class="col-md-4">{{ output.outputsubstance }}</td>
+          <td class="col-md-4">{{ output.amount_required }}</td>
+          <td class="col-md-4">{{ output.note }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td class="col-md-4">[No outputs/emissions]</td>
+          <td class="col-md-4"></td>
+          <td class="col-md-4"></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br><br>
+<a href="/data/subprocess/all" role="button" name="cancel" class="btn btn-info">Cancel</a>
+<a href="/data/subprocess/duplicate/{{subprocess.id}}" role="button" name="cancel" class="btn btn-primary">Create duplicate</a>
+
+{% else %}
+
+<h2>{% if subprocess %}{{subprocess.name}}{% else %}New subprocess{%endif%}</h2>
+
+<form class="subprocessform" action="{% if subprocess %}/data/subprocess/edit/{{subprocess.id}}{% else %}/data/subprocess/create/{%endif%}" method="post">{% csrf_token %}
+<table>
+  {{ form.as_table }}
+</table>
+
+{% if subprocess %}
+{{inputformset.management_form}}
+{{outputformset.management_form}}
+<br><br>
+
+
+<table class="table-hover table text-center">
+    <thead>
+        {% for form in inputformset.forms %}
+            {% if forloop.first %}
+                {% for field in form %}
+
+                {% if forloop.counter != 4 and forloop.counter != 6 %}
+                <th class="col-md-3 text-center">{{ field.label_tag }}</th>
+                {% else %}
+                <th class="hidden"></th>
+                {% endif %}
+
+
+                {% endfor %}
+            {% endif %}
+    </thead>
+    <tbody>
+            <tr>
+                {% for field in form %}
+
+                    <td class="col-md-3 text-center">{{ field }}{{ field.errors }}</td>
+
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br><br>
+
+
+<table class="table-hover table text-center">
+    <thead>
+        {% for form in outputformset.forms %}
+            {% if forloop.first %}
+                {% for field in form %}
+
+                {% if forloop.counter != 4 and forloop.counter != 6 %}
+                <th class="col-md-3 text-center">{{ field.label_tag }}</th>
+                {% else %}
+                <th class="hidden"></th>
+                {% endif %}
+
+
+                {% endfor %}
+            {% endif %}
+    </thead>
+    <tbody>
+            <tr>
+                {% for field in form %}
+
+                    <td class="col-md-3 text-center">{{ field }}{{ field.errors }}</td>
+
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
+<a href="/data/subprocess/all" role="button" name="cancel" class="btn btn-info">Cancel</a>
+<button type="submit" name="submit" class="btn btn-primary">{% if subprocess %}Save{% else %}Create{%endif%}</button>
+{% if subprocess %}
+
+
+
+<!-- Trigger for the modal (button) -->
+
+  <button type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#deleteModal">Delete Subprocess</button>
+
+<!-- Modal -->
+  <div class="modal fade" id="deleteModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Delete '{{subprocess.name}}'?</h4>
+        </div>
+        <div class="modal-body">
+          <p>Whoa! You're about to delete the subprocess called '{{ subprocess.name }}'.<br> You can't undo this.</p>
+          <p>
+            Are you sure you want to do this?
+          </p>
+        </div>
+        <div class="modal-footer">
+          <a role = "button" class="btn btn-danger" href="/data/subprocess/delete/{{subprocess.id}}">Yes, delete it</a>
+          <button type="button" class="btn btn-default" data-dismiss="modal">No, cancel</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% endif %}
+
+</form>
+
+{% endif %} <!-- readonly -->
+
+
+{% endblock %}

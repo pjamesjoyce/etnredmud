@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Inputs{% endblock %}
+
+{% block head-postload %}
+
+<script src="{% static 'js/jquery.tablesorter.js' %}"></script>
+<script src="{% static 'js/jquery.tablesorter.widgets.js' %}"></script>
+<script>
+$(document).ready(function(){
+  $(function(){
+    $('#sp_table').tablesorter();
+  });
+});
+</script>
+
+{% endblock %}
+
+{% block nav-class-output %}active{% endblock %}
+
+{% block content %}
+
+<h2>REDMUD Outputs/Emissions</h2>
+<p>
+  Click on an output/emission to view/edit it
+  <a href="/data/output/create" type="button" name="create" class="btn btn-sm btn-info pull-right">Add new</a>
+</p>
+
+<table class="table table-hover" id="sp_table">
+
+<thead>
+<tr>
+  <th>
+    Name
+  </th>
+  <th>
+    unit
+  </th>
+  <th>
+    GHG Emission Factor
+  </th>
+</tr>
+</thead>
+<tbody>
+{% for output in outputs %}
+  <tr>
+    <td>
+      <a href="/data/output/edit/{{output.id}}">{{ output.name }}</a></li>
+    </td>
+    <td>
+      {{ output.unit}}
+    </td>
+    <td>
+      {{ output.emission_factor}}
+    </td>
+  </tr>
+
+
+  {% empty %}
+
+  {% endfor %}
+
+  </tbody>
+</table>
+
+
+{% endblock %}
