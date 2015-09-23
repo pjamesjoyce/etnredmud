@@ -124,7 +124,8 @@ STATIC_ROOT = os.path.join(WSGI_DIR, 'static')
 STATIC_URL = '/static/'
 
 
-MEDIA_ROOT = os.path.join(DATA_DIR, "uploaded_files")
+MEDIA_ROOT = os.path.join(DATA_DIR, 'media')
+MEDIA_URL = '/media/'
 #STATICFILES_DIRS = (
 #    ("uploaded_files", os.path.join(DATA_DIR, "static/uploaded_files")),
 #)
