@@ -364,6 +364,12 @@ def get_LCI(request, process_id):
                 LCI[thisinput.name]['total_amount'] = input_amount
                 LCI[thisinput.name]['total_footprint'] = input_amount * thisinput.emission_factor
 
+        grand_total = 0
+
+        for item in LCI:
+            grand_total += item.total_footprint
+
+        args['grand_total']=grand_total
 
         args['LCI'] = LCI
 

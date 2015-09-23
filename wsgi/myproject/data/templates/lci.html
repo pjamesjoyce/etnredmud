@@ -6,10 +6,47 @@
 {% block content %}
 
 <h2>LCI results for {{process.name}}</h2>
-<p>
-  {{LCI}}
-</p>
 
+{% if LCI %}
 
+<table>
+  <tr>
+    <th>
+      Input
+    </th>
+    <th>
+      Total amount required
+    </th>
+    <th>
+      Estimated carbon footprint
+    </th>
+  </tr>
+  {% for item in LCI %}
+  <tr>
+    <td>
+      {{item.key}}
+    </td>
+    <td>
+      {{item.total_amount}}
+    </td>
+    <td>
+      item.total_footprint
+    </td>
+  </tr>
+  {% endfor %}
+  <tr>
+    <th>
+      Total
+    </th>
+    <th>
+
+    </th>
+    <th>
+      {{grand_total}}
+    </th>
+  </tr>
+</table>
+
+{% endif %}
 
 {% endblock %}
