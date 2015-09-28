@@ -17,4 +17,5 @@ from django.conf.urls import include, url
 
 urlpatterns = [
     url(r'^submit_comment/$', 'comment.views.submit_comment'),
+    url(r'^list/$', 'comment.views.list_comments'),
 ]

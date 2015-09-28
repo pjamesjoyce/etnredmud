@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block head-postload %}
+
+<script src="{% static 'js/jquery.tablesorter.js' %}"></script>
+<script src="{% static 'js/jquery.tablesorter.widgets.js' %}"></script>
+<script>
+$(document).ready(function(){
+  $(function(){
+    $('#sp_table').tablesorter();
+  });
+});
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<table class="table table-hover" id="sp_table">
+
+<thead>
+<tr>
+  <th>
+    Comment from
+  </th>
+  <th>
+    About
+  </th>
+  <th>
+    Comment
+  </th>
+</tr>
+</thead>
+<tbody>
+{% for comment in comments %}
+  <tr>
+    <td>
+      {{comment.submitting_user.first_name}} {{comment.submitting_user.last_name}}
+    </td>
+    <td>
+      {{comment.page}}
+    </td>
+    <td>
+      {{comment.comment}}
+    </td>
+  </tr>
+
+
+  {% empty %}
+
+  {% endfor %}
+
+  </tbody>
+</table>
+
+
+
+{% endblock %}

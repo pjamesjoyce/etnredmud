@@ -13,5 +13,12 @@ def submit_comment(request):
 
     new_comment = Comment(submitting_user=request.user, comment = request.POST['comment'], page = request.POST['path'])
     new_comment.save()
+    messages.success(request, "Thanks for your comment!")
 
     return HttpResponseRedirect(redirect)
+
+def list_comments(request):
+    args={}
+    args['comments']=Comment.objects.all()
+
+    return render(request, 'comment_list.html', args)
