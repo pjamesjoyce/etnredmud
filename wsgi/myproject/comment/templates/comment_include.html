@@ -14,13 +14,14 @@
         </div>
         <div class="modal-body">
           <p>Please write your comment below</p>
-          <form class="commentform" action="/comments/submit_comment/" method="post">
-            {{csrf_token}}
-            <input type="textarea" name="comment" value="">
+          <form class="commentform" action="/comments/submit_comment/" method="post">{% csrf_token %}
+
+            <input type="hidden" name="path" value="{{request.path}}">
+            <textarea name="comment" rows="8" cols="40"></textarea>
 
         </div>
         <div class="modal-footer">
-          <input type="button" name="name" value="" role = "button" class="btn btn-default">Submit comment</a>
+          <input type="submit" name="name" value="Submit comment" role = "button" class="btn btn-default"/>
           <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
         </div>
         </form>
