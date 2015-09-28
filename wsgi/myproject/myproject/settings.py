@@ -52,6 +52,7 @@ INSTALLED_APPS = (
     'data',
     'accounts',
     'content',
+    'comment',
 )
 
 DISALLOWED_MESSAGE = 50
