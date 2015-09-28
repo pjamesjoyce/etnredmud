@@ -48,7 +48,7 @@
 
             {% if user.is_authenticated %}
               <li role="presentation" class="navbar-right"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role = "button" aria-haspopup="true" aria-expanded="false">
-                {% if request.user.profile.profile_picture %}<img src="/static/media/{{request.user.profile.profile_picture}}" alt="" width="18" height="18"/>{% endif %} {{user.first_name}}<span class="caret"></span></a>
+                {% if request.user.profile.profile_picture %}<img src="/static/media/{{request.user.profile.profile_picture}}" alt="" width="18" height="18"/>{% endif %} {% if request.user.first_name == "" %}{{request.user}}{% else %}{{user.first_name}}{% endif %}<span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href="/accounts/profile">Profile</a></li>
                   <li role="separator" class="divider"></li>

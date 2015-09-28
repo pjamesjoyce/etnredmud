@@ -54,7 +54,11 @@ def register_user(request):
 		form = MyRegistrationForm(request.POST)
 		if form.is_valid():
 			form.save()
-			return HttpResponseRedirect('/accounts/register_success/')
+			new_user = auth.authenticate(username=request.POST['username'], password=request.POST['password1'])
+			auth.login(request, new_user)
+			messages.success(request,'Thanks ' + request.POST['username'] + ', you are now registered. Please fill in your details below...')
+			return HttpResponseRedirect("/accounts/profile")
+
 
 	args = {}
 	args.update(csrf(request))

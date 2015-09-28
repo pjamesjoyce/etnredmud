@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .models import Comment
+from django.contrib import messages
 # Create your views here.
 
 def submit_comment(request):
