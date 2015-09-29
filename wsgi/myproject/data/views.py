@@ -4,15 +4,25 @@ from django.shortcuts import render
 
 import json
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from models import Process, ProcessMembership, SubProcess, InputMembership, OutputMembership, InputSubstance, OutputSubstance
-from django.template import RequestContext
+from django.template import RequestContext, loader, Context
 from django.contrib import messages
 from myproject import settings
 from forms import ProcessForm, SubProcessForm, SubProcessFormSet, InputFormSet, OutputFormSet, InputForm, OutputForm
 from django.core.context_processors import  csrf
 
 from django.contrib.auth.decorators import login_required
+
+
+from random import randint
+
+# <<<<=========== HELPER FUNCTIONS ===========>>>> #
+
+def random_with_N_digits(n):
+    range_start = 10**(n-1)
+    range_end = (10**n)-1
+    return randint(range_start, range_end)
 
 # <<<<=========== PROCESSES ===========>>>> #
 
@@ -440,3 +450,27 @@ def get_LCI(request, process_id):
         args['LCI_Tree'] = json.dumps(LCI_Tree)
 
     return render(request,'lci.html',args)
+
+def output_csv(request, process_id):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment;filename="somefilename.csv"'
+
+    identifier = random_with_N_digits(11)
+
+    process_data ={'processname': 'Test Process', 'unit': 'kg', 'output_amount':1, 'identifier':identifier}
+    
+    lci_data=[
+        {'simaPro_id': 'Electricity, medium voltage, aluminium industry {UN-EUROPE}| market for | Alloc Def, S', 'unit': 'kWh', 'amount_required':1.5 },
+        {'simaPro_id': 'Hydrochloric acid, without water, in 30% solution state {RoW}| market for | Alloc Def, S', 'unit': 'kg', 'amount_required':15 },
+        {'simaPro_id': 'Sodium hydroxide, without water, in 50% solution state {GLO}| market for | Alloc Def, S', 'unit': 'kg', 'amount_required':5.1 }
+        ]
+
+    t = loader.get_template('csv_template.txt')
+    c = Context({
+        'process_data': process_data,
+        'lci_data':lci_data,
+    })
+
+    response.write(t.render(c))
+
+    return response

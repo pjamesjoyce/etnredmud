@@ -36,6 +36,8 @@ urlpatterns = [
     url(r'^output/edit/(?P<output_id>\d+)$', 'data.views.create_edit_output'),
     url(r'^output/create/$', 'data.views.create_edit_output'),
     url(r'^output/delete/(?P<output_id>\d+)$', 'data.views.delete_output'),
-    
+
     url(r'^process/LCI/(?P<process_id>\d+)$', 'data.views.get_LCI'),
+
+    url(r'^process/csv/(?P<process_id>\d+)$', 'data.views.output_csv'),
 ]

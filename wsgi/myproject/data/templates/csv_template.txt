@@ -1,0 +1,133 @@
+{SimaPro 8.0.4.30}
+{processes}
+{Date: 29/09/2015}
+{Time: 15:58:03}
+{Project: 01. REDMUD - Scratchpad}
+{CSV Format version: 7.0.0}
+{CSV separator: Tab}
+{Decimal separator: .}
+{Date separator: /}
+{Short date format: dd/MM/yyyy}
+{Skip empty fields: No}
+{Convert expressions to constants: No}
+{Selection: Selection (1)}
+{Related objects (system descriptions, substances, units, etc.): Yes}
+{Include sub product stages and processes: Yes}
+{Open project: '01. REDMUD - Scratchpad'}
+{Library 'Ecoinvent 3 - allocation, default - system'}
+{Library 'Ecoinvent 3 - allocation, default - unit'}
+{Library 'Methods'}
+
+Process
+
+Category type
+processing
+
+Process identifier
+Institut{{process_data.identifier}}
+
+Type
+
+
+Process name
+
+
+Status
+
+
+Time period
+Unspecified
+
+Geography
+Unspecified
+
+Technology
+Unspecified
+
+Representativeness
+Unspecified
+
+Multiple output allocation
+Unspecified
+
+Substitution allocation
+Unspecified
+
+Cut off rules
+Unspecified
+
+Capital goods
+Unspecified
+
+Boundary with nature
+Unspecified
+
+Infrastructure
+No
+
+Date
+29/09/2015
+
+Record
+
+
+Generator
+
+
+Literature references
+
+
+Collection method
+
+
+Data treatment
+
+
+Verification
+
+
+Comment
+
+
+Allocation rules
+
+
+System description
+
+
+Products
+{{process_data.processname}}	{{process_data.unit}}	{{process_data.output_amount}}	100	not defined	02. Data collection	
+
+Avoided products
+
+Resources
+
+Materials/fuels
+{% for input in lci_data %}{{input.simaPro_id}}	{{input.unit}}	{{input.amount_required}}	Undefined	0	0	0
+{% endfor %}
+
+Electricity/heat
+
+Emissions to air
+
+Emissions to water
+
+Emissions to soil
+
+Final waste flows
+
+Non material emissions
+
+Social issues
+
+Economic issues
+
+Waste to treatment
+
+Input parameters
+
+Calculated parameters
+
+End
+
+

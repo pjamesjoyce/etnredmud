@@ -49,6 +49,7 @@ class InputSubstance(models.Model):
     name = models.CharField(max_length=128)
     emission_factor = models.FloatField()
     unit = models.CharField(max_length=5, choices = UNIT_CHOICES, default='kg')
+    simaPro_id = models.CharField(max_length=255, null=True, blank=True)
 
     def __unicode__(self):
         return self.name + " (" + self.unit +")"
@@ -59,6 +60,7 @@ class OutputSubstance(models.Model):
     name = models.CharField(max_length=128)
     emission_factor = models.FloatField()
     unit = models.CharField(max_length=5, choices = UNIT_CHOICES, default='kg')
+    simaPro_id = models.CharField(max_length=255, null=True, blank=True)
 
     def __unicode__(self):
         return self.name + " (" + self.unit +")"
