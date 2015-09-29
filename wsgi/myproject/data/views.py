@@ -2,6 +2,8 @@ from django.shortcuts import render
 
 # Create your views here.
 
+import json
+
 from django.http import HttpResponseRedirect
 from models import Process, ProcessMembership, SubProcess, InputMembership, OutputMembership, InputSubstance, OutputSubstance
 from django.template import RequestContext
@@ -335,7 +337,9 @@ def delete_output(request,output_id):
 
 # <<<<<<  MODEL  >>>>>> #
 
-def get_LCI(request, process_id):
+def get_LCI_old(request, process_id):
+
+# This is the old version which works, but doesnt include the tree features
 
     LCI = {}
     args ={}
@@ -373,5 +377,66 @@ def get_LCI(request, process_id):
         args['grand_total']=grand_total
 
         args['LCI'] = LCI
+
+    return render(request,'lci.html',args)
+
+
+def get_LCI(request, process_id):
+
+# This is the new 'development version' which includes the tree
+
+    LCI = {}
+    args ={}
+    LCI_Tree={}
+
+    process = Process.objects.get(id=process_id)
+
+    args['process']=process
+    LCI_Tree.update({'name':process.name, 'children':[], 'level':1})
+
+    for i, subprocess in enumerate(process.subprocesses.all()):
+        subprocess_meta =  subprocess.processmembership_set.get(process = process)
+        #print subprocess.name
+        multiplier = subprocess_meta.amount_required
+        LCI_Tree['children'].append({'name':subprocess.name, 'children':[], 'footprint':0, 'level':2})
+
+
+
+        for thisinput in subprocess.inputs.all():
+            input_meta = thisinput.inputmembership_set.get(subprocess = subprocess)
+            #print thisinput.name
+            input_amount = input_meta.amount_required * multiplier
+            #print input_amount
+            ef = thisinput.emission_factor
+
+            LCI_Tree['children'][i]['children'].append({'name':thisinput.name, 'size':input_amount, 'footprint':input_amount * thisinput.emission_factor, 'level':3})
+            LCI_Tree['children'][i]['footprint']+=input_amount*ef
+
+
+            try:
+                LCI[thisinput.name]['total_amount'] += input_amount
+                LCI[thisinput.name]['total_footprint'] = LCI[thisinput.name]['total_amount'] * ef
+
+            except KeyError:
+                LCI[thisinput.name]={}
+                LCI[thisinput.name]['total_amount'] = input_amount
+                LCI[thisinput.name]['total_footprint'] = input_amount * ef
+
+
+
+
+        grand_total = 0
+
+        for item in LCI:
+            print LCI[item]['total_footprint']
+            grand_total += LCI[item]['total_footprint']
+
+        args['grand_total']=grand_total
+
+        LCI_Tree['footprint']=grand_total
+
+        args['LCI'] = LCI
+
+        args['LCI_Tree'] = json.dumps(LCI_Tree)
 
     return render(request,'lci.html',args)

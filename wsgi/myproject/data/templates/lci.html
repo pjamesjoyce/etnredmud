@@ -5,12 +5,41 @@
 
 {% block head-postload %}
 
+<style media="screen">
+.node {
+		cursor: pointer;
+	}
+
+	.node {
+	  fill: #fff;
+	  stroke: black;
+	  stroke-width: 1px;
+	}
+
+	.gnode text {
+	  font-size: 16px;
+    text-anchor: beginning;
+    alignment-baseline:middle;
+    stroke:white;
+    text-shadow: black 0.1em 0.1em 0.2em;
+	}
+
+	.link {
+	  fill: none;
+	  stroke: #ccc;
+	  stroke-width: 2px;
+	}
+</style>
+
 <script src="{% static 'js/jquery.tablesorter.js' %}"></script>
 <script src="{% static 'js/jquery.tablesorter.widgets.js' %}"></script>
+<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+<script src="{% static 'data/js/d3_script.js' %}"></script>
 <script>
 $(document).ready(function(){
   $(function(){
     $('#sp_table').tablesorter();
+    d3_force({{LCI_Tree|safe}}, {{grand_total}})
   });
 });
 </script>
@@ -20,6 +49,9 @@ $(document).ready(function(){
 {% block content %}
 
 <h2>LCI results for {{process.name}}</h2>
+
+
+
 
 {% if LCI %}
 
@@ -67,6 +99,15 @@ $(document).ready(function(){
     </tr>
   </tfoot>
 </table>
+
+<div class="tree col-md-6">
+
+</div>
+<div class="chart col-md-6">
+
+</div>
+
+
 
 {% endif %}
 
