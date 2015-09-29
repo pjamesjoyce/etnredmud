@@ -7,6 +7,10 @@ body {
 	background-size: cover;
 }
 
+.nav-top-pad{
+	margin-top: 20px;
+}
+
 /* tab color */
 .nav-tabs>li>a {
   background-color: #333333;
@@ -14,16 +18,16 @@ body {
   color:#fff;
 }
 
-/* active tab color */
+/* active tab color
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
   color: #000;
   background-color: rgba(240, 240, 240, 0.95);
 
 }
-
+*/
 /* hover tab color */
-.nav-tabs>li>a:hover, .nav-tabs>li>a:focus {
-  background-color: rgba(139, 0, 0, 0.95);;
+.navbar-nav>li:hover, .navbar-nav>li:focus {
+  background-color: rgba(240, 240, 240, 0.6);;
 }
 
 

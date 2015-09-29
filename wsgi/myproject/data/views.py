@@ -398,7 +398,7 @@ def get_LCI(request, process_id):
         subprocess_meta =  subprocess.processmembership_set.get(process = process)
         #print subprocess.name
         multiplier = subprocess_meta.amount_required
-        LCI_Tree['children'].append({'name':subprocess.name, 'children':[], 'footprint':0, 'level':2})
+        LCI_Tree['children'].append({'name':subprocess.name, 'children':[], 'footprint':0, 'level':2, 'order':i})
 
 
 
