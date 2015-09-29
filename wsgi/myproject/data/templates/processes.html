@@ -22,7 +22,6 @@ $(document).ready(function(){
 
 <h2>My REDMUD Processes</h2>
 <p>
-  Click on a process to view/edit it
   <a href="/data/process/create"><input type="button" name="create" value="Add new" class="btn btn-sm btn-info pull-right"></a>
 </p>
 
@@ -36,16 +35,23 @@ $(document).ready(function(){
   <th>
     Output
   </th>
+  <th>
+    Actions
+  </th>
 </tr>
 </thead>
 <tbody>
 {% for process in processes %}
   <tr>
     <td>
-      <a href="/data/process/edit/{{process.id}}">{{ process.name }}</a></li>
+      <a href="/data/process/edit/{{process.id}}">{{ process.name }}</a>
     </td>
     <td>
       {{ process.output}}: {{ process.output_amount}} {{ process.unit}}
+    </td>
+    <td>
+      <a href="/data/process/edit/{{process.id}}"type="button" class="btn btn-info btn-xs" name="button">Edit</a></li>
+      <a href="/data/process/LCI/{{process.id}}" type="button" class="btn btn-primary btn-xs" name="button">Analyse</a>
     </td>
   </tr>
 

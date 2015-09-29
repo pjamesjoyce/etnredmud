@@ -361,11 +361,13 @@ function d3_bar(treeData, max_footprint){
 
   var data = treeData['children'];
 
-  var margin = {top: 60, right: 20, bottom: 30, left: 60},
+  var margin = {top: 60, right: 20, bottom: 60, left: 60},
     width = 500 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
   var formatNumber = d3.format("#,##0");
+
+  var colours = d3.scale.category10();
 
   var x = d3.scale.ordinal()
       .rangeRoundBands([0, width], .1, 1);
@@ -396,7 +398,9 @@ function d3_bar(treeData, max_footprint){
     svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
+        .call(xAxis)
+      .selectAll(".tick text")
+        .call(wrap, x.rangeBand());
 
     svg.append("g")
         .attr("class", "y axis")
@@ -406,7 +410,7 @@ function d3_bar(treeData, max_footprint){
         .attr("y", 6)
         .attr("dy", ".71em")
         .style("text-anchor", "end")
-        .text("Carbon Footprint");
+        .text("Carbon Footprint (kg CO2-eq)");
 
     svg.selectAll(".bar")
         .data(data)
@@ -415,7 +419,8 @@ function d3_bar(treeData, max_footprint){
         .attr("x", function(d) { return x(d.name); })
         .attr("width", x.rangeBand())
         .attr("y", function(d) { return y(d.footprint); })
-        .attr("height", function(d) { return height - y(d.footprint); });
+        .attr("height", function(d) { return height - y(d.footprint); })
+        .style("fill", function(d){return colours(d.order)});
 
     d3.select("input").on("change", change);
 
@@ -446,8 +451,36 @@ function d3_bar(treeData, max_footprint){
 
       transition.select(".x.axis")
           .call(xAxis)
+
         .selectAll("g")
-          .delay(delay);
+          .delay(delay)
+
+        .selectAll(".tick text")
+          .call(wrap, x.rangeBand());
+    }
+
+    function wrap(text, width) {
+      text.each(function() {
+        var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, // ems
+            y = text.attr("y"),
+            dy = parseFloat(text.attr("dy")),
+            tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+        while (word = words.pop()) {
+          line.push(word);
+          tspan.text(line.join(" "));
+          if (tspan.node().getComputedTextLength() > width) {
+            line.pop();
+            tspan.text(line.join(" "));
+            line = [word];
+            tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+          }
+        }
+      });
     }
 
 }
