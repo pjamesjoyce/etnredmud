@@ -14,6 +14,7 @@ from django.core.context_processors import  csrf
 
 from django.contrib.auth.decorators import login_required
 
+from messenger.views import check_messages
 
 from random import randint
 
@@ -30,10 +31,15 @@ def random_with_N_digits(n):
 @login_required
 def all_processes(request):
 
+    args={}
+    # <<<=== CHECK FOR MESSAGES ===>>> #
+    if request.user.is_authenticated():
+        myMessages = check_messages(request.user)
+        args.update(myMessages)
+    # <<<==========================>>> #
+
     processes = Process.objects.filter(owner=request.user)
     print processes
-
-    args={}
 
     args['processes']=processes
 
@@ -112,9 +118,14 @@ def delete_process(request,process_id):
 @login_required
 def all_subprocesses(request):
 
-    subprocesses = SubProcess.objects.order_by('category')
-
     args={}
+    # <<<=== CHECK FOR MESSAGES ===>>> #
+    if request.user.is_authenticated():
+        myMessages = check_messages(request.user)
+        args.update(myMessages)
+    # <<<==========================>>> #
+
+    subprocesses = SubProcess.objects.order_by('category')
 
     args['subprocesses']=subprocesses
 
@@ -215,9 +226,15 @@ def duplicate_subprocess(request, subprocess_id):
 @login_required
 def all_inputs(request):
 
+    args={}
+    # <<<=== CHECK FOR MESSAGES ===>>> #
+    if request.user.is_authenticated():
+        myMessages = check_messages(request.user)
+        args.update(myMessages)
+    # <<<==========================>>> #
+
     inputs = InputSubstance.objects.order_by('name')
 
-    args={}
 
     args['inputs']=inputs
 
@@ -283,9 +300,17 @@ def delete_input(request,input_id):
 @login_required
 def all_outputs(request):
 
+    args={}
+
+    # <<<=== CHECK FOR MESSAGES ===>>> #
+    if request.user.is_authenticated():
+        myMessages = check_messages(request.user)
+        args.update(myMessages)
+    # <<<==========================>>> #
+
     outputs = OutputSubstance.objects.order_by('name')
 
-    args={}
+
 
     args['outputs']=outputs
 

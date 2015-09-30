@@ -1,9 +1,17 @@
 from django.shortcuts import render
 from content.models import Content
 
+from messenger.views import check_messages
+
 def home(request):
 
     args = {}
+
+    if request.user.is_authenticated():
+        myMessages = check_messages(request.user)
+        args.update(myMessages)
+
+
 
     homeblock1 = Content.objects.get(name='homeblock1')
     homeblock2 = Content.objects.get(name='homeblock2')

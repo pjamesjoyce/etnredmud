@@ -100,3 +100,7 @@ a{
 	color: #555;
 	background-color: rgba(180, 180, 180, 0.85);
 }
+
+.commentButtonDiv{
+	margin-top:40px;
+}

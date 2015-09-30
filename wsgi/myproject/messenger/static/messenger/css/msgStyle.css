@@ -1,0 +1,63 @@
+.msgList{
+  height:500px;
+  overflow-y: scroll;
+  margin-bottom: 20px;
+}
+
+.msgTitle{
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(221,221,221);
+  height:40px;
+  padding-top: 5px;
+}
+
+.msgBody{
+  background-color: rgb(255, 255, 255);
+  border-left: 1px solid rgb(221,221,221);
+  border-right: 1px solid rgb(221,221,221);
+  height: 370px;
+  overflow-y: scroll;
+}
+
+.msgSubject{
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.msgBodyText{
+  font-size: 16px;
+  padding: 15px;
+}
+
+.msgInactive{
+  background-color: #eee;
+}
+
+.replyTextArea{
+  width: 100%;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;
+  height:100px;
+  border: 1px solid rgb(221,221,221);
+}
+
+.msgReply{
+  margin-top:0px;
+  height:100px;
+  margin-bottom: 20px;
+}
+
+/* Small screen extras */
+
+@media screen and (max-width: 750px) {
+
+  .msgList{
+    height:200px;
+  }
+
+  .msgBody{
+    height:300px;
+  }
+}

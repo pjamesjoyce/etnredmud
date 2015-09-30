@@ -1,0 +1,10 @@
+<div class="msgTitle">
+  <span class="msgSubject">{{thisMessage.title}}</span>
+</div>
+<div class="msgBody">
+  <p class="msgBodyText">
+    {{thisMessage.body}}
+  </p>
+  <input type="hidden" name="oldSubject" value="{{thisMessage.title}}">
+  <input type="hidden" name="senderID" value="{{thisMessage.sender.id}}">
+</div>

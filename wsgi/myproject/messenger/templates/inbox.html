@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Messages{% endblock %}
+
+{% block head-postload %}
+
+<link rel = "stylesheet" type = "text/css" href = "{% static 'messenger/css/msgStyle.css' %}" />
+
+<script src="{% static 'js/jquery.tablesorter.js' %}"></script>
+<script src="{% static 'js/jquery.tablesorter.widgets.js' %}"></script>
+
+<script>
+$(document).ready(function(){
+  $(function(){
+    $('#sp_table').tablesorter();
+  });
+});
+
+function showMsg(msgID, read){
+  console.log(msgID);
+
+  $('#msgspan' + msgID).removeClass('text-info').addClass('text-muted');
+  $('#badge' + msgID).addClass('hidden');
+  $('#msgReplyBox').removeClass('msgInactive')
+  var unread_count = $('#msgBadgeDD').html();
+
+  if(read==='False'){
+      unread_count-=1;
+      console.log(unread_count)
+      if(unread_count===0){unread_count='';};
+      $('#msgBadgeID').html(unread_count);
+      $('#msgBadgeDD').html(unread_count);
+  }
+
+
+  $.ajax({
+      type:"POST",
+      url:"/messages/show_message/",
+      data: {
+        'msgID': msgID,
+        'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val()
+      },
+      success:msgSuccess,
+      dataType: 'html'
+    });
+}
+
+function msgSuccess(data, textStatus, jqXHR){
+  $('#msgDisplay').html(data);
+}
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<h2>Inbox</h2>
+{% csrf_token %}
+<div class="col-sm-4">
+<div class="msgList">
+    <table class="table table-hover table-striped">
+      {% for message in myMessages %}
+      <tr>
+
+        <td>
+          {{message.sender.first_name}} {{message.sender.last_name}}
+        </td>
+        <td>
+          <a href="#" onclick="showMsg({{message.id}}, '{{message.read}}')">{% if message.read == False %}<span class="text-info" id ="msgSpan{{message.id}}">{{ message.title }}</span> <span class="badge pull-right" id = "badge{{message.id}}">New</span>{% else %}<span class="text-muted" id="msgSpan{{message.id}}">{{message.title}}</span>{% endif %}</a>
+        </td>
+
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+
+<div class="col-sm-8 msgBox">
+  <form class="" action="/messages/reply/" method="post">
+  <div class="msgBox" id="msgDisplay">
+    <div class="msgTitle msgInactive">
+
+    </div>
+    <div class="msgBody msgInactive">
+
+    </div>
+  </div>
+  <div class="msgReply">
+
+      {% csrf_token %}
+      <textarea name="messageReply" rows="4" cols="40" class="replyTextArea msgInactive" id="msgReplyBox"></textarea>
+      <input type="submit" name="name" value="Send" class="btn btn-info pull-right">
+
+  </div>
+  </form>
+</div>
+{% endblock %}
