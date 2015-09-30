@@ -19,7 +19,7 @@ UNIT_CHOICES = (
     )
     ),
     ('Energy', (
-        ('kwh', 'kWh'),
+        ('kWh', 'kWh'),
     )
     ),
     ('Volume', (
@@ -27,12 +27,12 @@ UNIT_CHOICES = (
     )
     ),
     ('Radioactivity', (
-        ('bq', 'Bq'),
+        ('Bq', 'Bq'),
     )
     ),
     ('Time', (
-        ('hr', 'hours'),
-        ('dy', 'days'),
+        ('h', 'hours'),
+        ('d', 'days'),
     )
     ),
     ('Amount', (

@@ -108,11 +108,14 @@ $(document).ready(function(){
       <td>
         {{key}}
       </td>
-      {% for key1,value1 in value.items %}
+
       <td>
-        {{value1}}
+        {{value.total_amount}}
       </td>
-      {% endfor %}
+			<td>
+        {{value.total_footprint}}
+      </td>
+    
 
 
     </tr>

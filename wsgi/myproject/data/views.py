@@ -347,66 +347,61 @@ def delete_output(request,output_id):
 
 # <<<<<<  MODEL  >>>>>> #
 
-def get_LCI_old(request, process_id):
-
-# This is the old version which works, but doesnt include the tree features
-
-    LCI = {}
-    args ={}
-
-    process = Process.objects.get(id=process_id)
-
-    args['process']=process
-
-    for subprocess in process.subprocesses.all():
-        subprocess_meta =  subprocess.processmembership_set.get(process = process)
-        #print subprocess.name
-        multiplier = subprocess_meta.amount_required
-
-
-
-        for thisinput in subprocess.inputs.all():
-            input_meta = thisinput.inputmembership_set.get(subprocess = subprocess)
-            #print thisinput.name
-            input_amount = input_meta.amount_required * multiplier
-            #print input_amount
-            try:
-                LCI[thisinput.name]['total_amount'] += input_amount
-                LCI[thisinput.name]['total_footprint'] = LCI[thisinput.name]['total_amount'] * thisinput.emission_factor
-            except KeyError:
-                LCI[thisinput.name]={}
-                LCI[thisinput.name]['total_amount'] = input_amount
-                LCI[thisinput.name]['total_footprint'] = input_amount * thisinput.emission_factor
-
-        grand_total = 0
-
-        for item in LCI:
-            print LCI[item]['total_footprint']
-            grand_total += LCI[item]['total_footprint']
-
-        args['grand_total']=grand_total
-
-        args['LCI'] = LCI
-
-    return render(request,'lci.html',args)
-
-
 def get_LCI(request, process_id):
 
 # This is the new 'development version' which includes the tree
 
+    args = get_LCI_data(process_id)
+
+    return render(request,'lci.html',args)
+
+def output_csv(request, process_id):
+
+    lci_dataset = get_LCI_data(process_id)
+    process = lci_dataset['process']
+    LCI = lci_dataset['LCI']
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment;filename="SimaProOutput_Process_' + str(process.id) + '_' + process.name + '.csv"'
+
+    identifier = random_with_N_digits(11)
+
+    process_data ={'processname': process.output + ' from ' + process.name, 'unit': process.unit, 'output_amount':process.output_amount, 'identifier':identifier}
+
+    lci_data=[]
+
+    for item in LCI:
+
+        lci_data.append({'simaPro_id': LCI[item]['simaPro_id'], 'unit': LCI[item]['unit'], 'amount_required':LCI[item]['total_amount'] })
+
+    t = loader.get_template('csv_template.txt')
+    c = Context({
+        'process_data': process_data,
+        'lci_data':lci_data,
+    })
+
+    response.write(t.render(c))
+
+    return response
+
+
+def get_LCI_data(process_id):
+
+    response = {}
     LCI = {}
-    args ={}
     LCI_Tree={}
 
     process = Process.objects.get(id=process_id)
 
-    args['process']=process
+    print process.subprocesses.all()
+
+    response['process']=process
+
     LCI_Tree.update({'name':process.name, 'children':[], 'level':1})
 
     for i, subprocess in enumerate(process.subprocesses.all()):
         subprocess_meta =  subprocess.processmembership_set.get(process = process)
-        #print subprocess.name
+        print subprocess.name
         multiplier = subprocess_meta.amount_required
         LCI_Tree['children'].append({'name':subprocess.name, 'children':[], 'footprint':0, 'level':2, 'order':i})
 
@@ -414,13 +409,14 @@ def get_LCI(request, process_id):
 
         for thisinput in subprocess.inputs.all():
             input_meta = thisinput.inputmembership_set.get(subprocess = subprocess)
-            #print thisinput.name
+            print thisinput.name
             input_amount = input_meta.amount_required * multiplier
-            #print input_amount
+            print input_amount
             ef = thisinput.emission_factor
 
             LCI_Tree['children'][i]['children'].append({'name':thisinput.name, 'size':input_amount, 'footprint':input_amount * thisinput.emission_factor, 'level':3})
             LCI_Tree['children'][i]['footprint']+=input_amount*ef
+
 
 
             try:
@@ -431,46 +427,22 @@ def get_LCI(request, process_id):
                 LCI[thisinput.name]={}
                 LCI[thisinput.name]['total_amount'] = input_amount
                 LCI[thisinput.name]['total_footprint'] = input_amount * ef
+                LCI[thisinput.name]['simaPro_id'] = thisinput.simaPro_id
+                LCI[thisinput.name]['unit'] = thisinput.unit
 
+    grand_total = 0
 
+    for item in LCI:
+        print LCI[item]['total_footprint']
+        grand_total += LCI[item]['total_footprint']
 
+    response['grand_total']=grand_total
 
-        grand_total = 0
+    LCI_Tree['footprint']=grand_total
 
-        for item in LCI:
-            print LCI[item]['total_footprint']
-            grand_total += LCI[item]['total_footprint']
+    response['LCI'] = LCI
+    print LCI
 
-        args['grand_total']=grand_total
-
-        LCI_Tree['footprint']=grand_total
-
-        args['LCI'] = LCI
-
-        args['LCI_Tree'] = json.dumps(LCI_Tree)
-
-    return render(request,'lci.html',args)
-
-def output_csv(request, process_id):
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment;filename="somefilename.csv"'
-
-    identifier = random_with_N_digits(11)
-
-    process_data ={'processname': 'Test Process', 'unit': 'kg', 'output_amount':1, 'identifier':identifier}
-    
-    lci_data=[
-        {'simaPro_id': 'Electricity, medium voltage, aluminium industry {UN-EUROPE}| market for | Alloc Def, S', 'unit': 'kWh', 'amount_required':1.5 },
-        {'simaPro_id': 'Hydrochloric acid, without water, in 30% solution state {RoW}| market for | Alloc Def, S', 'unit': 'kg', 'amount_required':15 },
-        {'simaPro_id': 'Sodium hydroxide, without water, in 50% solution state {GLO}| market for | Alloc Def, S', 'unit': 'kg', 'amount_required':5.1 }
-        ]
-
-    t = loader.get_template('csv_template.txt')
-    c = Context({
-        'process_data': process_data,
-        'lci_data':lci_data,
-    })
-
-    response.write(t.render(c))
+    response['LCI_Tree'] = json.dumps(LCI_Tree)
 
     return response
