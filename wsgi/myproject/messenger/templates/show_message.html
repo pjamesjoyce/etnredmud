@@ -8,7 +8,7 @@
   </div>
   <div class="msgBody">
     <p class="msgBodyText">
-      {{thisMessage.body}}
+      {{thisMessage.body|linebreaksbr}}
     </p>
     <input type="hidden" name="oldSubject" value="{{thisMessage.title}}">
     <input type="hidden" name="senderID" value="{{thisMessage.sender.id}}">

@@ -77,6 +77,7 @@ def sendMessage(request):
         body = request.POST['message']
         recipients = request.POST.getlist('to_list')
         sender = request.user
+        
 
         for recipientID in recipients:
             recipient = User.objects.get(id=int(recipientID))
