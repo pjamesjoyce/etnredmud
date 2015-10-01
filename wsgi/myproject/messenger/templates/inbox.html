@@ -7,8 +7,8 @@
 <link rel = "stylesheet" type = "text/css" href = "{% static 'messenger/css/msgStyle.css' %}" />
 
 <!-- Include Bootstrap-select CSS, JS -->
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/css/bootstrap-select.min.css" />
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.2/js/bootstrap-select.min.js"></script>
+<link rel="stylesheet" href="{% static 'messenger/css/bootstrap-select.min.css' %}" />
+<script src="{% static 'messenger/js/bootstrap-select.min.js' %}"></script>
 
 <style type="text/css">
 #bootstrapSelectForm .selectContainer .form-control-feedback {
@@ -90,24 +90,39 @@ function msgSuccess(data, textStatus, jqXHR){
   <div class="col-sm-4">
   <div class="msgList">
       <table class="table table-hover table-striped">
-        {% for message in myMessages %}
-        <tr>
+        <thead>
+          <tr>
+            <th>
+              From
+            </th>
+            <th>
+              Subject
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for message in myMessages %}
+          <tr>
 
-          <td>
-            {{message.sender.first_name}} {{message.sender.last_name}}
-          </td>
-          <td>
-            <a href="#" onclick="showMsg({{message.id}}, '{{message.read}}')">{% if message.read == False %}<span class="text-info" id ="msgSpan{{message.id}}">{{ message.title }}</span> <span class="badge pull-right" id = "badge{{message.id}}">New</span>{% else %}<span class="text-muted" id="msgSpan{{message.id}}">{{message.title}}</span>{% endif %}</a>
-          </td>
+            <td>
+              {{message.sender.first_name}} {{message.sender.last_name}}
+            </td>
+            <td>
+              <a href="#" onclick="showMsg({{message.id}}, '{{message.read}}')">{% if message.read == False %}<span class="text-info" id ="msgSpan{{message.id}}">{{ message.title }}</span> <span class="badge pull-right" id = "badge{{message.id}}">New</span>{% else %}<span class="text-muted" id="msgSpan{{message.id}}">{{message.title}}</span>{% endif %}</a>
+            </td>
 
-        </tr>
-        {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
       </table>
     </div>
   </div>
 
   <div class="col-sm-8 msgBox" id="msgDisplay">
     <div class="msgBox">
+      <div class="msgTitle msgInactive">
+
+      </div>
       <div class="msgTitle msgInactive">
 
       </div>

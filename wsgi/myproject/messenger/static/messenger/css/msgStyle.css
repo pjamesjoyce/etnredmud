@@ -1,32 +1,74 @@
+table {
+        width: 100%;
+        border-top: 1px solid rgb(221,221,221);
+        border-bottom:1px solid rgb(221,221,221);
+        border-left: 1px solid rgb(221,221,221);
+        border-right: 1px solid rgb(221,221,221);
+    }
+
+thead, tbody, tr, td, th { display: block; }
+
+tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+thead th {
+    height: 40px;
+    text-align: left;
+}
+
+
+tbody {
+    height: 460px;
+    overflow-y: auto;
+}
+
+thead {
+    /* fallback */
+}
+
+
+tbody td, thead th {
+    float: left;
+    width:50%;
+}
+
+
+
 .msgList{
   height:500px;
-  overflow-y: scroll;
   margin-bottom: 20px;
 }
 
 .msgTitle{
   background-color: rgb(255, 255, 255);
-  border: 1px solid rgb(221,221,221);
+  border-left: 1px solid rgb(221,221,221);
+  border-right: 1px solid rgb(221,221,221);
+  border-top: 1px solid rgb(221,221,221);
   height:40px;
   padding-top: 5px;
 }
 
 .msgBody{
   background-color: rgb(255, 255, 255);
+  border-top: 1px solid rgb(221,221,221);
   border-left: 1px solid rgb(221,221,221);
   border-right: 1px solid rgb(221,221,221);
-  height: 360px;
+  height: 320px;
   overflow-y: scroll;
 }
 
 .msgSubject{
-  font-size: 20px;
+  font-size: 14px;
   font-weight: bold;
   padding-left: 15px;
   padding-right: 15px;
 }
 .msgBodyText{
-  font-size: 16px;
+  font-size: 14px;
   padding: 15px;
 }
 
@@ -61,13 +103,13 @@
   border-top: 1px solid rgb(221,221,221);
   height:40px;
 
-  padding: 0px;
+  padding: 2px;
   margin-bottom: 0px;
 }
 
 .scroll-400{
-  height:420px;
-  max-height: 420px;
+  height:416px;
+  max-height: 410px;
   border: 1px solid rgb(221,221,221);
   background-color: rgb(255, 255, 255);
 }
@@ -76,6 +118,7 @@
   height:420px;
   border: 1px solid rgb(221,221,221);
   background-color: rgb(255, 255, 255);
+  padding:3px;
 }
 
 /* Small screen extras */

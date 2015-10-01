@@ -3,6 +3,13 @@
 <form class="" action="/messages/reply/" method="post">
 <div class="msgBox">
 
+
+  <div class="msgTitle">
+    <span class="msgSubject">To: </span>
+    {% for person in thisMessage.recipient.all %}
+    <span class="">{{person.first_name}} {{person.last_name}}{% if not forloop.last %}; {% endif %}</span>
+    {% endfor %}
+  </div>
   <div class="msgTitle">
     <span class="msgSubject">{{thisMessage.title}}</span>
   </div>
@@ -12,13 +19,21 @@
     </p>
     <input type="hidden" name="oldSubject" value="{{thisMessage.title}}">
     <input type="hidden" name="senderID" value="{{thisMessage.sender.id}}">
+    {% for r in thisMessage.recipient.all %}
+    <input type="hidden" name="oldRecipient" value="{{r.id}}">
+    {% endfor %}
   </div>
 </div>
 <div class="msgReply">
 
     {% csrf_token %}
     <textarea name="messageReply" rows="4" cols="40" class="replyTextArea" id="msgReplyBox" placeholder="Reply..."></textarea>
-    <input type="submit" name="name" value="Send" class="btn btn-info pull-right">
+    <div class="btn-group pull-right">
+      <button type="submit" name="replySingle" value="Reply" class="btn btn-info">Reply</button>
+      {% if thisMessage.recipient.all|length > 1 %}
+      <button type="submit" name="replyAll" value="Reply to All" class="btn btn-info">Reply to All</button>
+      {% endif %}
+    </div>
 
 </div>
 </form>

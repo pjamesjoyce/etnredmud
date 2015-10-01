@@ -4,6 +4,8 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth.models import User
 from myproject import settings
+from django.utils import timezone
+
 # Create your views here.
 
 def check_messages(user):
@@ -43,9 +45,10 @@ def replyToMessage(request):
     if request.method=="POST":
         oldSubject= request.POST['oldSubject']
         newBody = request.POST['messageReply']
-        recipientID = request.POST['senderID']
-        recipient = User.objects.get(id=recipientID)
+        senderID = request.POST['senderID']
+        mainRecipient = User.objects.get(id=senderID)
         sender = request.user
+        oldRecipientList = request.POST.getlist('oldRecipient')
 
         if oldSubject[:4] != 'RE: ':
             newSubject = 'RE: ' + oldSubject
@@ -58,8 +61,19 @@ def replyToMessage(request):
                                 "Please type a message!")
         else:
 
-            reply = InternalMessage(sender=sender, recipient=recipient, title = newSubject, body = newBody)
+            reply = InternalMessage(sender=sender, title = newSubject, body = newBody, timestamp=timezone.now())
             reply.save()
+            reply.recipient.add(mainRecipient)
+            reply.save()
+            print 'Sent to ' + mainRecipient.first_name
+
+            if request.POST.get('replyAll'):
+                for r in oldRecipientList:
+                    if int(r) != sender.id:
+                        recipient = User.objects.get(id=r)
+                        reply.recipient.add(recipient)
+                        reply.save()
+                        print 'Sent to ' + recipient.first_name
 
             messages.success(request, "Message sent")
 
@@ -77,12 +91,15 @@ def sendMessage(request):
         body = request.POST['message']
         recipients = request.POST.getlist('to_list')
         sender = request.user
-        
+
+        message = InternalMessage(sender=sender, title = title, body = body, timestamp=timezone.now())
+        message.save()
 
         for recipientID in recipients:
             recipient = User.objects.get(id=int(recipientID))
-            reply = InternalMessage(sender=sender, recipient=recipient, title = title, body = body)
-            reply.save()
+            message.recipient.add(recipient)
+
+        message.save()
 
 
         messages.success(request, "Message(s) sent")

@@ -5,10 +5,14 @@
     <label class="control-label col-sm-2" for="to">To:</label>
     <div class="col-sm-9">
 
-      <select name="to_list" class="selectpicker" title="Choose recipient" data-live-search="true" data-width="100%" data-size="5" multiple>
+      <select name = "to_list" id="to_list" class="selectpicker dropup" multiple data-live-search="true" data-done-button="true" data-live-search-placeholder="Search for people here..." data-width="100%" data-size="5">
           <!--<option value="default" disabled="disabled" selected="selected">Choose recipient</option>-->
           {% for a_user in users %}
-          <option value="{{a_user.id}}">{{a_user.first_name}} {{a_user.last_name}}</option>
+            {% if a_user.first_name %}
+              <option value="{{a_user.id}}">{{a_user.first_name}} {{a_user.last_name}}</option>
+            {% else %}
+              <option value="{{a_user.id}}">{{a_user.username}}</option>
+            {% endif %}
           {% endfor %}
       </select>
 
