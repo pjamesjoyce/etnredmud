@@ -18,5 +18,7 @@ from django.conf.urls import include, url
 urlpatterns = [
     url(r'^inbox/$', 'messenger.views.inbox'),
     url(r'^show_message/$', 'messenger.views.showMessage'),
+    url(r'^write_message/$', 'messenger.views.writeMessage'),
     url(r'^reply/$', 'messenger.views.replyToMessage'),
+    url(r'^send/$', 'messenger.views.sendMessage'),
 ]

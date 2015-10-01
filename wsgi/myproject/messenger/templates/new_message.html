@@ -1,0 +1,47 @@
+<div class="msgBox">
+
+<form class="form-horizontal" role="form" action="/messages/send/" method="post">{% csrf_token %}
+  <div class="msgHead">
+    <label class="control-label col-sm-2" for="to">To:</label>
+    <div class="col-sm-9">
+
+      <select name="to_list" class="selectpicker" title="Choose recipient" data-live-search="true" data-width="100%" data-size="5" multiple>
+          <!--<option value="default" disabled="disabled" selected="selected">Choose recipient</option>-->
+          {% for a_user in users %}
+          <option value="{{a_user.id}}">{{a_user.first_name}} {{a_user.last_name}}</option>
+          {% endfor %}
+      </select>
+
+    </div>
+  </div>
+  <div class="msgHead">
+    <label class="control-label col-sm-2" for="title">Subject:</label>
+    <div class="col-sm-9">
+      <input type="text" class="form-control" name="title" id="title" placeholder="Subject">
+    </div>
+  </div>
+  <div class="">
+    <div class="msgNewBox">
+      <label class="control-label col-sm-2" for="message">Message:</label>
+      <div class="col-sm-9">
+        <textarea class="form-control scroll-400" rows="50" name="message" id="message"></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-info pull-right">Send</button>
+    </div>
+  </div>
+</form>
+
+</div>
+
+
+
+
+<script>
+$(document).ready(function() {
+    $('.selectpicker').selectpicker();
+});
+</script>

@@ -3,6 +3,7 @@ from .models import InternalMessage
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth.models import User
+from myproject import settings
 # Create your views here.
 
 def check_messages(user):
@@ -51,9 +52,38 @@ def replyToMessage(request):
         else:
             newSubject = oldSubject
 
-        reply = InternalMessage(sender=sender, recipient=recipient, title = newSubject, body = newBody)
-        reply.save()
+        if newBody=="":
+            messages.add_message(request,
+                                settings.DISALLOWED_MESSAGE,
+                                "Please type a message!")
+        else:
 
-        messages.success(request, "Message sent")
+            reply = InternalMessage(sender=sender, recipient=recipient, title = newSubject, body = newBody)
+            reply.save()
+
+            messages.success(request, "Message sent")
+
+    return HttpResponseRedirect('/messages/inbox/')
+
+def writeMessage(request):
+    users = User.objects.exclude(id=request.user.id)
+    args = {}
+    args['users']=users
+    return render(request, 'new_message.html', args)
+
+def sendMessage(request):
+    if request.method=="POST":
+        title= request.POST['title']
+        body = request.POST['message']
+        recipients = request.POST.getlist('to_list')
+        sender = request.user
+
+        for recipientID in recipients:
+            recipient = User.objects.get(id=int(recipientID))
+            reply = InternalMessage(sender=sender, recipient=recipient, title = title, body = body)
+            reply.save()
+
+
+        messages.success(request, "Message(s) sent")
 
     return HttpResponseRedirect('/messages/inbox/')

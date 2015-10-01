@@ -15,7 +15,7 @@
   background-color: rgb(255, 255, 255);
   border-left: 1px solid rgb(221,221,221);
   border-right: 1px solid rgb(221,221,221);
-  height: 370px;
+  height: 360px;
   overflow-y: scroll;
 }
 
@@ -40,13 +40,42 @@
   -moz-box-sizing: border-box;    /* Firefox, other Gecko */
   box-sizing: border-box;
   height:100px;
-  border: 1px solid rgb(221,221,221);
+  border: none;
 }
 
 .msgReply{
   margin-top:0px;
   height:100px;
   margin-bottom: 20px;
+  border: 1px solid rgb(221,221,221);
+}
+
+.newButton{
+  margin-bottom: 20px;
+}
+
+.msgHead{
+  background-color: rgb(255, 255, 255);
+  border-left: 1px solid rgb(221,221,221);
+  border-right: 1px solid rgb(221,221,221);
+  border-top: 1px solid rgb(221,221,221);
+  height:40px;
+
+  padding: 0px;
+  margin-bottom: 0px;
+}
+
+.scroll-400{
+  height:420px;
+  max-height: 420px;
+  border: 1px solid rgb(221,221,221);
+  background-color: rgb(255, 255, 255);
+}
+
+.msgNewBox{
+  height:420px;
+  border: 1px solid rgb(221,221,221);
+  background-color: rgb(255, 255, 255);
 }
 
 /* Small screen extras */
