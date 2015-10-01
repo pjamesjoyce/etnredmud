@@ -40,7 +40,7 @@ function showMsg(msgID, read){
   if(read==='False'){
       unread_count-=1;
       console.log(unread_count)
-      if(unread_count===0){unread_count='';};
+      if(unread_count < 1){unread_count='';};
       $('#msgBadgeID').html(unread_count);
       $('#msgBadgeDD').html(unread_count);
   }

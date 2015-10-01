@@ -132,4 +132,12 @@ tbody td, thead th {
   .msgBody{
     height:300px;
   }
+  .msgHead{
+    height:80px;
+  }
+
+  .scroll-400{
+    height:385px;
+    max-height: 385px;
+  }
 }
