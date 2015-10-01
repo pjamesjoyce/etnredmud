@@ -10,6 +10,12 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.contrib import messages
 
+from messenger.models import InternalMessage
+from content.models import Content
+from django.contrib.auth.models import User
+from myproject.settings import ADMIN_USERNAME
+from django.utils import timezone
+
 # Create your views here.
 
 def login(request):
@@ -56,6 +62,19 @@ def register_user(request):
 			form.save()
 			new_user = auth.authenticate(username=request.POST['username'], password=request.POST['password1'])
 			auth.login(request, new_user)
+
+			admin = User.objects.get(username=ADMIN_USERNAME)
+			welcomeContent = Content.objects.get(name='WelcomeMessage')
+			welcomeBody = 'Hi ' + new_user.username +',\n' + welcomeContent.body
+
+			print welcomeContent.title
+			print welcomeBody
+
+			welcome = InternalMessage(sender=admin, title = welcomeContent.title, body = welcomeBody)
+			welcome.save()
+			welcome.recipient.add(new_user)
+			welcome.save()
+
 			messages.success(request,'Thanks ' + request.POST['username'] + ', you are now registered. Please fill in your details below...')
 			return HttpResponseRedirect("/accounts/profile")
 
