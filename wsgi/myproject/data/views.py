@@ -15,6 +15,11 @@ from django.core.context_processors import  csrf
 from django.contrib.auth.decorators import login_required
 
 from messenger.views import check_messages
+from messenger.models import InternalMessage
+from content.models import Content
+from django.contrib.auth.models import User
+
+from myproject.settings import ADMIN_USERNAME
 
 from random import randint
 
@@ -99,6 +104,11 @@ def create_edit_process(request, process_id=None):
 
         args['form'] = form
         args['formset'] = spformset
+        try:
+            args['dismissMessage'] = Content.objects.get(name='ProcessMessage')
+        except:
+            pass
+
         return render(request, 'create_edit_process.html', args)
 
 
@@ -185,6 +195,10 @@ def create_edit_subprocess(request, subprocess_id=None):
         args['form'] = form
         args['inputformset'] = inputformset
         args['outputformset'] = outputformset
+        try:
+            args['dismissMessage'] = Content.objects.get(name='SubprocessMessage')
+        except:
+            pass
 
         return render(request, 'create_edit_subprocess.html', args)
 
@@ -250,6 +264,12 @@ def create_edit_input(request, input_id=None):
             if form.is_valid():
                 form.save()
                 messages.success(request, "Input updated")
+                admin = User.objects.get(username=ADMIN_USERNAME)
+                addMessage = InternalMessage(sender=admin, title = request.user.first_name + ' made some changes to '+ form.cleaned_data['name'] +'...', body = request.user.first_name + ' made changes to ' + form.cleaned_data['name'] + '\n\nYou should probably take a look...')
+                addMessage.save()
+                addMessage.recipient.add(admin)
+                addMessage.save()
+                print 'New input message sent....'
             else:
                 messages.add_message(request,
                                     settings.DISALLOWED_MESSAGE,
@@ -262,6 +282,12 @@ def create_edit_input(request, input_id=None):
             if form.is_valid():
                 new_input = form.save()
                 messages.success(request, "Input added")
+                admin = User.objects.get(username=ADMIN_USERNAME)
+                addMessage = InternalMessage(sender=admin, title = request.user.first_name + ' added an Input', body = request.user.first_name + ' added an Input called ' + form.cleaned_data['name'] + '\n\nYou should look at it and add the emission factor and SimaPro ID...')
+                addMessage.save()
+                addMessage.recipient.add(admin)
+                addMessage.save()
+                print 'New input message sent....'
             else:
                 messages.add_message(request,
                                     settings.DISALLOWED_MESSAGE,
@@ -282,6 +308,10 @@ def create_edit_input(request, input_id=None):
             form = InputForm(instance = input_instance)
 
         args['form'] = form
+        try:
+            args['dismissMessage'] = Content.objects.get(name='InputsOutputsMessage')
+        except:
+            pass
 
         return render(request, 'create_edit_input.html', args)
 
@@ -327,6 +357,11 @@ def create_edit_output(request, output_id=None):
             if form.is_valid():
                 form.save()
                 messages.success(request, "Output updated")
+                admin = User.objects.get(username=ADMIN_USERNAME)
+                addMessage = InternalMessage(sender=admin, title = request.user.first_name + ' made some changes to '+ form.cleaned_data['name'] +'...', body = request.user.first_name + ' made changes to ' + form.cleaned_data['name'] + '\n\nYou should probably take a look...')
+                addMessage.save()
+                addMessage.recipient.add(admin)
+                addMessage.save()
             else:
                 messages.add_message(request,
                                     settings.DISALLOWED_MESSAGE,
@@ -339,6 +374,11 @@ def create_edit_output(request, output_id=None):
             if form.is_valid():
                 new_output = form.save()
                 messages.success(request, "Output added")
+                admin = User.objects.get(username=ADMIN_USERNAME)
+                addMessage = InternalMessage(sender=admin, title = request.user.first_name + ' added an Output', body = request.user.first_name + ' added an Output called ' + form.cleaned_data['name'] + '\n\nYou should look at it and add the emission factor and SimaPro ID...')
+                addMessage.save()
+                addMessage.recipient.add(admin)
+                addMessage.save()
             else:
                 messages.add_message(request,
                                     settings.DISALLOWED_MESSAGE,
@@ -359,6 +399,10 @@ def create_edit_output(request, output_id=None):
             form = OutputForm(instance = output_instance)
 
         args['form'] = form
+        try:
+            args['dismissMessage'] = Content.objects.get(name='InputsOutputsMessage')
+        except:
+            pass
 
         return render(request, 'create_edit_output.html', args)
 
