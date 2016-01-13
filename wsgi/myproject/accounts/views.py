@@ -9,6 +9,7 @@ from forms import MyRegistrationForm, UserProfileForm, UserBasicForm
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.contrib import messages
+from django.core.mail import send_mail
 
 from messenger.models import InternalMessage
 from content.models import Content
@@ -76,6 +77,10 @@ def register_user(request):
 			welcome.save()
 
 			messages.success(request,'Thanks ' + request.POST['username'] + ', you are now registered. Please fill in your details below...')
+
+			alert_email = 'Good news!\n\n' + request.POST['username'] + ' has just signed up for the ETN-REDMUD data collection website'
+			send_mail('New user on etnredmud-pjjoyce.rhcloud.com', alert_email, 'from@example.com', [admin.email], fail_silently=False)
+
 			return HttpResponseRedirect("/accounts/profile")
 
 

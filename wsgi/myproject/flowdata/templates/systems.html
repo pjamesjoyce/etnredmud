@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}Systems{% endblock %}
+
+{% block head-postload %}
+
+<script src="{% static 'js/jquery.tablesorter.js' %}"></script>
+<script src="{% static 'js/jquery.tablesorter.widgets.js' %}"></script>
+<script>
+$(document).ready(function(){
+  $(function(){
+    $('#sp_table').tablesorter();
+  });
+});
+</script>
+
+{% endblock %}
+
+{% block nav-class-process %}active{% endblock %}
+
+{% block content %}
+
+<h2>My REDMUD Systems</h2>
+<p>
+  <a href="/flow/newSystem/"><input type="button" name="create" value="Add new" class="btn btn-sm btn-info pull-right"></a>
+</p>
+
+<table class="table table-hover" id="sp_table">
+
+<thead>
+<tr>
+  <th>
+    Name
+  </th>
+  <th>
+    Owner
+  </th>
+  <th>
+    Actions
+  </th>
+</tr>
+</thead>
+<tbody>
+{% for system in systems %}
+  <tr>
+    <td>
+      {{ system.name }}
+    </td>
+    <td>
+      {{ system.owner.first_name}}
+    </td>
+    <td>
+      <a href="/flow/setSystem/{{system.id}}/"type="button" class="btn btn-info btn-xs" name="edit_button{{system.id}}">Edit</a></li>
+      <a type="button" class="btn btn-info btn-xs" name="delete_button{{system.id}}" data-toggle="modal" data-target="#deleteModal">Delete</a></li>
+
+      <!-- Modal -->
+        <div class="modal fade" id="deleteModal" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Delete '{{system.name}}'?</h4>
+              </div>
+              <div class="modal-body">
+                <p>Whoa! You're about to delete the process system called '{{ system.name }}'.<br> You can't undo this.</p>
+                <p>
+                  Are you sure you want to do this?
+                </p>
+              </div>
+              <div class="modal-footer">
+                <a role = "button" class="btn btn-danger" href="/flow/deleteSystem/{{system.id}}/">Yes, delete it</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No, cancel</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      <!--<a href="/data/process/LCI/{{process.id}}" type="button" class="btn btn-primary btn-xs" name="button">Analyse</a>-->
+    </td>
+  </tr>
+
+
+  {% empty %}
+  <tr>
+    <td>
+      Sorry, you don't have any systems yet, click <a href="/flow/newSystem/">here</a> to create one</li>
+    </td>
+  </tr>
+  {% endfor %}
+
+  </tbody>
+</table>
+
+
+
+{% endblock %}

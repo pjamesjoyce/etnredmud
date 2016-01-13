@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+Flowchart Test
+{% endblock %}
+
+{% block head-postload %}
+
+<link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic'
+      rel='stylesheet' type='text/css'>
+
+
+<!-- <link rel="stylesheet" href="http://swisnl.github.io/jQuery-contextMenu/css/theme.css" type="text/css"/> -->
+<link href="http://swisnl.github.io/jQuery-contextMenu/dist/jquery.contextMenu.min.css" rel="stylesheet" type="text/css" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://swisnl.github.io/jQuery-contextMenu/dist/jquery.contextMenu.min.js" type="text/javascript"></script>
+<script src="http://swisnl.github.io/jQuery-contextMenu/dist/jquery.ui.position.min.js" type="text/javascript"></script>
+
+
+<link rel="stylesheet" href="{% static 'data/css/graphviz.svg.css' %}">
+<link rel="stylesheet" href="{% static 'flowdata/css/flowstyle.css' %}">
+
+<script type="text/javascript" src="https://cdn.rawgit.com/jquery/jquery-mousewheel/master/jquery.mousewheel.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/jquery/jquery-color/master/jquery.color.js"></script>
+
+<script src="{% static 'data/js/jquery.graphviz.svg.js' %}"></script>
+<script src="{% static 'data/js/viz.js' %}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+
+<!-- <div>
+  {{processList}}<br><br>
+</div>
+-->
+<div id="graph" ></div>
+
+<script type="text/javascript">
+
+  $(function(){
+
+    var svg_div = $('#graph');
+    //var graphviz_data_textarea = jQuery('#graphviz_data');
+
+    svg_div.html("");
+    //var data = graphviz_data_textarea.val();
+    //console.log(data);
+
+    // Generate the Visualization of the Graph into "svg".
+    var svg = Viz('{{dotString|safe}}', "svg");
+    svg_div.html(svg);
+
+    $('.node').each(function(){
+      $thisnode = $( this );
+      myType = $thisnode.attr("id").split(" ");
+      $thisnode.attr("id", myType[1])
+      //console.log(myType);
+      $thisnode.attr("class", "node " + myType[0]);
+      //console.log(this)
+    });
+
+    $background = $('svg > g > polygon');
+    $background.attr('class', 'graph_svg');
+    sname = "{{system.name}}"
+    $background.attr('id', 'system|' + sname.replace(" ","_") + '|{{system.id}}');
+
+    //console.log(shape);
+
+  });
+
+</script>
+<script src="{% static 'flowdata/js/flowscript.js' %}"></script>
+
+
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<script src="http://swisnl.github.io/jQuery-contextMenu/js/theme.js"></script>
+
+{% endblock %}

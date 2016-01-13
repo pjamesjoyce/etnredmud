@@ -1,0 +1,64 @@
+.node{
+  cursor: pointer;
+}
+
+.input polygon{
+  fill:lightblue;
+
+}
+.input text{
+  fill:black;
+}
+
+.output polygon{
+  fill:lightgray;
+
+}
+.output text{
+  fill:black;
+}
+
+.process polygon{
+  fill:darkred;
+
+}
+.process text{
+  fill:white;
+}
+
+.intermediate polygon{
+  fill:lightpink;
+
+}
+.intermediate text{
+  fill:black;
+}
+
+svg > g > polygon{
+  fill:rgba(255, 255, 255, 0.1);
+  stroke:none;
+}
+
+.context-menu-item.context-menu-icon-right {
+    position: relative;
+}
+.context-menu-item.context-menu-icon-right:before {
+    content:"\e092";
+    font-family: "Glyphicons Halflings";
+    color:rgb(83,135,189);
+    left: 5px;
+    position: absolute;
+    top: 5;
+}
+
+.context-menu-item.context-menu-icon-left {
+    position: relative;
+}
+.context-menu-item.context-menu-icon-left:before {
+    content:"\e091";
+    font-family: "Glyphicons Halflings";
+    color:rgb(83,135,189);
+    left: 5px;
+    position: absolute;
+    top: 5;
+}

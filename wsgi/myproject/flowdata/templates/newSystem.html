@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block nav-class-process %}active{% endblock %}
+
+{% block title %}{% if process %}Updating process{% else %}New process{%endif%}{% endblock %}
+
+{% block content %}
+
+
+
+<div class="">
+
+<form class="form-horizontal" role="form" action="/flow/createSystem/" method="post">{% csrf_token %}
+  <div class="">
+      <div class="col-sm-9">
+      <label for="systemName">Enter a name for the new System : </label>
+      <input type="text" name="systemName" value="" initial="System Name">
+    </div>
+    <div class="form-group">
+      <div class="col-sm-12">
+        <button type="submit" class="btn btn-info">Create</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+</div>
+
+
+
+{% endblock %}

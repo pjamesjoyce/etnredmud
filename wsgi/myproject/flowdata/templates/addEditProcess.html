@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+Add {{action}} {{type}}
+{% endblock %}
+
+{% block head-postload %}
+
+<link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic'
+      rel='stylesheet' type='text/css'>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<link rel="stylesheet" href="{% static 'data/css/graphviz.svg.css' %}">
+<link rel="stylesheet" href="{% static 'flowdata/css/flowstyle.css' %}">
+
+<script src="{% static 'data/js/jquery.graphviz.svg.js' %}"></script>
+<script src="{% static 'data/js/viz.js' %}"></script>
+
+<!-- Include Bootstrap-select CSS, JS -->
+<link rel="stylesheet" href="{% static 'messenger/css/bootstrap-select.min.css' %}" />
+<script src="{% static 'messenger/js/bootstrap-select.min.js' %}"></script>
+
+<style media="screen">
+input {
+  width:100%;
+  max-width: 100%;
+}
+
+select {
+  width:100%;
+  max-width: 100%;
+}
+
+textarea {
+  width:100%;
+  max-width: 100%;
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<h2>{{action}} Process</h2>
+
+<select class="selectpicker">
+  <option>Mustard</option>
+  <option>Ketchup</option>
+  <option>Relish</option>
+</select>
+
+<div class="col-md-6">
+
+<form class="" action="/flow/{{action}}{{type}}Confirm{% if editID %}{{editID}}{% endif %}/" method="post">{% csrf_token %}
+
+  {{form.partOfSystem.as_hidden}}{{form.author}}
+
+  <div class="col-md-12">
+
+
+      <fieldset class="form-group">
+        <label for="name">{{form.name.label}}</label>
+        {{form.name}}
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="name">{{form.unit.label}}</label>
+        {{form.unit}}
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="name">{{form.category.label}}</label>
+        {{form.category}}
+      </fieldset>
+
+
+
+
+
+  </div>
+  <div class="col-md-12">
+    <div class="col-md-4"></div>
+    <div class="col-md-8">
+        <button type="submit" class="btn btn-info" name="submitButton">{% if editID %}Update{% else %}Add{% endif %}</button><a class="btn btn-danger" href="/flow/scan/">Cancel</a>
+    </div>
+  </div>
+
+</form>
+
+</div>
+<div id="graph" class="col-md-6">
+
+</div>
+
+
+<script type="text/javascript">
+
+  $(function(){
+
+    console.log('about to try to activate the select picker')
+    $('.selectpicker').selectpicker();
+    console.log('done trying to activate the select picker')
+
+    var svg_div = $('#graph');
+    //var graphviz_data_textarea = jQuery('#graphviz_data');
+
+    svg_div.html("");
+    //var data = graphviz_data_textarea.val();
+    //console.log(data);
+
+    // Generate the Visualization of the Graph into "svg".
+    var svg = Viz('{{dotString|safe}}', "svg");
+    svg_div.html(svg);
+
+    shape = document.getElementsByTagName("svg")[0];
+    //var wc = svg_div.width()
+    //var hc = svg_div.height()
+    var w = parseFloat(shape.getAttribute("width").replace("pt",""))
+    var h = parseFloat(shape.getAttribute("height").replace("pt",""))
+
+    shape.setAttribute("viewBox", "0 0 " + w + " " + h);
+    shape.setAttribute("height", "100%")
+    shape.setAttribute("width", "100%")
+
+    $('.node').each(function(){
+      $thisnode = $( this );
+      myType = $thisnode.attr("id").split(" ");
+      $thisnode.attr("id", myType[1])
+      //console.log(myType);
+      $thisnode.attr("class", "node " + myType[0]);
+      //console.log(this)
+    });});
+
+</script>
+<!--<script src="{% static 'flowdata/js/flowscript.js' %}"></script>-->
+
+
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+<script src="http://swisnl.github.io/jQuery-contextMenu/js/theme.js"></script>
+
+{% endblock %}

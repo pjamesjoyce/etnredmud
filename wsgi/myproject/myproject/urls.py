@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^accounts/', include('accounts.urls')),
     url(r'^comments/', include('comment.urls')),
     url(r'^messages/', include('messenger.urls')),
+    url(r'^flow/', include('flowdata.urls')),
     url(r'^$', 'myproject.views.home'),
 ]

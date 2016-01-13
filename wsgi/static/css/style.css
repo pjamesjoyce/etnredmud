@@ -22,14 +22,13 @@ body {
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
   color: #000;
   background-color: rgba(240, 240, 240, 0.95);
-
 }
 */
+
 /* hover tab color */
 .navbar-nav>li:hover, .navbar-nav>li:focus {
   background-color: rgba(240, 240, 240, 0.6);;
 }
-
 
 .jumbotron{
 	background: url(../img/data.jpg) no-repeat center center;
