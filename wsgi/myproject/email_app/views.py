@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 def testEmail(request):
 
     send_mail('Subject here', 'Here is the message.', 'from@example.com',
-    ['to@example.com'], fail_silently=False)
+    ['pjamesjoyce@gmail.com'], fail_silently=False)
 
     return HttpResponseRedirect('/email/view/')
 
