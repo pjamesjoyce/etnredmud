@@ -4,6 +4,10 @@
 Flowchart Test
 {% endblock %}
 
+{%block head-preload %} <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script> {% endblock %}
+
+
 {% block head-postload %}
 
 <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic'

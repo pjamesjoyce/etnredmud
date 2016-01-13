@@ -4,6 +4,10 @@
 Add {{action}} {{type}}
 {% endblock %}
 
+{%block head-preload %} <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script> {% endblock %}
+
+
 {% block head-postload %}
 
 <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic'
@@ -44,11 +48,6 @@ textarea {
 
 <h2>{{action}} Process</h2>
 
-<select class="selectpicker">
-  <option>Mustard</option>
-  <option>Ketchup</option>
-  <option>Relish</option>
-</select>
 
 <div class="col-md-6">
 
