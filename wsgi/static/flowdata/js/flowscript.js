@@ -13,10 +13,12 @@ $(document).ready(function(){
           window.location = command;
       },
       items: {
-          "Add_input": {name: "Add input", icon: "right" },
-          "Add_output": {name: "Add output", icon: "left"},
+          "Edit_process": {name: "Edit process", icon:"edit"},
           "sep1": "---------",
-          "Add_Tech_Output": {name: "Create output to another process", icon: "left"},
+          "Add_input": {name: "Add input", icon: "right" },
+          "Add_output": {name: "Add output to the environment", icon: "left"},
+          "sep1": "---------",
+          "Add_Tech_Output": {name: "Add intermediate output (an input to another process)", icon: "left"},
           "sep2": "---------",
           "Delete": {name: "Delete", icon: "delete"},
       }
