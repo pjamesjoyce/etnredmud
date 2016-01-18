@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head-postload %}
+
+<style media="screen">
+.axis text {
+  font-size: 12px;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: steelblue;
+  fill-opacity: .9;
+
+  stroke:black;
+  stroke-width: 0.5px;
+}
+
+.x.axis path {
+  /*display: none;*/
+}
+</style>
+
+<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+<script src="{% static 'analysis/js/d3script.js' %}"></script>
+<script>
+$(document).ready(function(){
+  $(function(){
+    d3_bar({{barData|safe}}, {{grand_total}});
+  });
+});
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="col-md-6">
+  {{processText|safe}}
+</div>
+
+
+<div class="chart col-md-6">
+  <label><input type="checkbox"> Sort by contribution </label>
+</div>
+
+{% endblock %}

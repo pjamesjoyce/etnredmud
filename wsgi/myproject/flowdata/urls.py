@@ -16,6 +16,9 @@ Including another URLconf
 from django.conf.urls import include, url
 
 urlpatterns = [
+
+    url(r'analysis/', include('analysis.urls')),
+
     url(r'^systems/$', 'flowdata.views.all_systems'),
 
     url(r'^setSystem/(?P<system_id>\d+)/$', 'flowdata.views.setSystem'),

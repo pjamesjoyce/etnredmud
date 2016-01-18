@@ -81,6 +81,10 @@ $(document).ready(function(){
 
 {% block content %}
 
+<p>
+	{{LCI_Tree|safe}}
+</p>
+
 <h2>LCI results for {{process.name}}</h2>
 
 
@@ -115,7 +119,7 @@ $(document).ready(function(){
 			<td>
         {{value.total_footprint}}
       </td>
-    
+
 
 
     </tr>

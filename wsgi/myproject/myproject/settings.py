@@ -62,6 +62,7 @@ INSTALLED_APPS = (
     'messenger',
     'flowdata',
     'email_app',
+    'analysis',
 )
 
 DISALLOWED_MESSAGE = 50

@@ -52,7 +52,7 @@ $(document).ready(function(){
     <td>
       <a href="/flow/setSystem/{{system.id}}/"type="button" class="btn btn-info btn-xs" name="edit_button{{system.id}}">Edit</a></li>
       <a type="button" class="btn btn-info btn-xs" name="delete_button{{system.id}}" data-toggle="modal" data-target="#deleteModal">Delete</a></li>
-
+      <a href="/flow/analysis/system/{{system.id}}/"type="button" class="btn btn-info btn-xs" name="analyse_button{{system.id}}">Analyse</a></li>
       <!-- Modal -->
         <div class="modal fade" id="deleteModal" role="dialog">
           <div class="modal-dialog">
