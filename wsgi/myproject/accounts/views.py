@@ -38,7 +38,7 @@ def auth_view(request):
 			if nextpage != '':
 				return HttpResponseRedirect(nextpage)
 			else:
-				return HttpResponseRedirect('/data/process/all/')
+				return HttpResponseRedirect('/flow/systems/')
 		else:
 		# Return a 'disabled account' error message
 			return HttpResponseRedirect('/accounts/invalid/')
