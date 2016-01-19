@@ -4,16 +4,15 @@
 Add {{action}} {{type}}
 {% endblock %}
 
-{%block head-preload %} <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+{% block head-preload %} <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="{% static 'js/bootstrap.min.js' %}"></script> {% endblock %}
-
 
 {% block head-postload %}
 
 <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic'
       rel='stylesheet' type='text/css'>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 
 <link rel="stylesheet" href="{% static 'data/css/graphviz.svg.css' %}">
 <link rel="stylesheet" href="{% static 'flowdata/css/flowstyle.css' %}">
@@ -31,64 +30,85 @@ input {
   max-width: 100%;
 }
 
-select {
+/*select {
   width:100%;
   max-width: 100%;
-}
+}*/
 
 textarea {
   width:100%;
   max-width: 100%;
 }
+
+.tooltip-inner {
+    white-space:pre-wrap;
+}
+
 </style>
 
 {% endblock %}
 
 {% block content %}
 
-<h2>{{action}} Process</h2>
 
 
 <div class="col-md-6">
 
 <form class="" action="/flow/{{action}}{{type}}Confirm{% if editID %}{{editID}}{% endif %}/" method="post">{% csrf_token %}
 
-<div class="hidden">
-  {{form.author}}
-  {{form.partOfSystem}}
-</div>
+<div class="col-md-12">
 
-<input type="hidden" name="sendTo" value="{{ request.META.HTTP_REFERER }}">
-
-    <div class="col-md-12">
-
-
-      <fieldset class="form-group">
-        <label for="name">{{form.name.label}}</label>
-        {{form.name}}
-      </fieldset>
-      <fieldset class="form-group">
-        <label for="name">{{form.unit.label}}</label>
-        {{form.unit}}
-      </fieldset>
-      <fieldset class="form-group">
-        <label for="name">{{form.category.label}}</label>
-        {{form.category}}
-      </fieldset>
+      <div class="col-md-4">
+        <label for="{{ form.techFlow.id_for_label }}">Name of process to link to:</label>
+      </div>
+      <div class="col-md-6">
+        <select name = "transformation" id="transformation" class="selectpicker" data-live-search="true" data-done-button="true" data-live-search-placeholder="Search..." data-width="100%" data-size="5">
+            <option value="default" disabled="disabled" {% if request.GET.i %}{% else %} selected="selected" {% endif %}>-------</option>
+            {% for anItem in dropDown %}
+                <option value="{{anItem.id}}" {% if request.GET.i == anItem.id|stringformat:"i" %} selected="selected" {% endif %}>{{anItem.name}}</option>
+            {% endfor %}
+        </select>
+      </div>
 
 
+    <div class="col-md-2">
+      <a href="/flow/create{{type}}Setup/" class="btn btn-xs btn-info"><span class="glyphicon glyphicon-plus"></span> New</a>
+    </div>
 
-
-
+  </div>
+  <div class="col-md-12">
+    {{form.techFlow}}{{form.partOfSystem}}
+    <div class="col-md-4">
+      <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="bottom"
+        title="Input the quantity here"
+      ></span>
+      <label for="{{ form.amount_required.id_for_label }}">Amount:</label>
+    </div>
+    <div class="col-md-8">
+      {{form.amount_required}}
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="col-md-4">
+      <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="bottom"
+        title="Add any notes or assumptions here"
+      ></span>
+      <label for="{{ form.note.id_for_label }}">Note:</label>
+    </div>
+    <div class="col-md-8">
+      {{form.note}}
+    </div>
   </div>
   <div class="col-md-12">
     <div class="col-md-4"></div>
     <div class="col-md-8">
-        <button type="submit" class="btn btn-info" name="submitButton">{% if editID %}Update{% else %}Add{% endif %}</button><a class="btn btn-danger" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+        <button type="submit" class="btn btn-info" name="name">{% if editID %}Update{% else %}Add{% endif %}</button><a class="btn btn-danger" href="/flow/scan/">Cancel</a>
     </div>
   </div>
 
 </form>
+
+
 
 </div>
 <div id="graph" class="col-md-6">
@@ -103,6 +123,9 @@ textarea {
     console.log('about to try to activate the select picker')
     $('.selectpicker').selectpicker();
     console.log('done trying to activate the select picker')
+
+    $('[data-toggle="tooltip"]').tooltip();
+
 
     var svg_div = $('#graph');
     //var graphviz_data_textarea = jQuery('#graphviz_data');

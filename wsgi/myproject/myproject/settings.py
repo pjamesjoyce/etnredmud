@@ -32,7 +32,12 @@ SECRET_KEY = SECRETS['secret_key']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = os.environ.get('DEBUG') == 'True'
-DEBUG=True
+if 'OPENSHIFT_APP_NAME' in os.environ:
+  DEBUG = False
+else:
+  DEBUG = True
+  EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 from socket import gethostname
 ALLOWED_HOSTS = [
     gethostname(), # For internal OpenShift load balancer security purposes.

@@ -31,6 +31,12 @@ Flowchart Test
 <script src="{% static 'data/js/jquery.graphviz.svg.js' %}"></script>
 <script src="{% static 'data/js/viz.js' %}"></script>
 
+<style media="screen">
+  .btn{
+    margin-top: 15px;
+  }
+</style>
+
 {% endblock %}
 
 {% block content %}
@@ -40,7 +46,47 @@ Flowchart Test
   {{processList}}<br><br>
 </div>
 -->
-<div id="graph" ></div>
+<div class="col-md-12 text-center" style="margin-bottom:25px;">
+  <h1>View and edit the <span style="color:rgb(139,0,0)">{{request.session.currentSystemName}}</span> flow sheet</h1>
+
+</div>
+<div id="controls" class="col-md-4 text-center">
+
+<p>
+  Use this screen to edit your flow sheet.
+</p>
+<p>
+  You can edit any of the existing items in the flow sheet by clicking on them and choosing an option from the menu.
+</p>
+<p>
+  You can also add a new process to the flowsheet by right-clicking anywhere on the diagram.
+</p>
+<p>
+  Alternatively you can click on the buttons below.
+</p>
+
+
+<div class="buttons col-md-8 col-md-offset-2">
+
+<h2 class="text-center">Controls</h2>
+
+  <p>
+    <a href="addProcess|system|{{request.session.currentSystemName|slugify}}|{{request.session.currentSystemID}}" class="btn btn-primary btn-xs col-lg-12" style="white-space: normal;" id="AddProcessButton">Add a new process to the flowsheet</button></a>
+  </p>
+
+  <p>
+    <a class="btn btn-primary btn-xs col-lg-12" style="white-space: normal;" id="NewInputButton">Add a new input to a process</a>
+  </p>
+
+  <br>
+  <a class="btn btn-primary btn-xs col-lg-12" style="white-space: normal;" id="NewOutputButton">Add a new output (to the environment) to a process</a>
+  <br>
+  <a class="btn btn-primary btn-xs col-lg-12" style="white-space: normal;" id="NewTechOutputButton">Add an intermediate output (an potential input to another process) to a process</a>
+  <br>
+  <a class="btn btn-primary btn-xs col-lg-12" style="white-space: normal;" id="LinkTechOuputButton">Link an intermediate output to another process</a>
+</div>
+</div>
+<div id="graph" class="col-md-8" style="border:1px solid rgb(127,127,127)"></div>
 
 <script type="text/javascript">
 
@@ -56,6 +102,14 @@ Flowchart Test
     // Generate the Visualization of the Graph into "svg".
     var svg = Viz('{{dotString|safe}}', "svg");
     svg_div.html(svg);
+
+    shape = document.getElementsByTagName("svg")[0];
+    var w = parseFloat(shape.getAttribute("width").replace("pt",""))
+    var h = parseFloat(shape.getAttribute("height").replace("pt",""))
+
+    shape.setAttribute("viewBox", "0 0 " + w + " " + h);
+    shape.setAttribute("height", "100%")
+    shape.setAttribute("width", "100%")
 
     $('.node').each(function(){
       $thisnode = $( this );
@@ -78,6 +132,89 @@ Flowchart Test
 </script>
 <script src="{% static 'flowdata/js/flowscript.js' %}"></script>
 
+<script type="text/javascript">
+
+$.contextMenu({
+    selector: '#NewInputButton',
+    trigger: 'left',
+    callback: function(key, options) {
+        var m = "clicked: " + key;
+        var command = key ;//+ "|" + options.$trigger[0].id;
+        console.log(command);
+        window.location = command;
+    },
+    items: {
+        "Nothing":{name:"Choose a process to add an input to", disabled:true},
+        "sep1": "---------",
+        {% for key, value in processNames.iteritems  %}
+        "Add_input|Process|{{value|slugify}}|{{key}}": {name: "{{value}}", icon:"right"},
+        {% empty %}
+        "Nothing":{name:"No processes created yet", disabled:true},
+        {% endfor %}
+    }
+});
+
+$.contextMenu({
+    selector: '#NewOutputButton',
+    trigger: 'left',
+    callback: function(key, options) {
+        var m = "clicked: " + key;
+        var command = key ;//+ "|" + options.$trigger[0].id;
+        console.log(command);
+        window.location = command;
+    },
+    items: {
+        "Nothing":{name:"Choose a process to add an output to", disabled:true},
+        "sep1": "---------",
+        {% for key, value in processNames.iteritems  %}
+        "Add_output|Process|{{value|slugify}}|{{key}}": {name: "{{value}}", icon:"left"},
+        {% empty %}
+        "Nothing":{name:"No processes created yet", disabled:true},
+        {% endfor %}
+    }
+});
+
+$.contextMenu({
+    selector: '#NewTechOutputButton',
+    trigger: 'left',
+    callback: function(key, options) {
+        var m = "clicked: " + key;
+        var command = key ;//+ "|" + options.$trigger[0].id;
+        console.log(command);
+        window.location = command;
+    },
+    items: {
+        "Nothing":{name:"Choose a process to add an output to", disabled:true},
+        "sep1": "---------",
+        {% for key, value in processNames.iteritems  %}
+        "Add_Tech_Output|Process|{{value|slugify}}|{{key}}": {name: "{{value}}", icon:"left"},
+        {% empty %}
+        "Nothing":{name:"No processes created yet", disabled:true},
+        {% endfor %}
+    }
+});
+
+$.contextMenu({
+    selector: '#LinkTechOuputButton',
+    trigger: 'left',
+    callback: function(key, options) {
+        var m = "clicked: " + key;
+        var command = key ;//+ "|" + options.$trigger[0].id;
+        console.log(command);
+        window.location = command;
+    },
+    items: {
+        "Nothing":{name:"Choose an intermediate to link to a process", disabled:true},
+        "sep1": "---------",
+        {% for key, value in techOutputNames.iteritems  %}
+        "linkProcess|Process|{{value|slugify}}|{{key}}": {name: "{{value}}", icon:"right"},
+        {% empty %}
+        "Nothing":{name:"No intermediate outputs created yet", disabled:true},
+        {% endfor %}
+    }
+});
+
+</script>
 
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>

@@ -18,7 +18,7 @@ def get_System_LCI_data(system_id):
     processList = scantree(system_id)
 
     #processText ='<table class="table">\n\t\t<th>ProcessName</th>\t<th>Inputs</th>\t<th>Outputs</th>\t<th>Technosphere Inputs</th>\t<th>Technosphere Outputs</th>\t<th>Impact</th>\n'
-    processText ='<table class="table">\n\t\t<th>ProcessName</th>\t<th>Carbon Footprint</th>\n'
+    processText ='<table class="table">\n\t\t<tr><th>Process Name</th>\t<th>Carbon Footprint<br>(kg CO<sub>2</sub>-eq)</th></tr>\n'
 
     textInputs = "<p>"
     textOutputs = "<p>"
@@ -92,7 +92,7 @@ def get_System_LCI_data(system_id):
         barData.append({'name':process.name, 'footprint':processImpact, 'order':j})
 
         #processText += "\t<tr>\n\t\t<td>%s</td>\t<td>%s</td>\t<td>%s</td>\t<td>%s</td>\t<td>%s</td>\t<td>%s</td>\n\t</tr>\n" % (process,  textInputs, textOutputs, textTechInputs, textTechOutputs, processImpact)
-        processText += "\t<tr>\n\t\t<td>%s</td>\t<td>%s</td>\n\t</tr>\n" % (process,  processImpact)
+        processText += "\t<tr>\n\t\t<td>%s</td>\t<td>%s</td>\n\t</tr>\n" % (process.name,  processImpact)
 
     processText += '</table>'
 

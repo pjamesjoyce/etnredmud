@@ -68,7 +68,8 @@ def chooseSystem(request):
 def setSystem(request,system_id):
     #systemInfo = request.POST['system'].split("|")
     #print systemInfo
-    #request.session['currentSystemName']=systemInfo[1]
+    system = m.FlowSystem.objects.get(id=system_id)
+    request.session['currentSystemName']=system.name
     request.session['currentSystemID']=system_id#systemInfo[0]
     return HttpResponseRedirect('/flow/scan/')
 
@@ -85,8 +86,11 @@ def scantree(system_id):
     system  = m.FlowSystem.objects.get(id=system_id)
 
     processList = {} #initialise the process list output
+    processNames, techOutputNames = {}, {}
 
     for checknum,process in enumerate(m.FlowTransformation.objects.all()): # for each process, set up the blank keys for inputs/outputs/tech inputs/tech outputs
+
+
 
         processList[process]={}
         processList[process]['Inputs']=[]
@@ -125,15 +129,18 @@ def scantree(system_id):
             for j in input_meta:
                 #print j
                 processList[process]['Technosphere Outputs'].append([i,j])
+                techOutputNames.update({i.id:i.name})
                 inSystem = True
 
         inSystemExplicit = system in process.partOfSystem.all()
 
         if inSystemExplicit == False and inSystem == False: # if none of the flags have been set, pop the process
             processList.pop(process,None)
+        else:
+            processNames.update({process.id:process.name})
 
     #print processList
-    return processList
+    return processList, processNames, techOutputNames
 
 def getDotString(processList, system_id):
 
@@ -177,9 +184,12 @@ def systemScan(request):
     args = {}
     system_id = int(request.session['currentSystemID'])
     system = m.FlowSystem.objects.get(id=system_id)
-    processList = scantree(system_id)
+    processList, processNames, techOutputNames  = scantree(system_id)
 
     args['processList']=processList
+    args['processNames'] = processNames
+    args['techOutputNames'] = techOutputNames
+    print processList, processNames, techOutputNames
     args['dotString'] = getDotString(processList, system_id)
     args['system'] = system
 
@@ -287,6 +297,7 @@ def createProcessSetup(request):
     system  = m.FlowSystem.objects.get(id=int(request.session['currentSystemID']))
     args = {}
     args.update(csrf(request))
+
     form = f.CreateTransformationForm(initial = {'partOfSystem':[system], 'author':request.user})
 
     args['form'] = form
@@ -321,13 +332,15 @@ def editProcessSetup(request, item_id):
 def addProcessConfirm(request):
     if request.method == 'POST':
         form = f.CreateTransformationForm(request.POST)
+        sendTo = request.POST['sendTo']
         if form.is_valid():
-            form.save()
+            newitem=form.save()
         else:
             print request.POST
             print form.errors
             print 'Form Not Saved'
-    return HttpResponseRedirect('/flow/scan/')
+    return HttpResponseRedirect("%s?i=%s" % (sendTo, newitem.id))
+
 
 def editProcessConfirm(request, edit_id):
     if request.method == 'POST':
@@ -347,14 +360,14 @@ def addInputSetup(request, item_id):
 
     system  = m.FlowSystem.objects.get(id=int(request.session['currentSystemID']))
     process = m.FlowTransformation.objects.get(id=item_id)
-
+    ###<<<< CHECK THIS BIT!!!>>>>###
     args = {}
     args.update(csrf(request))
     form = f.AddInputForm(initial = {'partOfSystem':system, 'transformation':process})
 
     if 'i' in request.GET:
-        item = m.FlowOutputSubstance.objects.get(id=request.GET['i'])
-        form.fields['outputsubstance'].initial = item
+        item = m.FlowInputSubstance.objects.get(id=request.GET['i'])
+        form.fields['inputsubstance'].initial = item
 
     args['form'] = form
     args['action']="add"
@@ -504,6 +517,8 @@ def addTechOutputSetup(request, item_id):
     processList = getSingleProcess(item_id,system.id)
     args['processList']=processList
     args['dotString'] = getDotString(processList,system.id)
+
+
 
     return render(request, 'addIO.html', args)
 
@@ -655,15 +670,15 @@ def createSystemConfirm(request):
 def linkProcessSetup(request, item_id):
     system  = m.FlowSystem.objects.get(id=int(request.session['currentSystemID']))
     item = m.FlowTechnosphere.objects.get(id=item_id)
-    #print item
+    print item
     args = {}
     args.update(csrf(request))
     form = f.AddTechInputForm(initial={'techFlow':item, 'partOfSystem':system})
 
     if 'i' in request.GET:
         print "Found the GET"
-        item = m.FlowTechnosphere.objects.get(id=request.GET['i'])
-        form.fields['techFlow'].initial = item
+        olditem = m.FlowTransformation.objects.get(id=request.GET['i'])
+        form.fields['transformation'].initial = olditem
 
     args['form'] = form
     args['action']="add"
@@ -689,11 +704,14 @@ def linkProcessSetup(request, item_id):
         args['processList']=processList
         args['dotString'] = getDotString(processList,system.id)
 
-    return render(request, 'addIO.html', args)
+    print "go to linkProcess.html"
+    return render(request, 'linkProcess.html', args)
 
 def addTechInputConfirm(request):
     if request.method == 'POST':
         form = f.AddTechInputForm(request.POST)
         if form.is_valid():
-            form.save()
-    return HttpResponseRedirect('/flow/scan/')
+            newitem=form.save()
+        else:
+            print form.errors
+    return HttpResponseRedirect("/flow/scan")

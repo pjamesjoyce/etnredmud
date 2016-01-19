@@ -27,7 +27,7 @@ urlpatterns = [
     url(r'^createSystem/$', 'flowdata.views.createSystem'),
 
     url(r'^scan/$', 'flowdata.views.systemScan'),
-    url(r'^scan/(?P<action_id>[\w]+)\|(?P<item_type>[\w]+)\|(?P<item_name>[\w\(\):]+)\|(?P<item_id>[\w]+)','flowdata.views.parseAction'),
+    url(r'^scan/(?P<action_id>[\w]+)\|(?P<item_type>[\w]+)\|(?P<item_name>[\w\(\)-:]+)\|(?P<item_id>[\w]+)','flowdata.views.parseAction'),
     url(r'^addInputConfirm/$', 'flowdata.views.addInputConfirm'),
     url(r'^addOutputConfirm/$', 'flowdata.views.addOutputConfirm'),
     url(r'^addTechOutputConfirm/$', 'flowdata.views.addTechOutputConfirm'),
@@ -37,7 +37,7 @@ urlpatterns = [
     url(r'^editOutputConfirm(?P<edit_id>[\w]+)/$', 'flowdata.views.editOutputConfirm'),
 
     url(r'^createTechOutputSetup/$', 'flowdata.views.createTechFlowSetup'),
-    url(r'^createTechInputSetup/$', 'flowdata.views.createTechFlowSetup'),
+    url(r'^createTechInputSetup/$', 'flowdata.views.createProcessSetup'),
     url(r'^createTechFlowConfirm/$', 'flowdata.views.createTechFlowConfirm'),
 
     url(r'^createInputSetup/$', 'flowdata.views.createInputSetup'),

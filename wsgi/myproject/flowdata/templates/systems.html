@@ -20,7 +20,7 @@ $(document).ready(function(){
 
 {% block content %}
 
-<h2>My REDMUD Systems</h2>
+<h2>My REDMUD Flow Sheets</h2>
 <p>
   <a href="/flow/newSystem/"><input type="button" name="create" value="Add new" class="btn btn-sm btn-info pull-right"></a>
 </p>
@@ -64,7 +64,7 @@ $(document).ready(function(){
                 <h4 class="modal-title">Delete '{{system.name}}'?</h4>
               </div>
               <div class="modal-body">
-                <p>Whoa! You're about to delete the process system called '{{ system.name }}'.<br> You can't undo this.</p>
+                <p>Whoa! You're about to delete the flow sheet called '{{ system.name }}'.<br> You can't undo this.</p>
                 <p>
                   Are you sure you want to do this?
                 </p>
@@ -86,7 +86,7 @@ $(document).ready(function(){
   {% empty %}
   <tr>
     <td>
-      Sorry, you don't have any systems yet, click <a href="/flow/newSystem/">here</a> to create one</li>
+      Sorry, you don't have any flow sheets yet, click <a href="/flow/newSystem/">here</a> to create one</li>
     </td>
   </tr>
   {% endfor %}
