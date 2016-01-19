@@ -2,6 +2,7 @@
 function d3_bar(treeData, max_footprint){
 
   var data = treeData;
+  
 
   console.log(data)
 
