@@ -15,7 +15,7 @@ def get_System_LCI_data(system_id):
 
     system = m.FlowSystem.objects.get(id=system_id)
 
-    processList = scantree(system_id)
+    processList ,_processNames, _techOutputNames = scantree(system_id)
 
     #processText ='<table class="table">\n\t\t<th>ProcessName</th>\t<th>Inputs</th>\t<th>Outputs</th>\t<th>Technosphere Inputs</th>\t<th>Technosphere Outputs</th>\t<th>Impact</th>\n'
     processText ='<table class="table">\n\t\t<tr><th>Process Name</th>\t<th>Carbon Footprint<br>(kg CO<sub>2</sub>-eq)</th></tr>\n'
@@ -35,13 +35,14 @@ def get_System_LCI_data(system_id):
     impactByProcess = {}
 
     processImpact = 0
+    
 
     for j, process in enumerate(processList):
 
         processImpact = 0
 
-        textInputs = "</p><p>".join(["%s (%d %s)" % (i[0].name, i[1].amount_required, i[0].unit) for i in processList[process]['Inputs']])
-        textInputs += "</p>"
+        #textInputs = "</p><p>".join(["%s (%d %s)" % (i[0].name, i[1].amount_required, i[0].unit) for i in processList[process]['Inputs']])
+        #textInputs += "</p>"
 
         for i in processList[process]['Inputs']:
             allInputs.setdefault(i[0].name, []).append(i[1].amount_required)
@@ -57,8 +58,8 @@ def get_System_LCI_data(system_id):
 
             impactByProcess.setdefault(process.name,{}).update({i[0].name:fullImpactData[i[0].name]})
 
-        textOutputs = "</p><p>".join(["%s (%d %s)" % (i[0].name, i[1].amount_required, i[0].unit) for i in processList[process]['Outputs']])
-        textOutputs += "</p>"
+        #textOutputs = "</p><p>".join(["%s (%d %s)" % (i[0].name, i[1].amount_required, i[0].unit) for i in processList[process]['Outputs']])
+        #textOutputs += "</p>"
 
         for i in processList[process]['Outputs']:
             allOutputs.setdefault(i[0].name, []).append(i[1].amount_required)
@@ -74,15 +75,15 @@ def get_System_LCI_data(system_id):
 
             impactByProcess.setdefault(process.name,{}).update({i[0].name:fullImpactData[i[0].name]})
 
-        textTechInputs = "</p><p>".join(["%s (%d %s)" % (i[0].name, i[1].amount_required, i[0].unit) for i in processList[process]['Technosphere Inputs']])
-        textTechInputs += "</p>"
+        #textTechInputs = "</p><p>".join(["%s (%d %s)" % (i[0].name, i[1].amount_required, i[0].unit) for i in processList[process]['Technosphere Inputs']])
+        #textTechInputs += "</p>"
 
         for i in processList[process]['Technosphere Inputs']:
             allTechInputs.setdefault(i[0].name, []).append(i[1].amount_required)
             techCheck.setdefault(i[0].name, []).append(i[1].amount_required*-1)
 
-        textTechOutputs = "</p><p>".join(["%s (%d %s)" % (i[0].name, i[1].amount_required, i[0].unit) for i in processList[process]['Technosphere Outputs']])
-        textTechOutputs += "</p>"
+        #textTechOutputs = "</p><p>".join(["%s (%d %s)" % (i[0].name, i[1].amount_required, i[0].unit) for i in processList[process]['Technosphere Outputs']])
+        #textTechOutputs += "</p>"
 
         for i in processList[process]['Technosphere Outputs']:
             allTechOutputs.setdefault(i[0].name, []).append(i[1].amount_required)
