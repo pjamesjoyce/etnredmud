@@ -1,7 +1,10 @@
 
 function d3_bar(treeData, max_footprint){
 
-  var data = treeData['children'];
+  var data = treeData;
+  
+
+  console.log(data)
 
   var margin = {top: 60, right: 20, bottom: 60, left: 60},
     width = 500 - margin.left - margin.right,
