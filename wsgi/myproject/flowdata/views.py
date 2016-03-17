@@ -71,6 +71,7 @@ def setSystem(request,system_id):
     system = m.FlowSystem.objects.get(id=system_id)
     request.session['currentSystemName']=system.name
     request.session['currentSystemID']=system_id#systemInfo[0]
+    #return HttpResponseRedirect('/sandbox/main/') # <-- reinstate this when new version is ready to go live
     return HttpResponseRedirect('/flow/scan/')
 
 def deleteSystem(request, system_id):

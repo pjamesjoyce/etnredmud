@@ -1,4 +1,4 @@
-"""myproject URL Configuration
+"""REDMUD URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.8/topics/http/urls/
@@ -14,16 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import include, url
-from django.contrib import admin
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^data/', include('data.urls')),
-    url(r'^accounts/', include('accounts.urls')),
-    url(r'^comments/', include('comment.urls')),
-    url(r'^messages/', include('messenger.urls')),
-    url(r'^flow/', include('flowdata.urls')),
-    url(r'^email/', include('email_app.urls')),
-    url(r'^sandbox/', include('sandbox.urls')),
-    url(r'^$', 'myproject.views.home'),
-]
+
+    url(r'^main/$', 'sandbox.views.sandbox_main'),
+    url(r'^posUpdate/$','sandbox.views.sandbox_pos_update'),
+    url(r'^newInput/$', 'sandbox.views.sandbox_new_input'),
+    url(r'^newOutput/$', 'sandbox.views.sandbox_new_output'),
+    url(r'^deleteDatabaseItem/$', 'sandbox.views.sandbox_delete_item'),
+    url(r'^newDatabaseItem/$', 'sandbox.views.sandbox_new_item'),
+    url(r'^newConnection/$', 'sandbox.views.sandbox_new_connection'),
+    url(r'^renameProcess/$', 'sandbox.views.sandbox_rename_process'),
+
+    ]

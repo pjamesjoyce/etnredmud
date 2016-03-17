@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block head-postload %}
+
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<script src="{% static 'sandbox/js/jsPlumb-2.0.7-min.js' %}"></script>
+
+<!-- Include Bootstrap-select CSS, JS-->
+<link rel="stylesheet" href="{% static 'messenger/css/bootstrap-select.min.css' %}" />
+<script src="{% static 'messenger/js/bootstrap-select.min.js' %}"></script>
+
+<link rel="stylesheet" href="{% static 'sandbox/css/sandbox2.css' %}" media="screen" title="no title" charset="utf-8">
+{% endblock %}
+
+{% block content %}
+
+
+
+
+
+<!-- demo -->
+            <div class="demo_container" id="main_canvas">
+              <button type="button" name="button" class="btn btn-xs btn-primary pull-right" id="addProcess"><div><i class="material-icons">add</i></div>Add process</button>
+
+
+
+                <!-- <div class="w" id="opened">
+                  <div class="title">
+                    Bauxite residue slurry
+                  </div>
+                  <div class="buttons">
+                    <div class="ep" action="begin"></div>
+                    <div class="ip" action="begin"></div>
+                    <div class="op" action="begin"></div>
+                    <div class="x" action="begin"></div>
+                  </div>
+                </div> -->
+
+
+            </div>
+            <!-- /demo -->
+
+
+
+<script src="{% static 'sandbox/js/sandbox2.js' %}"></script>
+
+<script type="text/javascript">
+
+  jsPlumb.ready(function () {
+
+    var nodes = [];
+    {% for k,v in nodes.items %}
+        nodes.push(['{{v.name}}','{{v.type}}','{{v.id}}','{{v.initX}}','{{v.initY}}']);
+    {% endfor%}
+
+
+    var links = [];
+    {% for k,v in links.items %}
+        links.push(['{{v.sourceID}}', '{{v.targetID}}', '{{v.type}}']);
+    {% endfor%}
+
+    var linklabels = {};
+    {% for k,v in links.items %}
+        linklabels['{{v.sourceID}}_{{v.targetID}}'] = '{{v.text}}';
+    {% endfor%}
+
+    var allInputs = {}
+    {% for k in allInputs %}
+      allInputs['{{k.id}}'] = ['{{k.name}}', '{{k.unit}}'];
+    {% endfor %}
+
+    var allOutputs = []
+    {% for k in allOutputs %}
+      allOutputs['{{k.id}}'] = ['{{k.name}}', '{{k.unit}}'];
+    {% endfor %}
+
+    var allIntermediates = []
+    {% for k in allIntermediates %}
+      allIntermediates['{{k.id}}'] = ['{{k.name}}', '{{k.unit}}'];
+    {% endfor %}
+    //console.log(linklabels)
+
+    //set up jsPlumb
+
+    function getCookie(name) {
+    var cookieValue = null;
+      if (document.cookie && document.cookie != '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = jQuery.trim(cookies[i]);
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+  var csrftoken = getCookie('csrftoken');
+
+  var system_id = {{system_id}}
+
+    jsPlumbsetup(nodes, links, linklabels, csrftoken,allInputs,allOutputs,allIntermediates,system_id);
+
+    //console.log(links);
+
+  });
+
+
+
+
+</script>
+
+
+{% endblock %}
