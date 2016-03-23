@@ -3,8 +3,11 @@
 
 body {
 	font-family: 'Muli', sans-serif;
+	/*
 	background: url(../img/background.jpg) no-repeat center center fixed;
 	background-size: cover;
+	*/
+	background-color: #F4F4F4;
 }
 
 /* NAV */
@@ -89,8 +92,9 @@ ul.menu li:first-child {
 ul.menu > li {
     border-left: 1px solid #d2d6d5;
 }
-ul.menu li a,
-ul.menu li span {
+
+
+.menu-block {
     display: block;
     height: 66px;
     padding: 0 15px;
@@ -99,6 +103,7 @@ ul.menu li span {
     -webkit-transition: background .25s ease-out, color .25s ease-out;
     transition: background .25s ease-out, color .25s ease-out;
 }
+
 ul.menu > li.active a,
 ul.menu > li.active span {
     font-family: 'Muli';
@@ -108,7 +113,7 @@ ul.menu > li a:hover,
 ul.menu > li span:hover,
 ul.menu > li.open span {
     background-color: #F4F4F4;
-    text-decoration: none;
+    /*text-decoration: none;*/
     /* color: #919191; */
 }
 
@@ -123,12 +128,27 @@ ul.menu > li.open span {
   color: #cd2122;
 }
 
+.white{
+	color:#fff;
+}
 .right{
   float: right;
 }
 
+/* USER */
+
+.menu-highlight{
+		position: relative;
+		top: -1px;
+    width: 160px;
+    background-color: #cd2122;
+    text-align: center;
+    color: #fff;
+}
 
 
+
+/* OTHER /*
 
 
 .nav-top-pad{
@@ -151,46 +171,20 @@ ul.menu > li.open span {
 */
 
 /* hover tab color */
-.navbar-nav>li:hover, .navbar-nav>li:focus {
+/*.navbar-nav>li:hover, .navbar-nav>li:focus {
   background-color: rgba(240, 240, 240, 0.6);;
-}
+}*/
 
-.jumbotron{
+/*.jumbotron{
 	background: url(../img/data.jpg) no-repeat center center;
 	color:white;
 	text-shadow: black 0.1em 0.1em 0.2em;
 	height:450px;
-}
+}*/
 
 ul {
 	list-style-type: none;
 	padding-left: 0;
-}
-
-h1, h2 {
-	font-family: 'Play',sans-serif;
-}
-
-p {
-	font-family: 'Quicksand', sans-serif;
-}
-
-a{
-
-}
-
-#sidebar{
-	background-color: rgba(192, 192, 192, 0.5);
-}
-
-.container{
-
-}
-
-#content{
-
-	background-color: rgba(240, 240, 240, 0.95);
-	padding:10px;
 }
 
 .disallowed{
@@ -227,4 +221,8 @@ a{
 
 .commentButtonDiv{
 	margin-top:40px;
+}
+
+.light{
+	color:rgba(180, 180, 180, 0.25);
 }
