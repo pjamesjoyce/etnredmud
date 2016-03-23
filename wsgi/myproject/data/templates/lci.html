@@ -61,12 +61,34 @@
     right: 10px;
   }
 
+
+/* New treemap bit */
+	.chart {
+	  display: block;
+	  margin: auto;
+	  margin-top: 40px;
+	}
+
+	text {
+	  font-size: 11px;
+	}
+
+	rect {
+	  fill: none;
+	}
+
+
+
 </style>
 
+<script src="http://marvl.infotech.monash.edu/webcola/cola.v3.min.js"></script>
 <script src="{% static 'js/jquery.tablesorter.js' %}"></script>
 <script src="{% static 'js/jquery.tablesorter.widgets.js' %}"></script>
 <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
 <script src="{% static 'data/js/d3_script.js' %}"></script>
+<script src="{% static 'data/js/d3.js' %}"></script>
+<script src="{% static 'data/js/d3.layout.js' %}"></script>
+<script src="{% static 'data/js/treemap.js' %}"></script>
 <script>
 $(document).ready(function(){
   $(function(){
@@ -83,6 +105,7 @@ $(document).ready(function(){
 
 <p>
 	{{LCI_Tree|safe}}
+	{% static 'data/js/flare.json' %}
 </p>
 
 <h2>LCI results for {{process.name}}</h2>
@@ -145,6 +168,10 @@ $(document).ready(function(){
 </div>
 <div class="chart col-md-6">
   <label><input type="checkbox"> Sort by contribution </label>
+</div>
+
+<div class="col-md-12" id = "body">
+
 </div>
 
 

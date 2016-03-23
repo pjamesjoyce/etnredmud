@@ -25,5 +25,7 @@ urlpatterns = [
     url(r'^flow/', include('flowdata.urls')),
     url(r'^email/', include('email_app.urls')),
     url(r'^sandbox/', include('sandbox.urls')),
+    url(r'^import/', include('importData.urls')),
+    url(r'^testing/', include('testing.urls')),
     url(r'^$', 'myproject.views.home'),
 ]

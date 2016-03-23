@@ -268,11 +268,18 @@ function d3_force(treeData, max_footprint){
   var width = 500,
     height = 500;
 
-  var force = d3.layout.force()
-      .gravity(.01)
-      .charge(-2000)
-      .linkDistance(height/20)
-      .size([width, height]);
+  var constraints = {"axis":"y", "left":0, "right":1, "gap":25};
+
+  var force = cola.d3adaptor()//d3.layout.force()
+      //.gravity(.01)
+      //.charge(-2000)
+      .linkDistance(height/6)
+      .size([width, height])
+      //.constraints(constraints)
+      //.symmetricDiffLinkLengths(5)
+      //.avoidOverlaps(true)
+      //.start(10,15,20);
+      ;
 
   var svg = d3.select(".tree").append("svg:svg")
       //.attr("width", width)

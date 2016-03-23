@@ -1,0 +1,68 @@
+{
+    "name": "System",
+    "children": [
+        {
+            "name": "Mixing",
+            "children": [
+                {
+                    "name": "Bauxite Residue Slurry",
+                    "value": 0
+                },
+                {
+                    "name": "Carbon",
+                    "value": 150
+                },
+                {
+                    "name": "Silicon Dioxide (Si02)",
+                    "value": 100
+                },
+                {
+                    "name": "Sodium Silicate",
+                    "value": 200
+                },
+                {
+                    "name": "Bauxite Residue Slurry",
+                    "value": 0
+                }
+            ]
+        },
+        {
+            "name": "Mix and Cure",
+            "children": [
+                {
+                    "name": "Alkalis",
+                    "value": 70
+                },
+                {
+                    "name": "Sodium Silicate",
+                    "value": 400
+                },
+                {
+                    "name": "Inorganic Geopolymer Product",
+                    "value": 0
+                }
+            ]
+        },
+        {
+            "name": "Magnetic separation",
+            "children": [
+                {
+                    "name": "Electricity",
+                    "value": 60
+                },
+                {
+                    "name": "Fe, Fe3O4",
+                    "value": 0
+                }
+            ]
+        },
+        {
+            "name": "Filter Press",
+            "children": []
+        },
+        {
+            "name": "Firing",
+            "children": []
+        }
+    ]
+}

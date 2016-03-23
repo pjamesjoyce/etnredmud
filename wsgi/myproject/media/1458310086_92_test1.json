@@ -1,0 +1,15 @@
+{"Item1":{
+	"type":"input",
+	"name":"TestInput1",
+	"emission_factor":1.0,
+	"unit":"kg",
+	"simaPro_id":"",
+},
+"Item2":{
+	"type":"input",
+	"name":"TestInput2",
+	"emission_factor":1.0,
+	"unit":"kg",
+	"simaPro_id":"",
+}
+}

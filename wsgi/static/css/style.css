@@ -1,11 +1,135 @@
 @import url(http://fonts.googleapis.com/css?family=Play|Quicksand|Cabin);
-
+@import url(https://fonts.googleapis.com/css?family=Muli:400,300);
 
 body {
-	font-family: 'Quicksand', sans-serif;
+	font-family: 'Muli', sans-serif;
 	background: url(../img/background.jpg) no-repeat center center fixed;
 	background-size: cover;
 }
+
+/* NAV */
+
+#header {
+    position: relative;
+    font-family: 'Muli';
+    font-weight: 300;
+    z-index: 11;
+}
+
+#header nav {
+    position: relative;
+    width: 100%;
+    height: 47px;
+    line-height: 48px;
+    background: #e1e3e4;
+    border-bottom: 1px solid #d2d6d5;
+    z-index: 200;
+
+    -webkit-transition: background .25s ease-out;
+    transition: background .25s ease-out;
+}
+#header .menu > li {
+    float: left;
+}
+
+
+/* NAV - MAIN */
+
+#header nav.main {
+    height: 66px;
+    line-height: 67px;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+/* LOGO */
+
+.logo{
+    display: inline-block;
+    height: 66px;
+    line-height: 67px;
+    width: 250px;
+
+}
+.logo.light{
+    background-image: url(../images/logo-light.svg);
+}
+.logo a{
+    display: block;
+    height: 66px;
+    text-decoration: none;
+    /*text-indent: -34em;*/
+    /*overflow: hidden;*/
+}
+
+.logo.large{
+    width: 376px;
+    height: 66px;
+}
+
+#header nav .logo{
+    float: left;
+    /*margin: 23px 0 0 20px;*/
+    margin-left: 23px;
+    font-size: 1.5em;
+}
+
+/* MENU */
+
+#header nav.main ul.menu {
+    position: absolute;
+    right: 0;
+}
+ul.menu li {
+    position: relative;
+}
+ul.menu li:first-child {
+    border-left: none;
+}
+ul.menu > li {
+    border-left: 1px solid #d2d6d5;
+}
+ul.menu li a,
+ul.menu li span {
+    display: block;
+    height: 66px;
+    padding: 0 15px;
+    color: #313131;
+
+    -webkit-transition: background .25s ease-out, color .25s ease-out;
+    transition: background .25s ease-out, color .25s ease-out;
+}
+ul.menu > li.active a,
+ul.menu > li.active span {
+    font-family: 'Muli';
+    font-weight: 400;
+}
+ul.menu > li a:hover,
+ul.menu > li span:hover,
+ul.menu > li.open span {
+    background-color: #F4F4F4;
+    text-decoration: none;
+    /* color: #919191; */
+}
+
+
+/* MY OWN */
+
+.grey{
+  color:#a6abab;
+}
+
+.red{
+  color: #cd2122;
+}
+
+.right{
+  float: right;
+}
+
+
+
+
 
 .nav-top-pad{
 	margin-top: 20px;
@@ -13,6 +137,7 @@ body {
 
 /* tab color */
 .nav-tabs>li>a {
+	font-weight: 300;
   background-color: #333333;
   background-color: rgba(120, 120, 120, 0.95);
   color:#fff;

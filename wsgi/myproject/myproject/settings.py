@@ -69,6 +69,8 @@ INSTALLED_APPS = (
     'email_app',
     'analysis',
     'sandbox',
+    'importData',
+    'testing',
 )
 
 DISALLOWED_MESSAGE = 50

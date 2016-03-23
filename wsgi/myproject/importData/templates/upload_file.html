@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block head-postload %}
+
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<!-- Include Bootstrap-select CSS, JS-->
+<link rel="stylesheet" href="{% static 'messenger/css/bootstrap-select.min.css' %}" />
+
+{% endblock %}
+
+{% block content %}
+
+<div class="">
+
+<form class="form-horizontal" role="form" action="/import/processUpload/" method="post" enctype="multipart/form-data">{% csrf_token %}
+  <div class="">
+      <div class="col-sm-9">
+        {{upload_form}}
+    </div>
+    <div class="form-group">
+      <div class="col-sm-12">
+        <button type="submit" class="btn btn-info">Upload</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+</div>
+
+
+
+{% endblock %}

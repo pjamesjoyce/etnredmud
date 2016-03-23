@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block head-postload %}
+
+{% endblock %}
+
+{% block content %}
+
+
+<header id="header">
+
+
+<nav class="top">
+
+<h1 class="slogan">ETN-REDMUD Data Entry &amp; Exploration Platform</h1>
+
+<ul class="right">
+     <li class="login">Are you a member? <a href="/login">Register / Login</a></li>
+</ul>
+
+</nav>
+
+<nav class="main">
+   <div class="logo">
+       <strong><a href="/" title="ETN-REDMUD:DEEP"><span class="grey">ETN-REDMUD</span><span class="red">DEEP</span></a></strong>
+   </div>
+   <ul class="menu right">
+       <li class="active"><a href="/">Home</a></li>
+       <li><a href="/awards-of-the-day/">Flow Sheets</a></li>
+  </ul>
+</nav>
+
+
+
+
+{% for item in data|slice:"4"  %}
+<div class="col-md-3">
+  <a href="{{item.link}}">
+    <figure class="rollover">
+        <img class="img-responsive" src="{{item.img}}" alt="{{item.title|safe}}" />
+        <figcaption>{{item.title|safe}}</figcaption>
+    </figure>
+  </a>
+    <div class="info">
+      <h3 class="bold"><a href="{{item.link}}">{{item.description|safe}}</a></h3>
+    </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}

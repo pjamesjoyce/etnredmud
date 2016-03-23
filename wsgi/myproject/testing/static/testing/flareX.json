@@ -1,0 +1,77 @@
+{
+    "name": "Functional Unit",
+    "children": [
+        {
+            "name": "Production",
+            "children": [
+                {
+                    "name": "Materials",
+                    "size": 3534
+                },
+                {
+                    "name": "Electricity",
+                    "size": 5731
+                },
+                {
+                    "name": "Gas",
+                    "size": 7840
+                },
+                {
+                    "name": "Transport",
+                    "size": 5914
+                },
+                {
+                    "name": "Labour",
+                    "size": 3416
+                }
+            ]
+        },
+        {
+            "name": "Use Phase",
+            "children": [
+                {
+                    "name": "Electricity",
+                    "children": [
+                        {
+                            "name": "Electricity - China",
+                            "size": 1234
+                        },
+                        {
+                            "name": "Electricity - UK",
+                            "children": [
+                                {
+                                    "name": "Coal",
+                                    "size": 1000
+                                },
+                                {
+                                    "name": "Gas",
+                                    "size": 200
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Electricity - France",
+                            "size": 123
+                        },
+                        {
+                            "name": "Electricity - Sweden",
+                            "size": 154
+                        },
+                        {
+                            "name": "Electricity - Belgium",
+                            "size": 2354
+                        }
+                    ]
+                },
+                {
+                    "name": "Gas",
+                    "size": 1234
+                },
+                {
+                    "name": "Batteries",
+                    "size": 1234
+                }
+            ]
+        }
+    ]
+}

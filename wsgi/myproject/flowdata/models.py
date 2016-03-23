@@ -88,7 +88,7 @@ class FlowTransformation(models.Model):
     category = models.CharField(max_length=50, default = 'Uncategorized')
     author = models.ForeignKey(User, null = True)
     partOfSystem = models.ManyToManyField(FlowSystem)
-    uuid = models.CharField(max_length=36,default=str(uuid.uuid4()))
+    uuid = models.CharField(max_length=36,default=" ")
 
     inputflows = models.ManyToManyField(FlowInputSubstance, through = 'FlowInputMembership')
     outputflows = models.ManyToManyField(FlowOutputSubstance, through = 'FlowOutputMembership')
@@ -108,7 +108,7 @@ class FlowInputMembership(models.Model):
     amount_required = models.FloatField()
     partOfSystem = models.ForeignKey(FlowSystem, on_delete = models.CASCADE)
     note = models.CharField(max_length = 500, null = True)
-    uuid = models.CharField(max_length=36,default=str(uuid.uuid4()))
+    uuid = models.CharField(max_length=36,default=" ")
 
     def __unicode__(self):
         return "%s : %s -> %s (%s)" % (self.id, self.inputsubstance, self.transformation, self.partOfSystem)
@@ -119,7 +119,7 @@ class FlowOutputMembership(models.Model):
     amount_required = models.FloatField()
     partOfSystem = models.ForeignKey(FlowSystem, on_delete = models.CASCADE)
     note = models.CharField(max_length = 500, null = True)
-    uuid = models.CharField(max_length=36,default=str(uuid.uuid4()))
+    uuid = models.CharField(max_length=36,default=" ")
 
     def __unicode__(self):
         return "%s : %s -> %s (%s)" % (self.id, self.transformation, self.outputsubstance, self.partOfSystem)
@@ -130,7 +130,7 @@ class FlowTechnosphereMembershipInput(models.Model):
     amount_required = models.FloatField()
     partOfSystem = models.ForeignKey(FlowSystem, on_delete = models.CASCADE)
     note = models.CharField(max_length = 500, null = True)
-    uuid = models.CharField(max_length=36,default=str(uuid.uuid4()))
+    uuid = models.CharField(max_length=36,default=" ")
 
     def __unicode__(self):
         return "%s : %s -> %s (%s)" % (self.id, self.techFlow, self.transformation, self.partOfSystem)
@@ -141,7 +141,7 @@ class FlowTechnosphereMembershipOutput(models.Model):
     amount_required = models.FloatField()
     partOfSystem = models.ForeignKey(FlowSystem, on_delete = models.CASCADE)
     note = models.CharField(max_length = 500, null = True)
-    uuid = models.CharField(max_length=36,default=str(uuid.uuid4()))
+    uuid = models.CharField(max_length=36,default=" ")
 
     def __unicode__(self):
         return "%s : %s -> %s (%s)" % (self.id, self.transformation, self.techFlow, self.partOfSystem)
