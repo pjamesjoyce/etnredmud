@@ -33,7 +33,7 @@ SECRET_KEY = SECRETS['secret_key']
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = os.environ.get('DEBUG') == 'True'
 if 'OPENSHIFT_APP_NAME' in os.environ:
-  DEBUG = False
+  DEBUG = True
 else:
   DEBUG = True
   EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
