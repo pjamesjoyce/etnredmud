@@ -1,5 +1,7 @@
 /* PAGE ITEMS */
 
+.ui-dialog {font-size:10px;}
+
 .demo_container{
  /*margin-left: 50px;
   margin-right: 50px;*/
@@ -15,6 +17,7 @@
 
 .processButton{
   margin-bottom: 15px;
+  width:85px;
 }
 .labelButtons{
   font-size: 0.75em;
@@ -96,7 +99,7 @@
 }
 
 .input {
-    width: 75px;
+    width: 55px;
     min-height: 25px;
     border: 1px solid #2e6f9a;
     background-color: #6390BF;

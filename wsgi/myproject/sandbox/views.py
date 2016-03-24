@@ -148,6 +148,40 @@ def sandbox_new_connection(request):
 
     return HttpResponse("OK")
 
+def sandbox_compute_link(request):
+
+    mySource = request.POST.get("source","918dfcda-1e7c-4d33-a33e-ffe05b8a41ef")
+    myTarget = request.POST.get("target","2a926071-e56a-4b10-8e3f-eab9ca45e304")
+    system_id = request.POST.get("system_id",30)
+
+    system = m.FlowSystem.objects.get(id = system_id)
+    linkFrom = m.FlowTransformation.objects.get(uuid = mySource)
+    linkTo = m.FlowTransformation.objects.get(uuid = myTarget)
+
+    possibleOutputs = m.FlowTechnosphereMembershipOutput.objects.filter(partOfSystem = system).filter(transformation = linkFrom)
+    possibleInputs = m.FlowTechnosphereMembershipInput.objects.filter(partOfSystem = system).filter(transformation = linkTo)
+
+    op = [x.techFlow for x in possibleOutputs]
+    ip = [x.techFlow for x in possibleInputs]
+
+    candidates = []
+
+    for i in op:
+        if i in ip:
+            candidates.append(i)
+
+    if len(candidates) == 1:
+        intermediate = candidates[0]
+
+        getRidInput = possibleInputs.get(techFlow = intermediate)
+        getRidOutput = possibleOutputs.get(techFlow = intermediate)
+
+        getRidInput.delete()
+        getRidOutput.delete()
+
+
+    return HttpResponse("OK")
+
 
 def sandbox_delete_item(request):
     uuid = request.POST.get("uuid","")
@@ -191,6 +225,11 @@ def sandbox_new_item(request):
     unit = request.POST.get("unit","kg")
     system_id = request.POST.get("system_id",22)
     id = request.POST.get("uuid",tempuuid)
+    x = request.POST.get("x",250)
+    y = request.POST.get("y",250)
+
+    print id,x,y
+    save_position(id,x,y)
 
 
     #uuid = '43281763-cdab-42ed-9885-fde29010696c'
@@ -227,6 +266,8 @@ def sandbox_new_item(request):
         thisItem.save()
 
         print 'saved a ' + type
+
+
 
     response_data = {'id':thisItem.id}
 

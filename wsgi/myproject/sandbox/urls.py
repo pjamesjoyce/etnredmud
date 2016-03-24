@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^newConnection/$', 'sandbox.views.sandbox_new_connection'),
     url(r'^renameProcess/$', 'sandbox.views.sandbox_rename_process'),
     url(r'^editFlow/$', 'sandbox.views.sandbox_edit_quantity'),
+    url(r'^removeLink/$', 'sandbox.views.sandbox_compute_link'),
 
     ]

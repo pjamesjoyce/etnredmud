@@ -35,7 +35,7 @@ def get_System_LCI_data(system_id):
     impactByProcess = {}
 
     processImpact = 0
-    
+
 
     for j, process in enumerate(processList):
 
@@ -220,6 +220,7 @@ def get_System_LCI(request, system_id):
 # This is the new 'development version' which includes the tree
 
     args = get_System_LCI_data(system_id)
+    args.update({'system':m.FlowSystem.objects.get(id=system_id)})
 
     return render(request,'SystemLCI.html',args)
 

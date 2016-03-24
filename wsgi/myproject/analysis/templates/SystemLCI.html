@@ -45,10 +45,10 @@ $(document).ready(function(){
 
 
   <div class="col-xs-10 col-xs-offset-1">
-    <h2>View/edit flow sheet for {{system}}</h2>
+    <h2>Analyse <a href="/flow/setSystem/{{system.id}}">{{system.name}}</a></h2>
     <hr>
     <p>
-      You can create or edit the flow sheet for {{system}} in the box below &nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-xs btn-custom"data-toggle="collapse" href="#moreInfo" aria-expanded="false" aria-controls="moreInfo">More info...</a>
+      Environmental impact analysis for {{system.name}} &nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-xs btn-custom"data-toggle="collapse" href="#moreInfo" aria-expanded="false" aria-controls="moreInfo">More info...</a>
     </p>
     <div class="collapse" id="moreInfo">
       <div class="well">
@@ -59,7 +59,7 @@ $(document).ready(function(){
     </div>
 
     <hr>
-    
+
   </div>
 </div>
 

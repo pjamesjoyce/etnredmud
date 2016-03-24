@@ -2,22 +2,12 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
 
     //console.log(allIntermediates);
 
+    $.fn.bootstrapBtn = $.fn.button.noConflict();
+
     // setup some defaults for jsPlumb.
     var instance = jsPlumb.getInstance({
         Endpoint: ["Dot", {radius: 1}],
         Connector:[ "Flowchart", { stub: [0, 0], midpoint: 0.25 } ],//"Straight",
-        //HoverPaintStyle: {strokeStyle: "#1e8151", lineWidth: 2 },
-        //ConnectionOverlays: [
-        //    [ "Arrow", {
-        //        location: 1,
-        //        id: "arrow",
-        //        length: 7.5,
-        //        width:7.5,
-        //        foldback: 0.8
-        //    } ],
-        //    [ "Label", { label: "Establish connection", id: "label", cssClass: "aLabel" }],
-        //    //["Custom", { label: "Hello", id:"type" }]
-        //],
         Container: "body"
     });
 
@@ -71,7 +61,49 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
     // just do this: jsPlumb.bind("click", jsPlumb.detach), but I wanted to make it clear what was
     // happening.
     instance.bind("click", function (c) {
-        console.log(c);
+
+        connectionData = c.getData()
+        console.log(connectionData);
+        if (connectionData.connection_type == 'intermediate'){
+
+          var dialogConfirm = $('<div>').attr('id','dialog-confirm').attr('title','Remove this link?').html('<p> Do you want to remove this link?</p>')
+
+          //$.fn.bootstrapBtn = $.fn.button.noConflict();
+
+
+            dialogConfirm.dialog({
+              resizable: false,
+              height:140,
+              modal: true,
+              buttons: {
+                "Remove link": function() {
+                  $( this ).dialog( "close" );
+                  console.log ('remove connection for ' + c);
+
+                  var postData={
+                    'csrfmiddlewaretoken':csrftoken,
+                    'source': c.sourceId,
+                    'target': c.targetId,
+                    'system_id':system_id
+                  };
+
+                  $.post('/sandbox/removeLink/', postData);
+
+                  console.log(postData);
+
+                  jsPlumb.detach(c);
+                  dialogConfirm.remove();
+                },
+                Cancel: function() {
+                  $( this ).dialog( "close" );
+                  console.log('not happening')
+                  dialogConfirm.remove();
+                }
+              }
+            });
+
+        };
+
     });
 
     // bind a connection listener. note that the parameter passed to this function contains more than
@@ -101,7 +133,7 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
 
           var defineConnect = $('<div>').addClass('enter')
           var connectTitle = $('<div>').addClass('popTitle').text('Choose/create an intermediate');
-          var connectName = $('<select>').attr('name','connectName').attr('id','connectName').attr('data-live-search','true').attr('data-done-button','true').attr('data-live-search-placeholder','Search...').attr('data-width','100%').addClass('selectpicker');
+          var connectName = $('<select>').attr('name','connectName').attr('id','connectName').attr('data-live-search','true').attr('data-done-button','true').attr('data-live-search-placeholder','Search (or type to create new)').attr('data-width','100%').addClass('selectpicker');
           var connectAmountTitle = $('<div>').addClass('popTitle').text('How much is needed');
           var connectAmount = $('<input>').attr('name','connectAmount').attr('id','connectAmount');
           var connectUnit =  $('<div>').addClass('popUnit').text('');
@@ -178,6 +210,8 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
 
               labelText = name + " ("+ amount +" "+ unit +")";
               info.connection.getOverlay("label").setLabel(labelText);
+              info.connection.setData({'connection_type':'intermediate', 'connection_amount':amount})
+              console.log( info.connection.getData())
 
               defineConnect.remove();
 
@@ -237,16 +271,7 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
 
             instance.makeSource(el, {
                 filter: ".ep,.ep2",
-                //anchor: "Continuous",
-                //connectorStyle: { strokeStyle: "#777", lineWidth: 1, outlineColor: "transparent", outlineWidth: 4 },
-                connectionType:"basic",
-                //extract:{
-                //    "action":"the-action"
-                //},
-                //maxConnections: 10,
-                //onMaxConnections: function (info, e) {
-                //    alert("Maximum connections (" + info.maxConnections + ") reached");
-                //}
+                connectionType:"basic intermediate",
             });
 
             instance.makeTarget(el, {
@@ -399,7 +424,7 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
 
               var chooseInput = $('<div>').addClass('enter')
               var inputTitle = $('<div>').addClass('popTitle').text('Select an input');
-              var inputName = $('<select>').attr('name','inputsubstance').attr('id','inputsubstance').attr('data-live-search','true').attr('data-done-button','true').attr('data-live-search-placeholder','Search...').attr('data-width','100%').addClass('selectpicker');
+              var inputName = $('<select>').attr('name','inputsubstance').attr('id','inputsubstance').attr('data-live-search','true').attr('data-done-button','true').attr('data-live-search-placeholder','Search (or type to create new)').attr('data-width','100%').addClass('selectpicker');
               var inputAmountTitle = $('<div>').addClass('popTitle').text('How much is needed');
               var inputAmount = $('<input>').attr('name','inputamount').attr('id','inputamount');
               var inputUnit = $('<div>').addClass('popUnit').text('');
@@ -465,7 +490,7 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
                 var thisConnection = instance.connect({
                   source: id,
                   target: thisNodeID,
-                  type:"basic",
+                  type:"basic input",
                   data:{'connection_type':'input', 'connection_amount':amount}
                 })
                 //thisConnection.addType("new");
@@ -517,7 +542,7 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
 
               var chooseOutput = $('<div>').addClass('enter')
               var outputTitle = $('<div>').addClass('popTitle').text('Select an emission/output');
-              var outputName = $('<select>').attr('name','outputsubstance').attr('id','outputsubstance').attr('data-live-search','true').attr('data-done-button','true').attr('data-live-search-placeholder','Search...').attr('data-width','100%').addClass('selectpicker');
+              var outputName = $('<select>').attr('name','outputsubstance').attr('id','outputsubstance').attr('data-live-search','true').attr('data-done-button','true').attr('data-live-search-placeholder','Search (or type to create new)').attr('data-width','100%').addClass('selectpicker');
               var outputAmountTitle = $('<div>').addClass('popTitle').text('How much is needed');
               var outputAmount = $('<input>').attr('name','outputamount').attr('id','outputamount');
               var outputUnit = $('<div>').addClass('popUnit').text('');
@@ -583,7 +608,7 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
                 var thisConnection = instance.connect({
                   source: thisNodeID,
                   target: id,
-                  type:"basic",
+                  type:"basic output",
                   data:{'connection_type':'output', 'connection_amount':amount}
                 })
                 //thisConnection.addType("new");
@@ -672,7 +697,7 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
                 var connection = instance.connect({
                    source: thisConnections[0].sourceId,
                    target: thisConnections[0].targetId,
-                   type:"basic",
+                   type:"basic intermediate",
                    data:{'connection_type':type, 'connection_amount':$('#newQuantity').val()}
                  });
                  console.log(connection.getData());
@@ -857,7 +882,7 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
 
       $('#confirm_button').unbind().click(function(e){
         uuid = jsPlumbUtil.uuid();
-        createNewItem('process', $('#createItem').val(), "" ,csrftoken, system_id, uuid)
+        createNewItem('process', $('#createItem').val(), "" ,csrftoken, system_id, uuid, 250, 250)
         var thisNode = newNodeExternal($('#createItem').val(),'transformation',uuid,250,250,instance);
         initNode(thisNode);
         $('#myModal').modal('hide');
@@ -1061,7 +1086,18 @@ var deleteDatabaseItem = function(uuid,csrftoken,type,system_id){
 
 
 var createItem = function(type, initialValue, csrftoken){
-  console.log('time to create a new ' + type)
+
+  var typeTrans = {
+    'input' : 'input',
+    'output': 'output',
+    'transformation' : 'intermediate product'
+  }
+
+  friendlyType = typeTrans[type]
+
+  console.log('time to create a new ' + friendlyType)
+
+
 
 
   var UNIT_CHOICES = {
@@ -1112,14 +1148,14 @@ var createItem = function(type, initialValue, csrftoken){
 
   formHtml += "</select>"
 
-  var createdModal = createModal('New ' + type, formHtml);
+  var createdModal = createModal('New ' + friendlyType, formHtml);
   $(document.body).append(createdModal);
   $('#createUnit').selectpicker();
   $('#myModal').modal('show');
 
   var itemIDNo = null
    $('#confirm_button').unbind().click(function(e){
-    data = createNewItem(type, $('#createItem').val(), $('#createUnit').val(),csrftoken)
+    data = createNewItem(type, $('#createItem').val(), $('#createUnit').val(),csrftoken,0,0,0,0)
     $('#myModal').modal('hide');
         console.log(data)
         console.log(data.id)
@@ -1139,7 +1175,7 @@ var createItem = function(type, initialValue, csrftoken){
  });
 };
 
-createNewItem = function(type, name, unit ,csrftoken, system_id,uuid){
+createNewItem = function(type, name, unit ,csrftoken, system_id,uuid,x,y){
 
   var postData = {
       'csrfmiddlewaretoken': csrftoken,
@@ -1148,6 +1184,8 @@ createNewItem = function(type, name, unit ,csrftoken, system_id,uuid){
       'unit':unit,
       'system_id':system_id,
       'uuid':uuid,
+      'x':x,
+      'y':y
    };
    console.log(postData);
 
