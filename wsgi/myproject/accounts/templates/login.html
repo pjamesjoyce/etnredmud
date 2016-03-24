@@ -2,23 +2,78 @@
 
 {%  block content %}
 
-  {% if form.errors %}
-    <p class="error">Sorry, that's a no I'm afraid</p>
-  {% endif %}
 
-  <form action = "/accounts/auth/" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="next" value="{{ request.GET.next }}"/>
-    <label for="username">User name</label>
-    <input type="text" name="username" value="" id="username">
-    <label for="password">Password</label>
-    <input type="password" name="password" value="" id="password">
+  <div class="row">
 
-    <input type="submit" name="submit" value="Log in"/>
+    <div class="col-md-10 col-md-offset-1">
 
-  
-  </form>
-  <p>
-    or <a href="/accounts/register/">register</a> here.
-  </p>
+      <h2>Login/Register</h2>
+
+      {% if form.errors %}
+        <p class="error">Sorry, that's a no I'm afraid</p>
+      {% endif %}
+
+      <hr>
+
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-10 col-md-offset-1">
+
+      <form action = "/accounts/auth/" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.GET.next }}"/>
+        <table class="table-condensed">
+          <tr>
+            <td>
+              <label for="username">User name</label>
+            </td>
+            <td>
+              <input type="text" name="username" value="" id="username">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="password">Password</label>
+            </td>
+            <td>
+              <input type="password" name="password" value="" id="password">
+            </td>
+          </tr>
+          <tr>
+            <td>
+
+            </td>
+            <td>
+              <!--<button class="btn btn-sm btn-custom" type="button" onclick="history.back(-1)" >Cancel</button>-->
+              <button class="btn btn-sm btn-custom" type="submit" name="submit">Log in</button>
+            </td>
+          </tr>
+        </table>
+
+
+      </form>
+
+      <hr>
+
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-1">
+      <h3>Not yet a user? </h3>
+      <hr>
+      <p>
+          Click here to register
+          <br><br>
+          <a class="btn btn-sm btn-custom" type="button" href="/accounts/register/">Register</a><a href="/accounts/register/">
+      </p>
+      <hr>
+    </div>
+  </div>
+
+
+
 {% endblock %}

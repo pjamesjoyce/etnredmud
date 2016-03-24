@@ -23,13 +23,14 @@ def home(request):
     args['homeblock2']=homeblock2
     args['homeblock3']=homeblock3
 
-    args['latestNews'] = redmudLatest()
+    args['latestNews'] = redmudLatest("http://etn.redmud.org/news/")
+    args['latestBlog'] = redmudLatest("http://etn.redmud.org/blog/")
 
     return render(request, 'home.html', args)
 
-def redmudLatest():
+def redmudLatest(url):
 
-    page = requests.get("http://etn.redmud.org/blog/")
+    page = requests.get(url)
     encoding = page.encoding
     print encoding
 

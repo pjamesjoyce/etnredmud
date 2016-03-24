@@ -8,31 +8,54 @@
 
 {% block content %}
 
-  <h2>Profile</h2>
+  <div class="row">
 
-  {% for field in basicform %}
-    {{ field.error }}
-  {% endfor %}
-  {% for field in extraform %}
-    {{ field.error }}
-  {% endfor %}
-  <div class="col-md-6 col-md-offset-1">
-    <form class="profileform" action="/accounts/profile/" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <div class="col-md-10 col-md-offset-1">
 
-        <table class="table-condensed">
-        {{basicform.as_table}}
-        {{extraform.as_table}}
-      </table>
-      <br>
-      <button class="btn btn-info" type="button" onclick="history.back(-1)" >Cancel</button>
-      <button class="btn btn-primary" type="submit" name="submit">Update</button>
-    </form>
+      <h2>Profile</h2>
+
+      {% for field in basicform %}
+        {{ field.error }}
+      {% endfor %}
+      {% for field in extraform %}
+        {{ field.error }}
+      {% endfor %}
+    </div>
   </div>
-  <div class="col-md-5">
-    {% if request.user.profile.profile_picture %}
-    <img src="/static/media/{{request.user.profile.profile_picture}}" alt="" class="profile_pic" />
-    {% else %}
-    <img src="/static/img/user_default.png" alt=""  class="profile_pic"/>
-    {% endif %}
+
+  <div class="row">
+
+    <div class="col-md-6 col-md-offset-1">
+      <form class="profileform" action="/accounts/profile/" method="post" enctype="multipart/form-data">{% csrf_token %}
+
+          <table class="table-condensed">
+          {{basicform.as_table}}
+          <!--{{extraform.as_table}}-->
+          <tr>
+            <td>
+
+            </td>
+            <td>
+              <button class="btn btn-custom btn-sm" type="button" onclick="history.back(-1)" >Cancel</button>
+              <button class="btn btn-custom btn-sm" type="submit" name="submit">Update</button>
+            </td>
+          </tr>
+
+        </table>
+      </form>
+    </div>
+    <!--<div class="col-md-5">
+      {% if request.user.profile.profile_picture %}
+      <img src="/static/media/{{request.user.profile.profile_picture}}" alt="" class="profile_pic" />
+      {% else %}
+      <img src="/static/img/user_default.png" alt=""  class="profile_pic"/>
+      {% endif %}
+    </div>-->
   </div>
+  <div class="row">
+    <p>
+
+    </p>
+  </div>
+
   {% endblock %}
