@@ -14,16 +14,33 @@ $(document).ready(function(){
 });
 </script>
 
+<style media="screen">
+  .titleText{
+    width:79%;
+    display:inline-block;
+  }
+  .titleButton{
+    width:20%;
+    display:inline-block;
+  }
+</style>
+
 {% endblock %}
 
 {% block nav-class-process %}active{% endblock %}
 
 {% block content %}
+<div class="col-xs-10 col-xs-offset-1">
 
-<h2>My REDMUD Flow Sheets</h2>
-<p>
-  <a href="/flow/newSystem/"><input type="button" name="create" value="Add new" class="btn btn-sm btn-info pull-right"></a>
-</p>
+
+<div class= "titleText">
+  <h2>My REDMUD Flow Sheets</h2>
+</div>
+<div class="titleButton">
+<a href="/flow/newSystem/" type="button" name="create" class="btn btn-sm btn-custom pull-right ">Add new</a>
+</div>
+
+<hr>
 
 <table class="table table-hover" id="sp_table">
 
@@ -44,17 +61,17 @@ $(document).ready(function(){
 {% for system in systems %}
   <tr>
     <td>
-      {{ system.name }}
+        <a href="/flow/setSystem/{{system.id}}/">{{ system.name }}</a>
     </td>
     <td>
       {{ system.owner.first_name}}
     </td>
     <td>
-      <a href="/flow/setSystem/{{system.id}}/"type="button" class="btn btn-info btn-xs" name="edit_button{{system.id}}">Edit</a></li>
-      <a type="button" class="btn btn-info btn-xs" name="delete_button{{system.id}}" data-toggle="modal" data-target="#deleteModal">Delete</a></li>
-      <a href="/flow/analysis/system/{{system.id}}/"type="button" class="btn btn-info btn-xs" name="analyse_button{{system.id}}">Analyse</a></li>
+      <a href="/flow/setSystem/{{system.id}}/"type="button" class="btn btn-custom btn-xs" name="edit_button{{system.id}}">Edit</a></li>
+      <a type="button" class="btn btn-custom btn-xs" name="delete_button{{system.id}}" data-toggle="modal" data-target="#deleteModal_{{system.id}}">Delete</a></li>
+      <a href="/flow/analysis/system/{{system.id}}/"type="button" class="btn btn-custom btn-xs" name="analyse_button{{system.id}}">Analyse</a></li>
       <!-- Modal -->
-        <div class="modal fade" id="deleteModal" role="dialog">
+        <div class="modal fade" id="deleteModal_{{system.id}}" role="dialog">
           <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -94,6 +111,6 @@ $(document).ready(function(){
   </tbody>
 </table>
 
-
+</div>
 
 {% endblock %}

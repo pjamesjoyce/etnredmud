@@ -6,10 +6,14 @@ import flowdata.models as m
 import flowdata.forms as f
 from django.core.context_processors import  csrf
 
+import sandbox.models as sm
+
 from messenger.views import check_messages
 from messenger.models import InternalMessage
 
 from django.contrib.auth.decorators import login_required
+
+import uuid
 
 # <<<<=========== PROCESSES ===========>>>> #
 
@@ -44,16 +48,25 @@ def createSystem(request):
     newSystem = m.FlowSystem(name=systemName, owner = request.user)
     newSystem.save()
 
-    newProcess = m.FlowTransformation(name = "%s First process (click to edit)" % systemName, author = request.user)
+    processID = uuid.uuid4()
+    inputID = uuid.uuid4()
+
+    newProcess = m.FlowTransformation(name = "Process 1 (click to edit)", author = request.user, uuid = processID)
     newProcess.save()
     newProcess.partOfSystem.add(newSystem)
     newProcess.save()
 
+    processPosition = sm.SandboxPositions(uuid = processID, x = 140, y = 110)
+    processPosition.save()
+
     BRdefault = m.FlowInputSubstance.objects.get(name="Bauxite Residue Slurry")
 
-    newInput = m.FlowInputMembership(transformation = newProcess,inputsubstance = BRdefault, amount_required = 1000, partOfSystem = newSystem, note = 'Default input of 1000 kg Bauxite residue')
+    newInput = m.FlowInputMembership(transformation = newProcess,inputsubstance = BRdefault, amount_required = 1000, partOfSystem = newSystem, note = 'Default input of 1000 kg Bauxite residue', uuid = inputID)
 
     newInput.save()
+
+    inputPosition = sm.SandboxPositions(uuid = inputID, x = 10, y = 10)
+    inputPosition.save()
 
     return setSystem(request, newSystem.id)
 
@@ -71,8 +84,8 @@ def setSystem(request,system_id):
     system = m.FlowSystem.objects.get(id=system_id)
     request.session['currentSystemName']=system.name
     request.session['currentSystemID']=system_id#systemInfo[0]
-    #return HttpResponseRedirect('/sandbox/main/') # <-- reinstate this when new version is ready to go live
-    return HttpResponseRedirect('/flow/scan/')
+    return HttpResponseRedirect('/sandbox/main/') # <-- reinstate this when new version is ready to go live
+    #return HttpResponseRedirect('/flow/scan/')
 
 def deleteSystem(request, system_id):
     thisSystem = m.FlowSystem.objects.get(id=system_id)

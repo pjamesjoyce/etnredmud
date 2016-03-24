@@ -1,6 +1,15 @@
 @import url(http://fonts.googleapis.com/css?family=Play|Quicksand|Cabin);
 @import url(https://fonts.googleapis.com/css?family=Muli:400,300);
 
+a{
+	text-decoration: none;
+	color:#333;
+}
+a:hover{
+	text-decoration: none;
+	color:#cd2122;
+}
+
 body {
 	font-family: 'Muli', sans-serif;
 	/*
@@ -8,6 +17,11 @@ body {
 	background-size: cover;
 	*/
 	background-color: #F4F4F4;
+}
+
+.btn-custom{
+  border: 1px solid #aaa;
+  background-color: #e1e3e4;
 }
 
 /* NAV */
@@ -114,7 +128,7 @@ ul.menu > li span:hover,
 ul.menu > li.open span {
     background-color: #F4F4F4;
     /*text-decoration: none;*/
-    /* color: #919191; */
+    color: #313131;
 }
 
 

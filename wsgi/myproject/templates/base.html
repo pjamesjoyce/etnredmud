@@ -45,7 +45,7 @@
             {% if user.is_authenticated %}
             <li class="menu-highlight">
               <a href="#" class="menu-highlight dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                  {% if request.user.profile.profile_picture %}<img src="/static/media/{{request.user.profile.profile_picture}}" alt="" width="18" height="18"/>{% endif %} {% if request.user.first_name == "" %}{{request.user}}{% else %}{{user.first_name}}{% endif %}
+                  {% if request.user.first_name == "" %}{{request.user}}{% else %}{{user.first_name}}{% endif %}
                   {% if msgNo > 0 %}<span class="badge" id="msgBadgeID">{{msgNo}}</span>{% endif %}<span class="caret"></span>
               </a>
                 <ul class="dropdown-menu">

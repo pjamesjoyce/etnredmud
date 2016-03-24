@@ -41,13 +41,39 @@ $(document).ready(function(){
 
 {% block content %}
 
-<div class="col-md-6">
-  {{processText|safe}}
+<div class="row">
+
+
+  <div class="col-xs-10 col-xs-offset-1">
+    <h2>View/edit flow sheet for {{system}}</h2>
+    <hr>
+    <p>
+      You can create or edit the flow sheet for {{system}} in the box below &nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-xs btn-custom"data-toggle="collapse" href="#moreInfo" aria-expanded="false" aria-controls="moreInfo">More info...</a>
+    </p>
+    <div class="collapse" id="moreInfo">
+      <div class="well">
+        <p>
+          <strong>Information </strong>about the analysis
+        </p>
+      </div>
+    </div>
+
+    <hr>
+    
+  </div>
 </div>
 
+<div class="row">
+  <div class="col-xs-10 col-xs-offset-1">
+    <div class="col-md-6">
+      {{processText|safe}}
+    </div>
 
-<div class="chart col-md-6">
-  <label><input type="checkbox"> Sort by contribution </label>
+
+    <div class="chart col-md-6">
+      <label><input type="checkbox"> Sort by contribution </label>
+    </div>
+  </div>
 </div>
 
 {% endblock %}

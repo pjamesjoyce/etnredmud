@@ -249,6 +249,24 @@ def sandbox_rename_process(request):
     return HttpResponse("OK")
 
 
+def sandbox_edit_quantity(request):
+
+    id = request.POST.get("id","")
+    type = request.POST.get("type","")
+    newAmount = request.POST.get("newAmount","")
+
+    print id, type, newAmount
+
+    if type == 'input':
+        thisItem = m.FlowInputMembership.objects.get(uuid = id)
+    else:
+        thisItem = m.FlowOutputMembership.objects.get(uuid = id)
+
+    thisItem.amount_required = newAmount
+    thisItem.save()
+
+    return HttpResponse("OK")
+
 def sandboxScan(system_id):
 
     system  = m.FlowSystem.objects.get(id=system_id)

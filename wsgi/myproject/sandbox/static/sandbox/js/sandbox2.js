@@ -4,19 +4,20 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
 
     // setup some defaults for jsPlumb.
     var instance = jsPlumb.getInstance({
-        Endpoint: ["Dot", {radius: 2}],
-        Connector:"Flowchart",
-        HoverPaintStyle: {strokeStyle: "#1e8151", lineWidth: 2 },
-        ConnectionOverlays: [
-            [ "Arrow", {
-                location: 1,
-                id: "arrow",
-                length: 14,
-                foldback: 0.8
-            } ],
-            [ "Label", { label: "Establish connection", id: "label", cssClass: "aLabel" }],
-            //["Custom", { label: "Hello", id:"type" }]
-        ],
+        Endpoint: ["Dot", {radius: 1}],
+        Connector:[ "Flowchart", { stub: [0, 0], midpoint: 0.25 } ],//"Straight",
+        //HoverPaintStyle: {strokeStyle: "#1e8151", lineWidth: 2 },
+        //ConnectionOverlays: [
+        //    [ "Arrow", {
+        //        location: 1,
+        //        id: "arrow",
+        //        length: 7.5,
+        //        width:7.5,
+        //        foldback: 0.8
+        //    } ],
+        //    [ "Label", { label: "Establish connection", id: "label", cssClass: "aLabel" }],
+        //    //["Custom", { label: "Hello", id:"type" }]
+        //],
         Container: "body"
     });
 
@@ -24,7 +25,40 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
         newNodeExternal(nodes[i][0],nodes[i][1],nodes[i][2],nodes[i][3],nodes[i][4], instance);
     };
 
-    instance.registerConnectionType("basic", { anchor:"Continuous", connector:"StateMachine" });
+    instance.registerConnectionType("basic", {
+      anchor:"Continuous",
+      paintStyle: { strokeStyle: "#777", lineWidth: 1, outlineColor: "transparent", outlineWidth: 14 },
+      detachable : false,
+      hoverPaintStyle: {strokeStyle: "#1e8151", lineWidth: 1 },
+      overlays: [
+          [ "Arrow", {
+              location: 1,
+              id: "arrow",
+              length: 7.5,
+              width:7.5,
+              foldback: 0.8
+          } ],
+          [ "Label", { label: "Establish connection", id: "label", cssClass: "aLabel" }],
+          //["Custom", { label: "Hello", id:"type" }]
+      ],
+      //Connector:"Straight ",
+
+    });
+
+    instance.registerConnectionType("input", {
+      paintStyle: { strokeStyle: "#2e6f9a", lineWidth: 1, outlineColor: "transparent", outlineWidth: 14 },
+      //hoverPaintStyle: {strokeStyle: "blue", lineWidth: 1 },
+    });
+    instance.registerConnectionType("output", {
+      paintStyle: { strokeStyle: "#484c51", lineWidth: 1, outlineColor: "transparent", outlineWidth: 14 },
+      //hoverPaintStyle: {strokeStyle: "blue", lineWidth: 1 },
+    });
+    instance.registerConnectionType("intermediate", {
+      paintStyle: { strokeStyle: "#aaa", lineWidth: 1, outlineColor: "transparent", outlineWidth: 14 },
+      //hoverPaintStyle: {strokeStyle: "blue", lineWidth: 1 },
+    });
+
+
 
     window.jsp = instance;
 
@@ -180,7 +214,8 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
 
             // initialise draggable elements.
             instance.draggable(el, {
-              grid: [10,10],
+              //grid: [10,10],
+              containment:true,
               stop: function(event) {
 
                 var getID = el.id;
@@ -202,22 +237,22 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
 
             instance.makeSource(el, {
                 filter: ".ep,.ep2",
-                anchor: "Continuous",
-                connectorStyle: { strokeStyle: "#5c96bc", lineWidth: 2, outlineColor: "transparent", outlineWidth: 4 },
+                //anchor: "Continuous",
+                //connectorStyle: { strokeStyle: "#777", lineWidth: 1, outlineColor: "transparent", outlineWidth: 4 },
                 connectionType:"basic",
-                extract:{
-                    "action":"the-action"
-                },
-                maxConnections: 10,
-                onMaxConnections: function (info, e) {
-                    alert("Maximum connections (" + info.maxConnections + ") reached");
-                }
+                //extract:{
+                //    "action":"the-action"
+                //},
+                //maxConnections: 10,
+                //onMaxConnections: function (info, e) {
+                //    alert("Maximum connections (" + info.maxConnections + ") reached");
+                //}
             });
 
             instance.makeTarget(el, {
                 dropOptions: { hoverClass: "dragHover" },
-                anchor: "Continuous",
-                allowLoopback: true
+                //anchor: "Continuous",
+                allowLoopback: false
             });
 
             $('.x').unbind().click(function(e){
@@ -431,8 +466,9 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
                   source: id,
                   target: thisNodeID,
                   type:"basic",
-                  data:{'connection_type':'input'}
+                  data:{'connection_type':'input', 'connection_amount':amount}
                 })
+                //thisConnection.addType("new");
 
                 var postData = {
                     'uuid': id,
@@ -548,7 +584,9 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
                   source: thisNodeID,
                   target: id,
                   type:"basic",
+                  data:{'connection_type':'output', 'connection_amount':amount}
                 })
+                //thisConnection.addType("new");
 
                 var postData = {
                     'uuid': id,
@@ -573,6 +611,95 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
                 chooseOutput.remove();
               });
             });
+
+
+            $('.ed').unbind().click(function(e){
+
+              var target = $( e.target )
+
+              var thisNodeID = target.parent().parent().parent().attr('id');
+              var type = 'input';
+              var thisConnections = instance.getConnections({ source: thisNodeID });
+
+              if(thisConnections.length === 0){
+                thisConnections = instance.getConnections({ target: thisNodeID });
+                type = 'output';
+              }
+
+              var connectionData = thisConnections[0].getData();
+
+
+              var itemName = $('#' + thisNodeID + ' .title').text();
+              var initialValue=connectionData.connection_amount;
+
+              console.log(thisNodeID);
+
+              var formHtml = '<label for="newQuantity">Name:</label> <input name = "newQuantity", id="newQuantity" value = "'+initialValue+'">'
+
+              var createdModal = createModal('Edit quantity of  ' + itemName, formHtml);
+
+              $(document.body).append(createdModal);
+
+              $('#myModal').modal('show');
+
+              var itemIDNo = null
+               $('#confirm_button').unbind().click(function(e){
+                console.log('OK, editing quantity of ' + itemName +'(id = '+thisNodeID+')')
+
+                var postData = {
+
+                  'csrfmiddlewaretoken':csrftoken,
+                  'id': thisNodeID,
+                  'type': type,
+                  'newAmount' : $('#newQuantity').val()
+                }
+                console.log(postData);
+                $.post("/sandbox/editFlow/", postData);
+                $('#myModal').modal('hide');
+
+                //redo the connection
+
+
+
+                console.log(thisConnections[0].sourceId);
+                console.log(thisConnections[0].targetId);
+                currentLabel = thisConnections[0].getOverlay("label").getLabel();
+                unit = currentLabel.split(" ")[1];
+
+                jsPlumb.detach(thisConnections[0]);
+
+
+                var connection = instance.connect({
+                   source: thisConnections[0].sourceId,
+                   target: thisConnections[0].targetId,
+                   type:"basic",
+                   data:{'connection_type':type, 'connection_amount':$('#newQuantity').val()}
+                 });
+                 console.log(connection.getData());
+
+                 console.log(currentLabel);
+                 console.log(unit);
+                 connection.getOverlay("label").setLabel($('#newQuantity').val() + " " + unit);
+
+                 //connection.addType("new");
+
+
+                });
+
+
+
+
+              $('#myModal').on('hidden.bs.modal', function () {
+               $('#myModal').remove();
+              });
+              $('#myModal').on('shown.bs.modal', function () {
+               $('#newQuantity').focus()
+             });
+
+
+            });
+
+
 
             $('.transformation>.title').unbind().click(function(e){
               var titleDiv = $(this);
@@ -683,11 +810,15 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
             for (i=0;i<links.length;i++){
               //console.log ('trying to link' + links[i][0] + ' to ' + links[i][1])
               //console.log(links);
+              //console.log('source : ' + links[i][0].split(' ').join('_'))
+              //console.log('target : ' + links[i][1].split(' ').join('_'))
+
               var connection = instance.connect({
                  source: links[i][0].split(' ').join('_'),
                  target: links[i][1].split(' ').join('_'),
-                 type:"basic",
-                 data:{'connection_type':links[i][2]}
+                 type:"basic " +links[i][2],
+                 data:{'connection_type':links[i][2], 'connection_amount':links[i][3]},
+
                });
 
                //console.log(connection);
@@ -740,6 +871,38 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
     });
    });
 
+   var buttonTypes = {
+     'show_intermediate' : 'intermediate',
+     'hide_intermediate' : 'intermediate',
+     'show_input':'input',
+     'hide_input':'input',
+     'show_output':'output',
+     'hide_output':'output'
+   }
+
+   $('.showLabels').click(function(e){
+     var type = buttonTypes[$(this).attr('id')];
+
+     instance.select().each(function(connection){
+       connectionData = connection.getData()
+
+       if (connectionData.connection_type == type){
+         connection.getOverlay('label').show()
+       }
+     });
+   })
+   $('.hideLabels').click(function(e){
+     var type = buttonTypes[$(this).attr('id')];
+
+     instance.select().each(function(connection){
+       connectionData = connection.getData()
+
+       if (connectionData.connection_type == type){
+         connection.getOverlay('label').hide()
+       }
+     });
+   });
+
   };
 
 
@@ -753,9 +916,12 @@ var newNodeExternal = function(name, type, id, x, y, instance){
   var input =  $('<div>').addClass('ip').html('<i class="material-icons w3-medium" data-toggle="popover" data-placement= "bottom" data-trigger="hover" title="Input" data-content="Add an input to this process">file_download</i>');
   var output =  $('<div>').addClass('op').html('<i class="material-icons w3-medium" data-toggle="popover" data-placement= "bottom" data-trigger="hover" title="Output" data-content="Add an output to this process">file_upload</i>');
   var del =  $('<div>').addClass('x').html('<i class="material-icons w3-medium" data-toggle="popover" data-placement= "right" data-trigger="hover" title="Remove" data-content="Remove this item">cancel</i>');
+  var edit = $('<div>').addClass('ed').html('<i class="material-icons w3-medium" data-toggle="popover" data-placement= "bottom" data-trigger="hover" title="Edit" data-content="Edit quantity">edit</i>');
 
   if(type == 'transformation'){
-    buttons.append(connect).append(input).append(output)
+    buttons.append(connect).append(input).append(output);
+  }else{
+    buttons.append(edit);
   };
   buttons.append(del);
   d.append(title);
