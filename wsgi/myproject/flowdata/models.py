@@ -111,7 +111,7 @@ class FlowInputMembership(models.Model):
     uuid = models.CharField(max_length=36,default=" ")
 
     def __unicode__(self):
-        return "%s : %s -> %s (%s)" % (self.id, "self.inputsubstance", self.transformation, self.partOfSystem)#(self.id, self.inputsubstance, self.transformation, self.partOfSystem)
+        return "%s : %s -> %s (%s)" % (self.id, self.inputsubstance, self.transformation, self.partOfSystem)#(self.id, self.inputsubstance, self.transformation, self.partOfSystem)
 
 class FlowOutputMembership(models.Model):
     transformation = models.ForeignKey(FlowTransformation, on_delete = models.CASCADE)
