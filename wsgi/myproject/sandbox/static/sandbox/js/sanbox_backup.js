@@ -1,6 +1,6 @@
 var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOutputs, allIntermediates,system_id,editable) {
 
-    //console.log(editable);
+    //console.log(allIntermediates);
 
     $.fn.bootstrapBtn = $.fn.button.noConflict();
 
@@ -60,7 +60,6 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
     // bind a click listener to each connection; the connection is deleted. you could of course
     // just do this: jsPlumb.bind("click", jsPlumb.detach), but I wanted to make it clear what was
     // happening.
-    if(editable){
     instance.bind("click", function (c) {
 
         connectionData = c.getData()
@@ -106,7 +105,7 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
         };
 
     });
-    }
+
     // bind a connection listener. note that the parameter passed to this function contains more than
     // just the new connection - see the documentation for a full list of what is included in 'info'.
     // this listener sets the connection's internal
@@ -265,8 +264,6 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
               containment:true,
               stop: function(event) {
 
-                if(editable){
-
                 var getID = el.id;
                 if(typeof getID == 'undefined'){getID = el[0].id;};
 
@@ -277,9 +274,7 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
                 if ($target.find('select').length == 0) {
                   saveState($target);
                 }
-              }
-
-            },
+              },
 
             });
 
@@ -766,7 +761,7 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
             });
 
 
-        if(editable){
+
             $('.transformation>.title').unbind().click(function(e){
               var titleDiv = $(this);
               thisNodeID = titleDiv.parent().attr('id');
@@ -808,7 +803,7 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
 
             })
         };
-      }
+
         var newNode = function(x, y) {
 
             var id = jsPlumbUtil.uuid();
@@ -991,7 +986,6 @@ var newNodeExternal = function(name, type, id, x, y, instance){
   var del =  $('<div>').addClass('x').html('<i class="material-icons w3-medium" data-toggle="popover" data-placement= "right" data-trigger="hover" title="Remove" data-content="Remove this item">cancel</i>');
   var edit = $('<div>').addClass('ed').html('<i class="material-icons w3-medium" data-toggle="popover" data-placement= "bottom" data-trigger="hover" title="Edit" data-content="Edit quantity">edit</i>');
 
-
   if(type == 'transformation'){
     buttons.append(connect).append(input).append(output);
   }else{
@@ -999,9 +993,7 @@ var newNodeExternal = function(name, type, id, x, y, instance){
   };
   buttons.append(del);
   d.append(title);
-  if(editable){
-    d.append(buttons);
-  }
+  d.append(buttons);
   var canvas = $("#main_canvas");
   canvas.append(d);
 

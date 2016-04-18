@@ -31,8 +31,9 @@
 
 
   <div class="sandboxTitle col-xs-10 col-xs-offset-1">
-    <h2>View/edit flow sheet for {{system}}</h2>
+    <h2>{% if system.owner == request.user %}Edit{%else%}View{% endif %} flow sheet for {{system}}</h2>
     <hr>
+    {% if system.owner == request.user %}
     <p>
       You can create or edit the flow sheet for {{system}} in the box below &nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-xs btn-custom"data-toggle="collapse" href="#moreInfo" aria-expanded="false" aria-controls="moreInfo">More info...</a>
     </p>
@@ -71,14 +72,17 @@
 
       </div>
     </div>
+    {% endif %}
   </div>
 </div>
 
 
   <div class="col-xs-1 controls">
+    {% if system.owner == request.user %}
     <div >
       <button type="button" name="button" class="btn btn-xs btn-custom processButton" id="addProcess"><div><i class="material-icons">add</i></div>Add process</button>
     </div>
+    {% endif %}
     <div class="labelButtons ">
       <p>
         <strong>Arrow Labels</strong>
@@ -120,6 +124,9 @@
 <script type="text/javascript">
 
   jsPlumb.ready(function () {
+
+    editable = {% if system.owner == request.user %}true{% else %}false{% endif %}
+    //console.log(editable)
 
     var nodes = [];
     {% for k,v in nodes.items %}
@@ -174,7 +181,7 @@
 
   var system_id = {{system_id}}
 
-    jsPlumbsetup(nodes, links, linklabels, csrftoken,allInputs,allOutputs,allIntermediates,system_id);
+    jsPlumbsetup(nodes, links, linklabels, csrftoken,allInputs,allOutputs,allIntermediates,system_id,editable);
 
     //console.log(links);
 

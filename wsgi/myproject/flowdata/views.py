@@ -28,7 +28,7 @@ def all_systems(request):
         args.update(myMessages)
     # <<<==========================>>> #
 
-    systems = m.FlowSystem.objects.filter(owner=request.user)
+    systems = m.FlowSystem.objects.all()#.filter(owner=request.user)
 
     args['systems']=systems
 

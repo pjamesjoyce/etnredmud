@@ -40,8 +40,11 @@ $(document).ready(function(){
 <a href="/flow/newSystem/" type="button" name="create" class="btn btn-sm btn-custom pull-right ">Add new</a>
 </div>
 
+<div>
 <hr>
 
+
+<h3>Flow sheets created by me</h3>
 <table class="table table-hover" id="sp_table">
 
 <thead>
@@ -59,14 +62,16 @@ $(document).ready(function(){
 </thead>
 <tbody>
 {% for system in systems %}
+
+  {% if system.owner == request.user %}
   <tr>
-    <td>
+    <td class = "col-md-6">
         <a href="/flow/setSystem/{{system.id}}/">{{ system.name }}</a>
     </td>
-    <td>
+    <td class = "col-md-3">
       {{ system.owner.first_name}}
     </td>
-    <td>
+    <td class = "col-md-3">
       <a href="/flow/setSystem/{{system.id}}/"type="button" class="btn btn-custom btn-xs" name="edit_button{{system.id}}">Edit</a></li>
       <a type="button" class="btn btn-custom btn-xs" name="delete_button{{system.id}}" data-toggle="modal" data-target="#deleteModal_{{system.id}}">Delete</a></li>
       <a href="/flow/analysis/system/{{system.id}}/"type="button" class="btn btn-custom btn-xs" name="analyse_button{{system.id}}">Analyse</a></li>
@@ -99,7 +104,7 @@ $(document).ready(function(){
     </td>
   </tr>
 
-
+  {% endif %}
   {% empty %}
   <tr>
     <td>
@@ -110,6 +115,62 @@ $(document).ready(function(){
 
   </tbody>
 </table>
+
+</div>
+
+
+
+<div>
+  <hr>
+
+  <h3>Flow sheets created by other users</h3>
+
+  <table class="table table-hover" id="sp_table">
+
+  <thead>
+  <tr>
+    <th>
+      Name
+    </th>
+    <th>
+      Owner
+    </th>
+    <th>
+      Actions
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  {% for system in systems %}
+
+    {% if system.owner != request.user %}
+    <tr>
+      <td class = "col-md-6">
+          <a href="/flow/setSystem/{{system.id}}/">{{ system.name }}</a>
+      </td>
+      <td class = "col-md-3">
+        {{ system.owner.first_name}}
+      </td>
+      <td class = "col-md-3">
+        <a href="/flow/setSystem/{{system.id}}/"type="button" class="btn btn-custom btn-xs" name="edit_button{{system.id}}">View</a></li>
+        <a href="/flow/analysis/system/{{system.id}}/"type="button" class="btn btn-custom btn-xs" name="analyse_button{{system.id}}">Analyse</a></li>
+
+        <!--<a href="/data/process/LCI/{{process.id}}" type="button" class="btn btn-primary btn-xs" name="button">Analyse</a>-->
+      </td>
+    </tr>
+
+    {% endif %}
+    {% empty %}
+    <tr>
+      <td>
+        Sorry, you don't have any flow sheets yet, click <a href="/flow/newSystem/">here</a> to create one</li>
+      </td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+  </table>
+</div>
 
 </div>
 
