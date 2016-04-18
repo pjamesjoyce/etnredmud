@@ -69,7 +69,7 @@ $(document).ready(function(){
         <a href="/flow/setSystem/{{system.id}}/">{{ system.name }}</a>
     </td>
     <td class = "col-md-3">
-      {{ system.owner.first_name}}
+      {% if system.owner.first_name %}{{ system.owner.first_name}} {{ system.owner.last_name}} {% else %}{{system.owner}}{% endif %}
     </td>
     <td class = "col-md-3">
       <a href="/flow/setSystem/{{system.id}}/"type="button" class="btn btn-custom btn-xs" name="edit_button{{system.id}}">Edit</a></li>
@@ -149,7 +149,7 @@ $(document).ready(function(){
           <a href="/flow/setSystem/{{system.id}}/">{{ system.name }}</a>
       </td>
       <td class = "col-md-3">
-        {{ system.owner.first_name}}
+        {% if system.owner.first_name %}{{ system.owner.first_name}} {{ system.owner.last_name}} {% else %}{{system.owner}}{% endif %}
       </td>
       <td class = "col-md-3">
         <a href="/flow/setSystem/{{system.id}}/"type="button" class="btn btn-custom btn-xs" name="edit_button{{system.id}}">View</a></li>
