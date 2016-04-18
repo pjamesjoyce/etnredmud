@@ -99,7 +99,7 @@
 }
 
 .input {
-    width: 55px;
+    min-width: 65px;
     min-height: 25px;
     border: 1px solid #2e6f9a;
     background-color: #6390BF;
@@ -114,7 +114,8 @@
 }
 
 .output {
-    width: 75px;
+    min-width: 65px;
+    /*width: 75px;*/
     min-height: 25px;
     border: 1px solid #484c51;
     background-color: #5B6066;
