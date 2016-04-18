@@ -16,8 +16,8 @@ def check_messages(user):
 
     response.update({'myMessages':myMessages, 'msgNo':msgNo,})
 
-    print 'Checking messages for ' + user.first_name + ' ' + user.last_name
-    print user.first_name + ' ' + user.last_name + ' has ' + str(msgNo) + ' unread messages'
+    #print 'Checking messages for ' + user.first_name + ' ' + user.last_name
+    #print user.first_name + ' ' + user.last_name + ' has ' + str(msgNo) + ' unread messages'
 
     return response
 
@@ -65,7 +65,7 @@ def replyToMessage(request):
             reply.save()
             reply.recipient.add(mainRecipient)
             reply.save()
-            print 'Sent to ' + mainRecipient.first_name
+            #print 'Sent to ' + mainRecipient.first_name
 
             if request.POST.get('replyAll'):
                 for r in oldRecipientList:
@@ -73,7 +73,7 @@ def replyToMessage(request):
                         recipient = User.objects.get(id=r)
                         reply.recipient.add(recipient)
                         reply.save()
-                        print 'Sent to ' + recipient.first_name
+                        #print 'Sent to ' + recipient.first_name
 
             messages.success(request, "Message sent")
 

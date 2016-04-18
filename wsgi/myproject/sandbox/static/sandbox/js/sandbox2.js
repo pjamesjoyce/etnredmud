@@ -136,6 +136,14 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
           var connectName = $('<select>').attr('name','connectName').attr('id','connectName').attr('data-live-search','true').attr('data-done-button','true').attr('data-live-search-placeholder','Search (or type to create new)').attr('data-width','100%').addClass('selectpicker');
           var connectAmountTitle = $('<div>').addClass('popTitle').text('How much is needed');
           var connectAmount = $('<input>').attr('name','connectAmount').attr('id','connectAmount');
+
+          //input validation
+          connectAmount.keyup(function() {
+           var $th = $(this);
+           $th.val( $th.val().replace(/[^0-9\.]/g, function(str) {  return ''; } ) );
+          });
+          //end
+
           var connectUnit =  $('<div>').addClass('popUnit').text('');
           var okButton = $('<button>').text('OK');
 
@@ -162,7 +170,11 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
           connectName.on('shown.bs.select',function(){
                 var searchBox = $('.bs-searchbox input')
                   searchBox.keyup(function(){
-                  console.log('key pressed');
+                  //console.log('key pressed');
+                  //input validation
+                  var $th = $(this);
+                  $th.val( $th.val().replace(/[^A-Za-z0-9\(\)\\\[\]/ ]/g, function(str) {  return ''; } ) );
+                  //end
                   var noResults = $('.no-results');
                     noResults.html("'" + searchBox.val() + "' not found<button class='create_button btn btn-xs btn-primary pull-right'> Create </button>")
                     $('.create_button').click(function(){
@@ -427,6 +439,14 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
               var inputName = $('<select>').attr('name','inputsubstance').attr('id','inputsubstance').attr('data-live-search','true').attr('data-done-button','true').attr('data-live-search-placeholder','Search (or type to create new)').attr('data-width','100%').addClass('selectpicker');
               var inputAmountTitle = $('<div>').addClass('popTitle').text('How much is needed');
               var inputAmount = $('<input>').attr('name','inputamount').attr('id','inputamount');
+
+              //input validation
+              inputAmount.keyup(function() {
+               var $th = $(this);
+               $th.val( $th.val().replace(/[^0-9\.]/g, function(str) {  return ''; } ) );
+              });
+              //end
+
               var inputUnit = $('<div>').addClass('popUnit').text('');
               var okButton = $('<button>').text('OK');
 
@@ -453,7 +473,11 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
               inputName.on('shown.bs.select',function(){
                 var searchBox = $('.bs-searchbox input')
                   searchBox.keyup(function(){
-                  console.log('key pressed');
+                  //console.log('key pressed');
+                  //input validation
+                  var $th = $(this);
+                  $th.val( $th.val().replace(/[^A-Za-z0-9\(\)\\\[\]/ ]/g, function(str) {  return ''; } ) );
+                  //end
                   var noResults = $('.no-results');
                     noResults.html("'" + searchBox.val() + "' not found<button class='create_button btn btn-xs btn-primary pull-right'> Create </button>")
                     $('.create_button').click(function(){
@@ -545,6 +569,14 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
               var outputName = $('<select>').attr('name','outputsubstance').attr('id','outputsubstance').attr('data-live-search','true').attr('data-done-button','true').attr('data-live-search-placeholder','Search (or type to create new)').attr('data-width','100%').addClass('selectpicker');
               var outputAmountTitle = $('<div>').addClass('popTitle').text('How much is needed');
               var outputAmount = $('<input>').attr('name','outputamount').attr('id','outputamount');
+
+              //input validation
+              outputAmount.keyup(function() {
+               var $th = $(this);
+               $th.val( $th.val().replace(/[^0-9\.]/g, function(str) {  return ''; } ) );
+              });
+              //end
+
               var outputUnit = $('<div>').addClass('popUnit').text('');
               var okButton = $('<button>').text('OK');
 
@@ -572,6 +604,10 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
                 var searchBox = $('.bs-searchbox input')
                   searchBox.keyup(function(){
                   //console.log('key pressed');
+                  //input validation
+                  var $th = $(this);
+                  $th.val( $th.val().replace(/[^A-Za-z0-9\(\)\\\[\]/ ]/g, function(str) {  return ''; } ) );
+                  //end
                   var noResults = $('.no-results');
                     noResults.html("'" + searchBox.val() + "' not found<button class='create_button btn btn-xs btn-primary pull-right'> Create </button>")
                     $('.create_button').click(function(){
@@ -877,6 +913,13 @@ var jsPlumbsetup = function (nodes, links,linklabels, csrftoken,allInputs,allOut
       var createdModal = createModal('New Process', formHtml);
       $(document.body).append(createdModal);
 
+      //input validation
+      $('#createItem').keyup(function() {
+       var $th = $(this);
+       $th.val( $th.val().replace(/[^A-Za-z0-9\(\)\\\[\]/ ]/g, function(str) {  return ''; } ) );
+      });
+      //end
+
       $('#myModal').modal('show');
 
 
@@ -1151,6 +1194,14 @@ var createItem = function(type, initialValue, csrftoken){
   var createdModal = createModal('New ' + friendlyType, formHtml);
   $(document.body).append(createdModal);
   $('#createUnit').selectpicker();
+
+  //input validation
+  $('#createItem').keyup(function() {
+   var $th = $(this);
+   $th.val( $th.val().replace(/[^A-Za-z0-9\(\)\\\[\]/ ]/g, function(str) {  return ''; } ) );
+  });
+  //end
+
   $('#myModal').modal('show');
 
   var itemIDNo = null
