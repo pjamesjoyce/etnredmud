@@ -110,7 +110,7 @@ class FlowInputMembership(models.Model):
     note = models.CharField(max_length = 500, null = True)
     uuid = models.CharField(max_length=36,default=" ")
 
-    def __unicode__(self):
+    def __str__(self):
         return '{} : {} -> {} ({})'.format(self.id, self.inputsubstance, self.transformation, self.partOfSystem)
         #return '{} {}'.format(self.inputsubstance, self.transformation)
         #return "%s : %s -> %s (%s)" % (self.id, self.inputsubstance, self.transformation, self.partOfSystem)#(self.id, self.inputsubstance, self.transformation, self.partOfSystem)
