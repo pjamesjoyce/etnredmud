@@ -38,6 +38,9 @@ def sandbox_main(request):
     args['nodes'] = nodes
     args['links'] = links
 
+    can_edit_all = request.user.groups.filter(name='SuperEditors').exists()
+    args['can_edit_all']=can_edit_all
+
     return render(request, 'sandbox.html', args)
 
 def save_position(uuid,x,y):

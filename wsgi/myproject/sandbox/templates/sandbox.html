@@ -31,9 +31,9 @@
 
 
   <div class="sandboxTitle col-xs-10 col-xs-offset-1">
-    <h2>{% if system.owner == request.user %}Edit{%else%}View{% endif %} flow sheet for {{system}}</h2>
+    <h2>{% if system.owner == request.user or can_edit_all %}Edit{%else%}View{% endif %} flow sheet for {{system}}</h2>
     <hr>
-    {% if system.owner == request.user %}
+    {% if system.owner == request.user or can_edit_all %}
     <p>
       You can create or edit the flow sheet for {{system}} in the box below &nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-xs btn-custom"data-toggle="collapse" href="#moreInfo" aria-expanded="false" aria-controls="moreInfo">More info...</a>
     </p>
@@ -78,7 +78,7 @@
 
 
   <div class="col-xs-1 controls">
-    {% if system.owner == request.user %}
+    {% if system.owner == request.user or can_edit_all %}
     <div >
       <button type="button" name="button" class="btn btn-xs btn-custom processButton" id="addProcess"><div><i class="material-icons">add</i></div>Add process</button>
     </div>
@@ -125,7 +125,7 @@
 
   jsPlumb.ready(function () {
 
-    editable = {% if system.owner == request.user %}true{% else %}false{% endif %}
+    editable = {% if system.owner == request.user or can_edit_all %}true{% else %}false{% endif %}
     //console.log(editable)
 
     var nodes = [];

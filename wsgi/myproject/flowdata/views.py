@@ -29,8 +29,10 @@ def all_systems(request):
     # <<<==========================>>> #
 
     systems = m.FlowSystem.objects.all()#.filter(owner=request.user)
+    can_edit_all = request.user.groups.filter(name='SuperEditors').exists()
 
     args['systems']=systems
+    args['can_edit_all']=can_edit_all
 
     return render(request, 'systems.html', args)
 

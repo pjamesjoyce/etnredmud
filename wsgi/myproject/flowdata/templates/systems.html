@@ -44,7 +44,9 @@ $(document).ready(function(){
 <hr>
 
 
-<h3>Flow sheets created by me</h3>
+<h3>Flow sheets created by me {% if can_edit_all %} and all others (Editor privileges){% endif %}</h3>
+
+
 <table class="table table-hover" id="sp_table">
 
 <thead>
@@ -63,7 +65,7 @@ $(document).ready(function(){
 <tbody>
 {% for system in systems %}
 
-  {% if system.owner == request.user %}
+  {% if system.owner == request.user or can_edit_all %}
   <tr>
     <td class = "col-md-6">
         <a href="/flow/setSystem/{{system.id}}/">{{ system.name }}</a>
@@ -119,7 +121,7 @@ $(document).ready(function(){
 </div>
 
 
-
+{% if not can_edit_all %}
 <div>
   <hr>
 
@@ -171,6 +173,7 @@ $(document).ready(function(){
     </tbody>
   </table>
 </div>
+{% endif %}
 
 </div>
 
