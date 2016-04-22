@@ -1,0 +1,44 @@
+Index	Title	Authors	Source	Type	doi
+1	All about aluminium	Aluminium Leader		misc	
+2	Production Of Red Mud Building Materials In Jamaica. Case study 1: Production of cement stabilised red mud bricks	BASIN		techreport	
+3	Use of selected waste materials in concrete mixes	Batayneh, Malek ,  Marie, Iqbal and Asi, Ibrahim	Waste Management 27 (12) 1870-1876	article	10.1016/j.wasman.2006.07.026
+4	The ERICA Tool	Brown, J. E. ,  Alfonso, B. ,  Avila, R. ,  Beresford, N. a. ,  Copplestone, D. ,  Pr"ohl, G. and Ulanovsky, a.	Journal of Environmental Radioactivity 99 (9) 1371-1383	article	10.1016/j.jenvrad.2008.01.008
+5	The development and purpose of the FREDERICA radiation effects database	Copplestone, D. ,  Hingston, J. and Real, a.	Journal of Environmental Radioactivity 99 (9) 1456-1463	article	10.1016/j.jenvrad.2008.01.006
+6	A framework for deciding on the inclusion of emerging impacts in life cycle impact assessment	Cucurachi, S. ,  Heijungs, R. ,  Peijnenburg, W. J G M ,  Bolte, J. F B and De Snoo, G. R.	Journal of Cleaner Production 78 152-163	article	10.1016/j.jclepro.2014.05.010
+7	Externalities of fuel cycles. European Commission, DG XII, Science, Research and Development, JOULE, ExternE Externalities of Energy, Vol. 5, Nuclear	Dreicer, M ,  Tort, V and Manen, P		misc	
+8	FREDERICA database	Frederica		article	
+9	Human health damages due to ionising radiation in life cycle impact assessment	Frischknecht, R and Braunschweig, A	Environmental Impact Assessment Review 20 159-189	article	
+10	A Screening Level Ecological Risk Assessment and ranking method for liquid radioactive and chemical mixtures released by nuclear facilities under normal operating conditions	Garnier-Laplace, J. ,  Beaugelin-Seiller, K. ,  Gilbin, R. ,  Della-Vedova, C. ,  Jolliet, O. and Payet, J.	Radioprotection 44 (5) 903-908	article	10.1051/radiopro/20095161
+11	The Eco-Indicator 98 Explained	Goedkoop, Mark ,  Hofstetter, Patrick ,  Muller-Wenk, Ruedi and Spriemsma, Renilde	The International Journal of Life Cycle Assessment 3 (6) 352 - 360	article	
+12	Identifying best existing practice for characterization modeling in life cycle impact assessment	Hauschild, Michael Z. ,  Goedkoop, Mark ,  Guin'ee, Jeroen ,  Heijungs, Reinout ,  Huijbregts, Mark ,  Jolliet, Olivier ,  Margni, Manuele ,  De Schryver, An ,  Humbert, Sebastien ,  Laurent, Alexis ,  Sala, Serenella and Pant, Rana	International Journal of Life Cycle Assessment 18 (3) 683-697	article	10.1007/s11367-012-0489-5
+13	Integrating human indoor air pollutant exposure within Life Cycle Impact Assessment.	Hellweg, Stefanie ,  Demou, Evangelia ,  Bruzzi, Raffaella ,  Meijer, Arjen ,  Rosenbaum, Ralph K ,  Huijbregts, Mark a and Mckone, Thomas E	Environmental science & technology 43 (6) 1670-1679	article	10.1021/es8018176
+14	Confronting workplace exposure to chemicals with LCA: Examples of trichloroethylene and perchlorpethylene in metal degreasing and dry cleaning	Hellweg, Stefanie ,  Demou, Evangelia ,  Scheringer, Martin ,  Mckone, Thomas E. and Hungerbuhler, Konrad	Environmental Science and Technology 39 (19) 7741-7748	article	10.1021/es047944z
+15	Why and How Should We Assess Occupational Health Impacts in Integrated Product Policy ?	Hofstetter, Patrick and Norris, Gregory A	Environmental science & technology 37 (10) 2025-2035	article	
+16	A perspective of environmental pollution	Holdgate, Martin W		book	
+17	Generic Models for Use in Assessing the Impact of Discharges of Radioactive Substances to the Environment. Safety Reports Series No. 19	IAEA	Environment (19) 	article	
+18	Handbook of Parameter Values for the Prediction of Radionuclide Transfer in Terrestrial and Freshwater, Technical Reports Series 472	IAEA	October (472) 1-196	article	
+19	Report of the NORM Working Group of EMRAS Theme 3 : Modelling the Transfer of Radionuclides from Naturally Occurring Radioactive Material (NORM)	IAEA		techreport	
+20	The 2007 Recommendations of the International Commission on Radiological Protection. ICRP Publication 103.	ICRP	Annals of the ICRP 37 (2-4) 1-332	article	
+21	Environmental Protection: the Concept and Use of Reference Animals and Plants. ICRP Publication 108.	ICRP	Annals of the ICRP 38 (4-6) 1-242	article	
+22	Recommendations of the ICRP. ICRP Publication 26.	ICRP	Annals of the ICRP 1 (3) 2-3	article	
+23	Compendium of Dose Coefficients based on ICRP Publication 60. ICRP Publication 119.	ICRP	Annals of the ICRP 41 (Suppl. (1) 1-130	article	10.1016/j.icrp.2006.06.001
+24	ILCD Handbook: Recommendations for Life Cycle Impact Assessment in the European context	JRC European commission		book	10.278/33030
+25	Local risks and global impacts considering plant-specific functions and constraints: A case study of metal parts cleaning	Kikuchi, Yasunori and Hirao, Masahiko	International Journal of Life Cycle Assessment 15 (1) 17-31	article	10.1007/s11367-009-0137-x
+26	Mathematical models of external gamma radiation and congruence of measurements	Koblinger, L	Radiation Protection Dosimetry 7 (1-4) 227-234	article	
+27	Radiation Dose Assessments for Materials with Elevated Natural Radioactivity	Markkanen, Mika		book	
+28	Human Health Damages due to Indoor Sources of Organic Compounds and Radioactivity in Life Cycle Impact Assessment of Dwellings - Part 1: Characterisation Factors (8 pp)	Meijer, Arjen ,  Huijbregts, Mark and Reijnders, Lucas	The International Journal of Life Cycle Assessment 10 (5) 309-316	article	10.1065/lca2004.12.194.1
+29	Red Mud Project	MSCA-ETN REDMUD		misc	
+30	Radiological assessment for bauxite mining and alumina refining	O'Connor, Brian H. ,  Donoghue, a. Michael ,  Manning, Timothy J H and Chesson, Barry J.	Annals of Occupational Hygiene 57 (1) 63-76	article	10.1093/annhyg/mes052
+31	SimaPro 8	Pre Sustainability		misc	
+32	AMBER	Quintessa Ltd.		misc	
+33	Development of sustainable construction material using industrial and agricultural solid waste: A review of waste-create bricks	Raut, S. P. ,  Ralegaonkar, R. V. and Mandavgane, S. a.	Construction and Building Materials 25 (10) 4037-4042	article	10.1016/j.conbuildmat.2011.04.038
+34	Radioactivity in building materials: room model analysis and experimental methods.	Risica, S ,  Bolzan, C and Nuccetelli, C	The Science of the total environment 272 (1-3) 119-126	article	
+35	USEtox - The UNEP-SETAC toxicity model: Recommended characterisation factors for human toxicity and freshwater ecotoxicity in life cycle impact assessment	Rosenbaum, Ralph K. ,  Bachmann, Till M. ,  Gold, Lois Swirsky ,  Huijbregts, Mark a J ,  Jolliet, Olivier ,  Juraske, Ronnie ,  Koehler, Annette ,  Larsen, Henrik F. ,  MacLeod, Matthew ,  Margni, Manuele ,  McKone, Thomas E. ,  Payet, J'er^ome ,  Schuhmacher, Marta ,  Van De Meent, Dik and Hauschild, Michael Z.	International Journal of Life Cycle Assessment 13 (7) 532-546	article	10.1007/s11367-008-0038-4
+36	GaBi 6	Thinkstep		misc	
+37	Natural radioactivity in building materials in the European Union: A database and an estimate of radiological significance	Trevisi, R. ,  Risica, S. ,  D'Alessandro, M. ,  Paradiso, D. and Nuccetelli, C.	Journal of Environmental Radioactivity 105 11-20	article	10.1016/j.jenvrad.2011.10.001
+38	Sources and Effects of Ionizing Radiation	UNSCEAR		techreport	10.1097/00004032-199907000-00007
+39	Sources and Effects of Ionizing Radiation	UNSCEAR		techreport	
+40	The potential use of geopolymeric materials to immobilise toxic metals: Part I. Theory and applications	Van Jaarsveld, J.G.S. ,  Van Deventer, J.S.J. and Lorenzen, L.	Minerals Engineering 10 (7) 659-669	article	10.1016/S0892-6875(97)00046-0
+41	Indoor exposure to toluene from printed matter matters : Complementary views from Life Cycle Assessment and Risk Assessment Indoor exposure to toluene from printed matter matters : Complementary views from Life Cycle Assessment and Risk Assessment	Walser, Tobias ,  Juraske, Ronnie ,  Demou, Evangelia and Hellweg, Stefanie	Environmental science & technology 48 689−697	article	10.1021/es403804z
+42	Environmental Assessment of Products: Volume 1: Methodology, tools and case studies in product development	Wenzel, Henrik ,  Hauschild, Michael Z and Alting, Leo		book	
+43	Naturally-Occurring Radioactive Materials (NORM) Information Paper	World Nuclear Association		misc	

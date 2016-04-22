@@ -71,6 +71,7 @@ INSTALLED_APPS = (
     'sandbox',
     'importData',
     'testing',
+    'bibconvert',
 )
 
 DISALLOWED_MESSAGE = 50

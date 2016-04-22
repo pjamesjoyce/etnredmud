@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}
+Convert .bib file
+{% endblock %}
+
+{% block head-postload %}
+
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<!-- Include Bootstrap-select CSS, JS-->
+<link rel="stylesheet" href="{% static 'messenger/css/bootstrap-select.min.css' %}" />
+
+{% endblock %}
+
+{% block content %}
+
+{% if prompts %}{{prompts}}{% endif %}
+
+<div class="">
+  <h2>Convert .bib file to text file</h2>
+  <p>
+    Upload your .bib file to be converted into a human readable .txt file.</br>
+    Note - if you open the .txt file in Excel and split by tabs, you can create a nicely formatted table.
+  </p>
+</div>
+<hr>
+
+<div class="">
+
+<form class="form-horizontal" role="form" action="/reflist/processUpload/" method="post" enctype="multipart/form-data">{% csrf_token %}
+      <div class="col-sm-12">
+        {{upload_form}}
+      </div>
+
+      <div class="col-sm-12" style="padding-top:50px">
+        <button type="submit" class="btn btn-custom btn-xs">Convert</button>
+      </div>
+
+</form>
+
+<div class="space col-sm-12" style="height:500px">
+
+</div>
+
+</div>
+
+
+
+{% endblock %}
